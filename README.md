@@ -1,2 +1,3 @@
-# api-docs
-Personio API documentation
+# API Documentation
+Personio API documentation in [Swagger format](http://swagger.io/)
+
