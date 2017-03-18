@@ -141,7 +141,7 @@ paths:
                       value: DE98 8989 9898 0000 8989 00
   '/company/attendance-periods':
     get:
-      description: '[In development] List Attendance Periods'
+      description: 'List Attendance Periods'
       produces:
         - application/json
       parameters: []
@@ -179,7 +179,7 @@ paths:
                   created_at: '2017-01-17T10:32:18+0100'
   '/company/employees/{employee_id}/attendance-periods':
     post:
-      description: '[In development] Create new attendance period'
+      description: 'Create new attendance period'
       produces:
         - application/json
       parameters:
