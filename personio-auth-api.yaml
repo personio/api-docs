@@ -1,0 +1,66 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Authentication
+  description: 'Personio Authentication API'
+host: api.personio.de
+basePath: /v1
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  '/auth':
+    post:
+      description: 'Request Authentication Token'
+      produces:
+        - application/json
+      parameters:
+        - name: client_id
+          in: query
+          required: true
+          type: string
+          description: Client id of the downloaded credentials file
+        - name: client_secret
+          in: query
+          required: true
+          type: string
+          description: Client secret of the downloaded credentials file
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/AuthenticationTokenResponse'
+          examples:
+            application/json:
+              success: true
+              data:
+                token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLmRldi5wZXJzb25pby5kZTozMDAwMS92MS9hdXRoIiwiaWF0IjoxNDg5MDkxMzA2LCJleHAiOjE0ODkxNzc3MDYsIm5iZiI6MTQ4OTA5MTMwNiwianRpIjoiZmU1ZjkxOGY2MDZjOWI4OGMwMzM0ZmJkZjkyYzkwMzgiLCJzdWIiOiJPR014TVdRd1kySmxZbVF6Tm1RNVpqQmxOell6WmpsaSJ9.QZZCdlDjmL-LYdoDx2XLUfhwTdcjDgm9h4t-6JoACiM"
+definitions:
+  Response:
+    title: Default response object
+    type: object
+    properties:
+      success:
+        type: boolean
+      data:
+        type: object
+    required:
+      - success
+      - data  
+  AuthenticationTokenResponse:
+    title: Request Authentication Token response
+    allOf:
+      - $ref: '#/definitions/Response'
+      - type: object
+        properties:
+          data:
+            type: object
+            required:
+            - token
+            properties:
+              token:
+                type: string
+                
