@@ -139,6 +139,117 @@ paths:
                     dynamic_21827:
                       label: IBAN
                       value: DE98 8989 9898 0000 8989 00
+  '/company/employees/{employee_id}':
+    get:
+      description: 'Employee'
+      parameters:
+        - name: employee_id
+          in: path
+          required: true
+          type: number
+          format: integer
+          description: Numeric `id` of the employee
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/EmployeeResponse'
+          examples:
+            application/json:
+              success: true
+              data:
+                type: Employee
+                attributes:
+                  id: 
+                    label: id
+                    value: 83752
+                  first_name:
+                    label: First name
+                    value: Andreas
+                  last_name:
+                    label: Last name
+                    value: Anderson
+                  email:
+                    label: Email
+                    value: andreas.anderson@demo.com
+                  gender:
+                    label: Gender
+                    value: male
+                  status:
+                    label: Status
+                    value: active
+                  position:
+                    label: Position
+                    value: Online Marketing Specialist
+                  employment_type:
+                    label: Employment type
+                    value: internal
+                  weekly_working_hours:
+                    label: Weekly hours
+                    value: '40'
+                  hire_date:
+                    label: Hire date
+                    value: '2012-02-01T00:00:00+0100'
+                  contract_end_date:
+                    label: Contract ends
+                    value: 
+                  termination_date:
+                    label: Termination date
+                    value: 
+                  termination_type:
+                    label: Termination type
+                    value: ''
+                  termination_reason:
+                    label: Termination reason
+                    value: ''
+                  probation_period_end:
+                    label: Probation period end
+                    value: '2012-07-31T00:00:00+0200'
+                  created_at:
+                    label: created_at
+                    value: '2016-10-20T16:15:55+0200'
+                  office:
+                    label: Office
+                    value:
+                      type: Office
+                      attributes:
+                        name: Munich
+                  department:
+                    label: Department
+                    value:
+                      type: Department
+                      attributes:
+                        name: Marketing
+                  cost_centers:
+                    label: Cost center
+                    value:
+                    - type: CostCenter
+                      attributes:
+                        name: Cost Center One
+                        id: 320
+                        percentage: 50
+                    - type: CostCenter
+                      attributes:
+                        name: Cost Center Two
+                        id: 321
+                        percentage: 50
+                  fix_salary:
+                    label: Fix salary
+                    value: 4000
+                  hourly_salary:
+                    label: Hourly salary
+                    value: 0
+                  vacation_day_balance:
+                    label: Vacation day balance
+                    value: 28.5
+                  dynamic_24407:
+                    label: Titel
+                    value: Dr
+                  dynamic_21827:
+                    label: IBAN
+                    value: DE98 8989 9898 0000 8989 00
   '/company/attendance-periods':
     get:
       description: 'List Attendance Periods'
@@ -268,6 +379,54 @@ paths:
                   certificate:
                     status: not-required
                   created_at: '2017-01-17T10:32:18+0100'
+  '/company/time-off/{time_off_id}':
+    get:
+      description: 'Absence Period'
+      produces:
+        - application/json
+      parameters:
+        - name: time_off_id
+          in: path
+          required: true
+          type: number
+          format: integer
+          description: Numeric `id` of the absence period
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/AbsencePeriodResponse'
+          examples:
+            application/json:
+              success: true
+              data:
+                type: TimeOffPeriod
+                attributes:
+                  status: approved
+                  start_date: '2017-12-27T00:00:00+0100'
+                  end_date: '2017-12-29T00:00:00+0100'
+                  days_count: 3
+                  half_day_start: 0
+                  half_day_end: 0
+                  time_off_type:
+                    type: TimeOffType
+                    attributes:
+                      name: Vacation
+                  employee:
+                    type: Employee
+                    attributes:
+                      first_name:
+                        label: First name
+                        value: Michael
+                      last_name:
+                        label: Last name
+                        value: Miller
+                      email:
+                        label: Email
+                        value: michael.miller@demo.com
+                  certificate:
+                    status: not-required
+                  created_at: '2017-01-17T10:32:18+0100'
 definitions:
   Response:
     title: Default response object
@@ -347,6 +506,63 @@ definitions:
                     type: number
                   percentage: 
                     type: number
+  Employee:
+      type: object
+      required:
+        - type
+        - attributes
+      properties:
+        'type':
+          type: string
+        attributes:
+          type: array
+          items: 
+            type: object
+            properties:
+              id:
+                $ref: '#/definitions/Attribute'
+              first_name:
+                $ref: '#/definitions/Attribute'
+              last_name:
+                $ref: '#/definitions/Attribute'
+              email:
+                $ref: '#/definitions/Attribute'
+              gender:
+                $ref: '#/definitions/Attribute'
+              status:
+                $ref: '#/definitions/Attribute'
+              position:
+                $ref: '#/definitions/Attribute'
+              employment_type:
+                $ref: '#/definitions/Attribute'
+              weekly_working_hours:
+                $ref: '#/definitions/Attribute'
+              hire_date:
+                $ref: '#/definitions/Attribute'
+              contract_end_date:
+                $ref: '#/definitions/Attribute'
+              termination_date:
+                $ref: '#/definitions/Attribute'
+              termination_type:
+                $ref: '#/definitions/Attribute'
+              termination_reason:
+                $ref: '#/definitions/Attribute'
+              probation_period_end:
+                $ref: '#/definitions/Attribute'
+              created_at:
+                $ref: '#/definitions/Attribute'
+              fix_salary:
+                $ref: '#/definitions/Attribute'
+              hourly_salary:
+                $ref: '#/definitions/Attribute'
+              vacation_day_balance:
+                $ref: '#/definitions/Attribute'
+              office:
+                $ref: '#/definitions/Office'
+              department:
+                $ref: '#/definitions/Department'
+              cost_centers:
+                $ref: '#/definitions/CostCenters'
   EmployeesResponse:
     title: List of Employees
     allOf:
@@ -354,62 +570,21 @@ definitions:
       - type: object
         properties:
           data:
+            type: array
+            items:
+              type: object
+              allOf:
+                - $ref: '#/definitions/Employee'
+  EmployeeResponse:
+    title: Employee
+    allOf:
+      - $ref: '#/definitions/Response'
+      - type: object
+        properties:
+          data:
             type: object
-            required:
-              - type
-              - attributes
-            properties:
-              'type':
-                type: string
-              attributes:
-                type: array
-                items: 
-                  type: object
-                  properties:
-                    id:
-                      $ref: '#/definitions/Attribute'
-                    first_name:
-                      $ref: '#/definitions/Attribute'
-                    last_name:
-                      $ref: '#/definitions/Attribute'
-                    email:
-                      $ref: '#/definitions/Attribute'
-                    gender:
-                      $ref: '#/definitions/Attribute'
-                    status:
-                      $ref: '#/definitions/Attribute'
-                    position:
-                      $ref: '#/definitions/Attribute'
-                    employment_type:
-                      $ref: '#/definitions/Attribute'
-                    weekly_working_hours:
-                      $ref: '#/definitions/Attribute'
-                    hire_date:
-                      $ref: '#/definitions/Attribute'
-                    contract_end_date:
-                      $ref: '#/definitions/Attribute'
-                    termination_date:
-                      $ref: '#/definitions/Attribute'
-                    termination_type:
-                      $ref: '#/definitions/Attribute'
-                    termination_reason:
-                      $ref: '#/definitions/Attribute'
-                    probation_period_end:
-                      $ref: '#/definitions/Attribute'
-                    created_at:
-                      $ref: '#/definitions/Attribute'
-                    fix_salary:
-                      $ref: '#/definitions/Attribute'
-                    hourly_salary:
-                      $ref: '#/definitions/Attribute'
-                    vacation_day_balance:
-                      $ref: '#/definitions/Attribute'
-                    office:
-                      $ref: '#/definitions/Office'
-                    department:
-                      $ref: '#/definitions/Department'
-                    cost_centers:
-                      $ref: '#/definitions/CostCenters'
+            allOf:
+              - $ref: '#/definitions/Employee'
   AttendancePeriodsResponse:
     type: object
   NewAttendancePeriodRequest:
@@ -504,5 +679,7 @@ definitions:
                           type: string
                     created_at:
                       type: string
+  AbsencePeriodResponse:
+    type: object
       
     
