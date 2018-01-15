@@ -133,6 +133,9 @@ paths:
                     vacation_day_balance:
                       label: Vacation day balance
                       value: 28.5
+                    last_working_day:
+                      label: Last working day
+                      value: '2017-02-28T00:00:00+0200'
                     dynamic_24407:
                       label: Titel
                       value: Dr
@@ -244,6 +247,9 @@ paths:
                   vacation_day_balance:
                     label: Vacation day balance
                     value: 28.5
+                  last_working_day:
+                    label: Last working day
+                    value: '2017-02-28T00:00:00+0200'
                   dynamic_24407:
                     label: Titel
                     value: Dr
