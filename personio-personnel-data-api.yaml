@@ -51,7 +51,7 @@ paths:
               data:
                 - type: Employee
                   attributes:
-                    id: 
+                    id:
                       label: id
                       value: 83752
                     first_name:
@@ -83,10 +83,10 @@ paths:
                       value: '2012-02-01T00:00:00+0100'
                     contract_end_date:
                       label: Contract ends
-                      value: 
+                      value:
                     termination_date:
                       label: Termination date
-                      value: 
+                      value:
                     termination_type:
                       label: Termination type
                       value: ''
@@ -165,7 +165,7 @@ paths:
               data:
                 type: Employee
                 attributes:
-                  id: 
+                  id:
                     label: id
                     value: 83752
                   first_name:
@@ -197,10 +197,10 @@ paths:
                     value: '2012-02-01T00:00:00+0100'
                   contract_end_date:
                     label: Contract ends
-                    value: 
+                    value:
                   termination_date:
                     label: Termination date
-                    value: 
+                    value:
                   termination_type:
                     label: Termination type
                     value: ''
@@ -256,12 +256,55 @@ paths:
                   dynamic_21827:
                     label: IBAN
                     value: DE98 8989 9898 0000 8989 00
-  '/company/attendance-periods':
+  '/company/attendances':
     get:
       description: 'List Attendance Periods'
       produces:
         - application/json
-      parameters: []
+      parameters:
+        - name: start_date
+          in: query
+          required: true
+          type: string
+          format: date
+          description: >-
+            First day of the period to be queried.
+            It is inclusive, so the day specified as start_date will also be considered on the results
+        - name: end_date
+          in: query
+          required: true
+          type: string
+          format: date
+          description: >-
+            Last day of the period to be queried.
+            It is inclusive, so the day specified as end_date will also be considered on the results.
+        - name: employees
+          in: query
+          required: false
+          type: array
+          items:
+            type: integer
+          collectionFormat: multi
+          description: >-
+            A list of Personio employee identifiers to filter the results.
+            Only those employees specified here will be returned.
+        - name: limit
+          in: query
+          required: false
+          type: integer
+          minimum: 1
+          default: 200
+          description: >-
+            Pagination attribute to limit how many attendances will be returned per page
+        - name: offset
+          in: query
+          required: false
+          type: integer
+          minimum: 0
+          default: 0
+          description: >-
+          	Pagination attribute to identify which page you are requesting,
+          	by the form of telling an offset from the first record that would be returned.
       responses:
         '200':
           description: ''
@@ -273,39 +316,32 @@ paths:
               data:
               - type: AttendancePeriod
                 attributes:
-                  id: 325659
-                  start_time: '2017-01-17T10:00:00+0100'
-                  end_time: '2017-01-17T18:00:00+0100'
-                  break: 35
+                  employee: 325659
+                  date: '2017-01-17'
+                  start_time: '9:00'
+                  end_time: '18:00'
+                  break: 50
                   comment: I was productive as hell
-                  status: confirmed
-                  employee:
-                    type: Employee
-                    attributes:
-                      id: 325659
-                      first_name:
-                        label: First name
-                        value: Michael
-                      last_name:
-                        label: Last name
-                        value: Miller
-                      email:
-                        label: Email
-                        value: michael.miller@demo.com
-                  updated_at: '2017-01-17T10:32:18+0100'
-                  created_at: '2017-01-17T10:32:18+0100'
-  '/company/employees/{employee_id}/attendance-periods':
+                  is_holiday: false
+                  is_on_time_off: false
+              - type: AttendancePeriod
+                attributes:
+                  employee: 325660
+                  date: '2017-01-18'
+                  start_time: '9:30'
+                  end_time: '18:30'
+                  break: 60
+                  comment:
+                  is_holiday: false
+                  is_on_time_off: true
     post:
-      description: 'Create new attendance period'
+      description: >-
+        This endpoint is responsible for adding attendance data for the company employees.
+        It is possible to add attendances for one or many employees at the same time.
+        The payload sent on the request should be a list of attendance periods, in the form of an array containing objects structured.
       produces:
         - application/json
       parameters:
-        - name: employee_id
-          in: path
-          required: true
-          type: number
-          format: double
-          description: Numeric `id` of the User to perform action with.
         - name: body
           in: body
           required: true
@@ -313,36 +349,15 @@ paths:
             $ref: '#/definitions/NewAttendancePeriodRequest'
       responses:
         '200':
-          description: ''
+          description: 'The attendance periods to create'
           schema:
             $ref: '#/definitions/NewAttendancePeriodResponse'
           examples:
              application/json:
               success: true
               data:
-                type: AttendancePeriod
-                attributes:
-                  id: 325659
-                  start_time: '2017-01-17T10:00:00+0100'
-                  end_time: '2017-01-17T18:00:00+0100'
-                  break: 35
-                  comment: I was productive as hell
-                  status: confirmed
-                  employee:
-                    type: Employee
-                    attributes:
-                      id: 325659
-                      first_name:
-                        label: First name
-                        value: Michael
-                      last_name:
-                        label: Last name
-                        value: Miller
-                      email:
-                        label: Email
-                        value: michael.miller@demo.com
-                  updated_at: '2017-01-17T10:32:18+0100'
-                  created_at: '2017-01-17T10:32:18+0100'
+                message: 'Attendances saved'
+
   '/company/time-offs':
     get:
       description: 'List All Absence Periods'
@@ -463,14 +478,14 @@ definitions:
       value:
         type: object
         properties:
-          'type': 
+          'type':
             type: string
           attributes:
             type: array
             items:
               type: object
               properties:
-                name: 
+                name:
                   type: string
   Department:
     type: object
@@ -480,14 +495,14 @@ definitions:
       value:
         type: object
         properties:
-          'type': 
+          'type':
             type: string
           attributes:
             type: array
             items:
               type: object
               properties:
-                name: 
+                name:
                   type: string
   CostCenters:
     type: object
@@ -499,18 +514,18 @@ definitions:
         items:
           type: object
           properties:
-            'type': 
+            'type':
               type: string
             attributes:
               type: array
               items:
                 type: object
                 properties:
-                  name: 
+                  name:
                     type: string
                   id:
                     type: number
-                  percentage: 
+                  percentage:
                     type: number
   Employee:
       type: object
@@ -522,7 +537,7 @@ definitions:
           type: string
         attributes:
           type: array
-          items: 
+          items:
             type: object
             properties:
               id:
@@ -592,32 +607,111 @@ definitions:
             allOf:
               - $ref: '#/definitions/Employee'
   AttendancePeriodsResponse:
+    title: List All Attenance Periods response
     type: object
+    allOf:
+      - $ref: '#/definitions/Response'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              type: object
+              required:
+                - type
+                - attributes
+              properties:
+                'type':
+                  type: string
+                attributes:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - employee
+                      - date
+                      - start_time
+                      - end_time
+                      - break
+                      - comment
+                      - is_holiday
+                      - is_on_time_off
+                    properties:
+                      employee:
+                        type: integer
+                      date:
+                        type: string
+                        format: date
+                      start_time:
+                        type: string
+                        pattern: '^\d\d:\d\d$'
+                      end_time:
+                        type: string
+                        pattern: '^\d\d:\d\d$'
+                      break:
+                        type: integer
+                      comment:
+                        type: string
+                      is_holiday:
+                        type: boolean
+                      is_on_time_off:
+                        type: boolean
   NewAttendancePeriodRequest:
     title: Create a New Attendance Period request
-    type: object
-    properties:
-      start_time:
-        type: string
-      end_time:
-        type: string
-      break:
-        type: integer
-        format: int32
-      comment:
-        type: string
-    required:
-      - start_time
-      - end_time
-      - break
-      - comment
+    type: array
+    items:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        start_time:
+          type: string
+          pattern: '^\d\d:\d\d$'
+        end_time:
+          type: string
+          pattern: '^\d\d:\d\d$'
+        break:
+          type: integer
+          format: int32
+        comment:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+        - date
+        - start_time
+        - end_time
+        - break
+        - comment
+        - email
     example:
-      start_time: '2017-01-17T10:00:00+0100'
-      end_time: '2017-01-17T18:00:00+0100'
+    - date: '2017-01-18'
+      start_time: '8:00'
+      end_time: '18:00'
+      break: 120
+      comment:
+      email: me2@example.org
+    - date: '2017-01-17'
+      start_time: '9:00'
+      end_time: '12:00'
       break: 35
       comment: I was productive as hell
+      email: me@example.org
+
   NewAttendancePeriodResponse:
     type: object
+    allOf:
+      - $ref: '#/definitions/Response'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              message:
+                type: string
+
   AbsencePeriodsResponse:
     title: List All Absence Periods response
     type: object
@@ -640,11 +734,11 @@ definitions:
                   properties:
                     status:
                       type: string
-                    start_date: 
+                    start_date:
                       type: string
                     end_date:
                       type: string
-                    days_count: 
+                    days_count:
                       type: number
                     half_day_start:
                       type: number
@@ -653,30 +747,30 @@ definitions:
                     time_off_type:
                       type: object
                       properties:
-                        type: 
+                        type:
                           type: string
                         attributes:
                           type: array
                           items:
                             type: object
                             properties:
-                              name: 
+                              name:
                                 type: string
-                    employee: 
+                    employee:
                       type: object
                       properties:
-                        type: 
+                        type:
                           type: string
                         attributes:
                           type: array
                           items:
                             type: object
                             properties:
-                              first_name: 
+                              first_name:
                                 type: string
-                              last_name: 
+                              last_name:
                                 type: string
-                              email: 
+                              email:
                                 type: string
                     certificate:
                       type: object
@@ -687,5 +781,6 @@ definitions:
                       type: string
   AbsencePeriodResponse:
     type: object
-      
-    
+
+
+
