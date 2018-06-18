@@ -302,9 +302,7 @@ paths:
           type: integer
           minimum: 0
           default: 0
-          description: >-
-          	Pagination attribute to identify which page you are requesting,
-          	by the form of telling an offset from the first record that would be returned.
+          description: 'Pagination attribute to identify which page you are requesting, by the form of telling an offset from the first record that would be returned.'
       responses:
         '200':
           description: ''
@@ -662,6 +660,8 @@ definitions:
     items:
       type: object
       properties:
+        employee:
+          type: integer
         date:
           type: string
           format: date
@@ -676,29 +676,26 @@ definitions:
           format: int32
         comment:
           type: string
-        email:
-          type: string
-          format: email
       required:
+        - employee
         - date
         - start_time
         - end_time
         - break
         - comment
-        - email
     example:
-    - date: '2017-01-18'
+    - employee: 1234
+      date: '2017-01-18'
       start_time: '8:00'
       end_time: '18:00'
       break: 120
       comment:
-      email: me2@example.org
-    - date: '2017-01-17'
+    - employee: 1235
+      date: '2017-01-17'
       start_time: '9:00'
       end_time: '12:00'
       break: 35
       comment: I was productive as hell
-      email: me@example.org
 
   NewAttendancePeriodResponse:
     type: object
