@@ -340,7 +340,8 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: body
+        - 
+          name: body
           in: body
           required: true
           schema:
