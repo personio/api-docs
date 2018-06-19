@@ -258,7 +258,10 @@ paths:
                     value: DE98 8989 9898 0000 8989 00
   '/company/attendances':
     get:
-      description: 'List Attendance Periods'
+      description: >-
+        This endpoint is responsible for fetching attendance data for the company employees.
+        It is possible to paginate results, filter by period and/or specific employees.
+        The result will contain a list of attendance periods, structured as defined here.
       produces:
         - application/json
       parameters:
@@ -336,13 +339,14 @@ paths:
       description: >-
         This endpoint is responsible for adding attendance data for the company employees.
         It is possible to add attendances for one or many employees at the same time.
-        The payload sent on the request should be a list of attendance periods, in the form of an array containing objects structured.
+        The payload sent on the request should be a list of attendance periods, in the form of an array containing attendance period objects.
       produces:
         - application/json
       parameters:
-        - 
+        -
           name: body
           in: body
+          description: 'List of attendance periods to create'
           required: true
           schema:
             $ref: '#/definitions/NewAttendancePeriodRequest'
@@ -686,20 +690,26 @@ definitions:
           properties:
             employee:
               type: integer
+              description: 'Employee identifier'
             date:
               type: string
               format: date
+              description: 'Attendance date as YYYY-MM-DD'
             start_time:
               type: string
               pattern: '^\d\d:\d\d$'
+              description: 'Start time as HH:MM'
             end_time:
               type: string
               pattern: '^\d\d:\d\d$'
+              description: 'End time as HH:MM'
             break:
               type: integer
               format: int32
+              description: 'Break in minutes'
             comment:
               type: string
+              description: 'Optional comment'
           required:
             - employee
             - date
