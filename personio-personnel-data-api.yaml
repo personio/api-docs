@@ -348,14 +348,34 @@ paths:
             $ref: '#/definitions/NewAttendancePeriodRequest'
       responses:
         '200':
-          description: 'The attendance periods to create'
+          description: 'The attendance periods were created successfully'
           schema:
             $ref: '#/definitions/NewAttendancePeriodResponse'
           examples:
              application/json:
               success: true
               data:
-                message: 'Attendances saved'
+                message: 'success'
+        '400':
+          description: 'Invalid request'
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+              error:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+          examples:
+            application/json:
+              success: true
+              error:
+                code: 400
+                message: 'Error when trying to insert Attendances periods rows'
 
   '/company/time-offs':
     get:
@@ -657,46 +677,50 @@ definitions:
                         type: boolean
   NewAttendancePeriodRequest:
     title: Create a New Attendance Period request
-    type: array
-    items:
-      type: object
-      properties:
-        employee:
-          type: integer
-        date:
-          type: string
-          format: date
-        start_time:
-          type: string
-          pattern: '^\d\d:\d\d$'
-        end_time:
-          type: string
-          pattern: '^\d\d:\d\d$'
-        break:
-          type: integer
-          format: int32
-        comment:
-          type: string
-      required:
-        - employee
-        - date
-        - start_time
-        - end_time
-        - break
-        - comment
+    type: object
+    properties:
+      attendances:
+        type: array
+        items:
+          type: object
+          properties:
+            employee:
+              type: integer
+            date:
+              type: string
+              format: date
+            start_time:
+              type: string
+              pattern: '^\d\d:\d\d$'
+            end_time:
+              type: string
+              pattern: '^\d\d:\d\d$'
+            break:
+              type: integer
+              format: int32
+            comment:
+              type: string
+          required:
+            - employee
+            - date
+            - start_time
+            - end_time
+            - break
+            - comment
     example:
-    - employee: 1234
-      date: '2017-01-18'
-      start_time: '8:00'
-      end_time: '18:00'
-      break: 120
-      comment:
-    - employee: 1235
-      date: '2017-01-17'
-      start_time: '9:00'
-      end_time: '12:00'
-      break: 35
-      comment: I was productive as hell
+      attendances:
+        - employee: 1234
+          date: '2017-01-18'
+          start_time: '8:00'
+          end_time: '18:00'
+          break: 120
+          comment:
+        - employee: 1235
+          date: '2017-01-17'
+          start_time: '9:00'
+          end_time: '12:00'
+          break: 35
+          comment: I was productive as hell
 
   NewAttendancePeriodResponse:
     type: object
