@@ -314,6 +314,8 @@ paths:
           examples:
             application/json:
               success: true
+              offset: 0
+              limit: 200
               data:
               - type: AttendancePeriod
                 attributes:
@@ -636,6 +638,10 @@ definitions:
       - $ref: '#/definitions/Response'
       - type: object
         properties:
+          offset:
+            type: integer
+          limit:
+            type: integer
           data:
             type: array
             items:
