@@ -72,6 +72,23 @@ paths:
                     position:
                       label: Position
                       value: Online Marketing Specialist
+                    supervisor:
+                      label: Supervisor
+                      value:
+                        type: Employee
+                        attributes:
+                          id:
+                            label: id
+                            value: 423506
+                          first_name:
+                            label: First name
+                            value: Max
+                          last_name:
+                            label: Last name
+                            value: Mustermann
+                          email:
+                            label: Email
+                            value: max.mustermann@example.org
                     employment_type:
                       label: Employment type
                       value: internal
@@ -186,6 +203,23 @@ paths:
                   position:
                     label: Position
                     value: Online Marketing Specialist
+                  supervisor:
+                    label: Supervisor
+                    value:
+                      type: Employee
+                      attributes:
+                        id:
+                          label: id
+                          value: 423506
+                        first_name:
+                          label: First name
+                          value: Max
+                        last_name:
+                          label: Last name
+                          value: Mustermann
+                        email:
+                          label: Email
+                          value: max.mustermann@example.org
                   employment_type:
                     label: Employment type
                     value: internal
@@ -590,63 +624,72 @@ definitions:
                     type: number
                   percentage:
                     type: number
+  Supervisor:
+    type: object
+    allOf:
+      - $ref: '#/definitions/Attribute'
+    properties:
+      value:
+        $ref: '#/definitions/Employee'
   Employee:
-      type: object
-      required:
-        - type
-        - attributes
-      properties:
-        'type':
-          type: string
-        attributes:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                $ref: '#/definitions/Attribute'
-              first_name:
-                $ref: '#/definitions/Attribute'
-              last_name:
-                $ref: '#/definitions/Attribute'
-              email:
-                $ref: '#/definitions/Attribute'
-              gender:
-                $ref: '#/definitions/Attribute'
-              status:
-                $ref: '#/definitions/Attribute'
-              position:
-                $ref: '#/definitions/Attribute'
-              employment_type:
-                $ref: '#/definitions/Attribute'
-              weekly_working_hours:
-                $ref: '#/definitions/Attribute'
-              hire_date:
-                $ref: '#/definitions/Attribute'
-              contract_end_date:
-                $ref: '#/definitions/Attribute'
-              termination_date:
-                $ref: '#/definitions/Attribute'
-              termination_type:
-                $ref: '#/definitions/Attribute'
-              termination_reason:
-                $ref: '#/definitions/Attribute'
-              probation_period_end:
-                $ref: '#/definitions/Attribute'
-              created_at:
-                $ref: '#/definitions/Attribute'
-              fix_salary:
-                $ref: '#/definitions/Attribute'
-              hourly_salary:
-                $ref: '#/definitions/Attribute'
-              vacation_day_balance:
-                $ref: '#/definitions/Attribute'
-              office:
-                $ref: '#/definitions/Office'
-              department:
-                $ref: '#/definitions/Department'
-              cost_centers:
-                $ref: '#/definitions/CostCenters'
+    type: object
+    required:
+      - type
+      - attributes
+    properties:
+      'type':
+        type: string
+      attributes:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              $ref: '#/definitions/Attribute'
+            first_name:
+              $ref: '#/definitions/Attribute'
+            last_name:
+              $ref: '#/definitions/Attribute'
+            email:
+              $ref: '#/definitions/Attribute'
+            gender:
+              $ref: '#/definitions/Attribute'
+            status:
+              $ref: '#/definitions/Attribute'
+            position:
+              $ref: '#/definitions/Attribute'
+            supervisor:
+              $ref: '#/definitions/Supervisor'
+            employment_type:
+              $ref: '#/definitions/Attribute'
+            weekly_working_hours:
+              $ref: '#/definitions/Attribute'
+            hire_date:
+              $ref: '#/definitions/Attribute'
+            contract_end_date:
+              $ref: '#/definitions/Attribute'
+            termination_date:
+              $ref: '#/definitions/Attribute'
+            termination_type:
+              $ref: '#/definitions/Attribute'
+            termination_reason:
+              $ref: '#/definitions/Attribute'
+            probation_period_end:
+              $ref: '#/definitions/Attribute'
+            created_at:
+              $ref: '#/definitions/Attribute'
+            fix_salary:
+              $ref: '#/definitions/Attribute'
+            hourly_salary:
+              $ref: '#/definitions/Attribute'
+            vacation_day_balance:
+              $ref: '#/definitions/Attribute'
+            office:
+              $ref: '#/definitions/Office'
+            department:
+              $ref: '#/definitions/Department'
+            cost_centers:
+              $ref: '#/definitions/CostCenters'
   EmployeesResponse:
     title: List of Employees
     allOf:
