@@ -149,8 +149,8 @@ paths:
         - name: employee_id
           in: path
           required: true
-          type: number
-          format: integer
+          type: integer
+          format: int32
           description: Numeric `id` of the employee
       produces:
         - application/json
@@ -343,45 +343,67 @@ paths:
         It is possible to add attendances for one or many employees at the same time.
         The payload sent on the request should be a list of attendance periods, in the form of an array containing attendance period objects.
       produces:
-        - application/json
+      - application/json
       parameters:
-        -
-          name: body
-          in: body
-          description: 'List of attendance periods to create'
-          required: true
-          schema:
-            $ref: '#/definitions/NewAttendancePeriodRequest'
+      - name: body
+        in: body
+        description: 'List of attendance periods to create'
+        required: true
+        schema:
+          $ref: '#/definitions/NewAttendancePeriodRequest'
       responses:
         '200':
           description: 'The attendance periods were created successfully'
           schema:
             $ref: '#/definitions/NewAttendancePeriodResponse'
           examples:
-             application/json:
+            application/json:
               success: true
               data:
                 message: 'success'
         '400':
           description: 'Invalid request'
           schema:
-            type: object
-            properties:
-              success:
-                type: boolean
-              error:
-                type: object
-                properties:
-                  code:
-                    type: integer
-                  message:
-                    type: string
+            $ref: '#/definitions/ErrorResponse'
           examples:
             application/json:
               success: true
               error:
                 code: 400
                 message: 'Error when trying to insert Attendances periods rows'
+  '/company/attendances/{id}':
+    delete:
+      description: >-
+        This endpoint is responsible for deleting attendance data for the company employees.
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: 'ID of the attendance period to delete'
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: 'Success response'
+          schema:
+            $ref: '#/definitions/Response'
+          examples:
+             application/json:
+              success: true
+              data:
+                message: 'The attendance period was deleted.'
+        '404':
+          description: 'Not found response'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          examples:
+            application/json:
+              success: false
+              error:
+                code: 404
+                message: 'The attendance period was not found.'
 
   '/company/time-offs':
     get:
@@ -485,6 +507,22 @@ definitions:
     required:
       - success
       - data
+  ErrorResponse:
+    title: Default error response
+    type: object
+    properties:
+      success:
+        type: boolean
+      error:
+        type: object
+        properties:
+          code:
+            type: integer
+          message:
+            type: string
+    required:
+      - success
+      - error
   Attribute:
     type: object
     properties:
