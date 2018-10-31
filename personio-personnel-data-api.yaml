@@ -317,7 +317,8 @@ paths:
               offset: 0
               limit: 200
               data:
-              - type: AttendancePeriod
+              - id: 1234
+                type: AttendancePeriod
                 attributes:
                   employee: 325659
                   date: '2017-01-17'
@@ -327,7 +328,8 @@ paths:
                   comment: I was productive as hell
                   is_holiday: false
                   is_on_time_off: false
-              - type: AttendancePeriod
+              - id: 1235
+                type: AttendancePeriod
                 attributes:
                   employee: 325660
                   date: '2017-01-18'
@@ -647,9 +649,12 @@ definitions:
             items:
               type: object
               required:
+                - id
                 - type
                 - attributes
               properties:
+                'id':
+                  type: integer
                 'type':
                   type: string
                 attributes:
