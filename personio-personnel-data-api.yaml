@@ -116,6 +116,9 @@ paths:
                     created_at:
                       label: created_at
                       value: '2016-10-20T16:15:55+0200'
+                    last_modified_at:
+                      label: Last modified
+                      value: '2016-10-22T16:15:55+0200'
                     office:
                       label: Office
                       value:
@@ -247,6 +250,9 @@ paths:
                   created_at:
                     label: created_at
                     value: '2016-10-20T16:15:55+0200'
+                  last_modified_at:
+                    label: Last modified
+                    value: '2016-10-22T16:15:55+0200'
                   office:
                     label: Office
                     value:
