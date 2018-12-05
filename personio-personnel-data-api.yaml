@@ -159,6 +159,15 @@ paths:
                     dynamic_21827:
                       label: IBAN
                       value: DE98 8989 9898 0000 8989 00
+                    holiday_calendar:
+                      label: 'Holiday Calendar'
+                      value:
+                        type: HolidayCalendar
+                        attributes:
+                          id: 931
+                          name: 'DE (Hamburg) Feiertage'
+                          country: DE
+                          state: Hamburg
   '/company/employees/{employee_id}':
     get:
       description: 'Employee'
@@ -624,6 +633,27 @@ definitions:
                     type: number
                   percentage:
                     type: number
+  HolidayCalendar:
+    type: object
+    allOf:
+      - $ref: '#/definitions/Attribute'
+    properties:
+      value:
+        type: object
+        properties:
+          'type':
+            type: string
+          attributes:
+            type: object
+            properties:
+              id:
+                type: number
+              name:
+                type: string
+              country:
+                type: string
+              state:
+                type: string
   Supervisor:
     type: object
     allOf:
@@ -690,6 +720,8 @@ definitions:
               $ref: '#/definitions/Department'
             cost_centers:
               $ref: '#/definitions/CostCenters'
+            holiday_calendar:
+              $ref: '#/definitions/HolidayCalendar'
   EmployeesResponse:
     title: List of Employees
     allOf:
