@@ -305,6 +305,15 @@ paths:
                   dynamic_21827:
                     label: IBAN
                     value: DE98 8989 9898 0000 8989 00
+                  holiday_calendar:
+                    label: 'Holiday Calendar'
+                    value:
+                      type: HolidayCalendar
+                      attributes:
+                        id: 931
+                        name: 'DE (Hamburg) Feiertage'
+                        country: DE
+                        state: Hamburg
   '/company/attendances':
     get:
       description: >-
