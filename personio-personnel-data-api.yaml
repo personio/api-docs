@@ -439,10 +439,10 @@ paths:
                         name: 'DE (Hamburg) Feiertage'
                         country: DE
                         state: Hamburg
-                  working_schedule:
-                    label: 'Working Schedule'
+                  work_schedule:
+                    label: 'Work Schedule'
                     value:
-                      type: WorkingSchedule
+                      type: WorkSchedule
                       attributes:
                         id: 123
                         name: 'Standard Hours'
@@ -810,7 +810,7 @@ definitions:
                 type: string
               state:
                 type: string
-  WorkingSchedule:
+  WorkSchedule:
     type: object
     allOf:
       - $ref: '#/definitions/Attribute'
@@ -975,8 +975,8 @@ definitions:
               $ref: '#/definitions/CostCenters'
             holiday_calendar:
               $ref: '#/definitions/HolidayCalendar'
-            working_schedule:
-              $ref: '#/definitions/WorkingSchedule'
+            work_schedule:
+              $ref: '#/definitions/WorkSchedule'
   EmployeesResponse:
     title: List of Employees
     allOf:
