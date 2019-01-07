@@ -615,7 +615,7 @@ paths:
       parameters:
         - name: start_date
           in: query
-          required: true
+          required: false
           type: string
           format: date
           description: >-
@@ -623,7 +623,7 @@ paths:
             It is inclusive, so the day specified as start_date will also be considered on the results
         - name: end_date
           in: query
-          required: true
+          required: false
           type: string
           format: date
           description: >-
