@@ -606,10 +606,54 @@ paths:
 
   '/company/time-offs':
     get:
-      description: 'List All Absence Periods'
+      description: >-
+        This endpoint is responsible for fetching absence data for the company employees.
+        It is possible to paginate results, filter by period and/or specific employees.
+        The result will contain a list of absence periods, structured as defined here.
       produces:
         - application/json
-      parameters: []
+      parameters:
+        - name: start_date
+          in: query
+          required: true
+          type: string
+          format: date
+          description: >-
+            First day of the period to be queried.
+            It is inclusive, so the day specified as start_date will also be considered on the results
+        - name: end_date
+          in: query
+          required: true
+          type: string
+          format: date
+          description: >-
+            Last day of the period to be queried.
+            It is inclusive, so the day specified as end_date will also be considered on the results.
+        - name: employees
+          in: query
+          required: false
+          type: array
+          items:
+            type: integer
+          collectionFormat: multi
+          description: >-
+            A list of Personio employee identifiers to filter the results.
+            Only those employees specified here will be returned.
+        - name: limit
+          in: query
+          required: false
+          type: integer
+          minimum: 1
+          default: 200
+          description: >-
+            Pagination attribute to limit how many attendances will be returned per page
+        - name: offset
+          in: query
+          required: false
+          type: integer
+          minimum: 0
+          default: 0
+          description: 'Pagination attribute to identify which page you are requesting, by the form of telling an offset from the first record that would be returned.'
       responses:
         '200':
           description: ''
