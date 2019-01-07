@@ -665,6 +665,7 @@ paths:
               data:
               - type: TimeOffPeriod
                 attributes:
+                  id: 12345
                   status: approved
                   start_date: '2017-12-27T00:00:00+0100'
                   end_date: '2017-12-29T00:00:00+0100'
@@ -674,10 +675,14 @@ paths:
                   time_off_type:
                     type: TimeOffType
                     attributes:
+                      id: 54321
                       name: Vacation
                   employee:
                     type: Employee
                     attributes:
+                      id:
+                        label: id
+                        value: 4567
                       first_name:
                         label: First name
                         value: Michael
@@ -713,6 +718,7 @@ paths:
               data:
                 type: TimeOffPeriod
                 attributes:
+                  id: 12345
                   status: approved
                   start_date: '2017-12-27T00:00:00+0100'
                   end_date: '2017-12-29T00:00:00+0100'
@@ -722,10 +728,14 @@ paths:
                   time_off_type:
                     type: TimeOffType
                     attributes:
+                      id: 45678
                       name: Vacation
                   employee:
                     type: Employee
                     attributes:
+                      id:
+                        label: id
+                        value: 2367
                       first_name:
                         label: First name
                         value: Michael
@@ -1195,6 +1205,8 @@ definitions:
                 items:
                   type: object
                   properties:
+                    'id':
+                      type: integer
                     status:
                       type: string
                     start_date:
@@ -1217,6 +1229,8 @@ definitions:
                           items:
                             type: object
                             properties:
+                              'id':
+                                type: integer
                               name:
                                 type: string
                     employee:
@@ -1229,6 +1243,8 @@ definitions:
                           items:
                             type: object
                             properties:
+                              'id':
+                                type: integer
                               first_name:
                                 type: string
                               last_name:
