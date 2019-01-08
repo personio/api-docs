@@ -22,24 +22,6 @@ paths:
       description: 'List Employees'
       produces:
         - application/json
-      parameters:
-        - name: query
-          in: query
-          required: false
-          type: string
-          description: >-
-            [In development] Query string to perform search on. Returns all employees if not
-            present. Can also be used with custom attributes, e.g.
-            `dynamic_9382=abcd`
-        - name: attributes
-          in: query
-          required: false
-          type: array
-          items: {}
-          description: >-
-            [In development] Attributes to be returend for employees found. Returns all available
-            attributes if not present. Pass `attributes` multiple times of
-            needed.
       responses:
         '200':
           description: ''
@@ -319,6 +301,7 @@ paths:
                         friday: '06:00'
                         saturday: '00:00'
                         sunday: '00:00'
+
   '/company/attendances':
     get:
       description: >-
@@ -470,6 +453,53 @@ paths:
                 code: 404
                 message: 'The attendance period was not found.'
 
+  '/company/time-off-types':
+    get:
+      description: >-
+        Provides a list of available time-off types, for example 'Paid vacation', 'Parental leave' or 'Home office'
+      produces:
+        - application/json
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          type: integer
+          minimum: 1
+          default: 200
+          description: >-
+            Pagination attribute to limit how many records will be returned per page
+        - name: offset
+          in: query
+          required: false
+          type: integer
+          minimum: 0
+          default: 0
+          description: 'Pagination attribute to identify which page you are requesting, by the form of telling an offset from the first record that would be returned.'
+      responses:
+        200:
+          description: ''
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/TimeOffTypeResource'
+          examples:
+            application/json:
+              success: true
+              data:
+              - id: 1234
+                type: TimeOffType
+                attributes:
+                  name: 'Paid vacation'
+              - id: 1235
+                type: TimeOffType
+                attributes:
+                  name: 'Home office'
+
   '/company/time-offs':
     get:
       description: >-
@@ -561,6 +591,40 @@ paths:
                   certificate:
                     status: not-required
                   created_at: '2017-01-17T10:32:18+0100'
+    post:
+      description: >-
+        This endpoint is responsible for adding absence data for the company employees.
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          description: 'Absence period to create'
+          required: true
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/TimeOffPeriodResource'
+      responses:
+        '201':
+          description: 'The attendance period was created successfully'
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/TimeOffPeriodResource'
+        '400':
+          description: 'Invalid request'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          examples:
+            application/json:
+              success: false
+              error:
+                code: 400
+                message: 'Error when trying to insert absence period'
+
   '/company/time-off/{time_off_id}':
     get:
       description: 'Absence Period'
@@ -981,6 +1045,74 @@ definitions:
             properties:
               message:
                 type: string
+
+  TimeOffTypeResource:
+    title: 'Type of time-off resource'
+    type: object
+    properties:
+      id:
+        type: integer
+        description: 'identifier'
+      type:
+        type: string
+        enum:
+          - 'TimeOffType'
+        description: 'Time-off type resource name'
+      attributes:
+        type: object
+        properties:
+          name:
+            type: string
+
+  TimeOffPeriodResource:
+    title: 'Time period when an employee is not available.'
+    type: object
+    properties:
+      id:
+        type: integer
+        description: 'identifier'
+      type:
+        type: string
+        enum:
+          - 'TimeOffPeriod'
+        description: 'Time-off period resource name'
+      attributes:
+        type: object
+        properties:
+          employee_id:
+            type: integer
+            description: 'Employee identifier'
+          time_off_type_id:
+            type: integer
+            description: 'Time-off type identifier'
+          start_date:
+            type: string
+            format: date
+            description: 'Absence start date as YYYY-MM-DD'
+          end_date:
+            type: string
+            format: date
+            description: 'Absence end date as YYYY-MM-DD'
+          half_day_start:
+            type: boolean
+            description: 'Weather the start date is a half-day off'
+          half_day_end:
+            type: boolean
+            description: 'Weather the end date is a half-day off'
+          comment:
+            type: string
+            description: 'Optional comment'
+        required:
+          - employee_id
+          - time_off_type_id
+          - start_date
+          - end_date
+          - half_day_start
+          - half_day_end
+          - comment
+    required:
+      - type
+      - attributes
 
   AbsencePeriodsResponse:
     title: List All Absence Periods response
