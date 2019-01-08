@@ -602,10 +602,7 @@ paths:
           description: 'Absence period to create'
           required: true
           schema:
-            type: object
-            properties:
-              data:
-                $ref: '#/definitions/TimeOffPeriodResource'
+            $ref: '#/definitions/CreateTimeOffPeriodRequest'
       responses:
         '201':
           description: 'The attendance period was created successfully'
@@ -613,7 +610,7 @@ paths:
             type: object
             properties:
               data:
-                $ref: '#/definitions/TimeOffPeriodResource'
+                $ref: '#/definitions/CreateTimeOffPeriodResponse'
         '400':
           description: 'Invalid request'
           schema:
@@ -1064,55 +1061,125 @@ definitions:
           name:
             type: string
 
-  TimeOffPeriodResource:
-    title: 'Time period when an employee is not available.'
+  CreateTimeOffPeriodRequest:
+    title: 'Create time-off periods'
     type: object
     properties:
-      id:
-        type: integer
-        description: 'identifier'
-      type:
-        type: string
-        enum:
-          - 'TimeOffPeriod'
-        description: 'Time-off period resource name'
-      attributes:
+      data:
         type: object
         properties:
-          employee_id:
-            type: integer
-            description: 'Employee identifier'
-          time_off_type_id:
-            type: integer
-            description: 'Time-off type identifier'
-          start_date:
+          type:
             type: string
-            format: date
-            description: 'Absence start date as YYYY-MM-DD'
-          end_date:
-            type: string
-            format: date
-            description: 'Absence end date as YYYY-MM-DD'
-          half_day_start:
-            type: boolean
-            description: 'Weather the start date is a half-day off'
-          half_day_end:
-            type: boolean
-            description: 'Weather the end date is a half-day off'
-          comment:
-            type: string
-            description: 'Optional comment'
+            enum:
+              - 'TimeOffPeriod'
+            description: 'Time-off period resource name'
+          attributes:
+            type: object
+            properties:
+              employee_id:
+                type: integer
+                description: 'Employee identifier'
+              time_off_type_id:
+                type: integer
+                description: 'Time-off type identifier'
+              start_date:
+                type: string
+                format: date
+                description: 'Absence start date as YYYY-MM-DD'
+              end_date:
+                type: string
+                format: date
+                description: 'Absence end date as YYYY-MM-DD'
+              half_day_start:
+                type: boolean
+                description: 'Weather the start date is a half-day off'
+              half_day_end:
+                type: boolean
+                description: 'Weather the end date is a half-day off'
+              comment:
+                type: string
+                description: 'Optional comment'
+            required:
+              - employee_id
+              - time_off_type_id
+              - start_date
+              - end_date
+              - half_day_start
+              - half_day_end
+              - comment
         required:
-          - employee_id
-          - time_off_type_id
-          - start_date
-          - end_date
-          - half_day_start
-          - half_day_end
-          - comment
-    required:
-      - type
-      - attributes
+          - type
+          - attributes
+
+  CreateTimeOffPeriodResponse:
+    title: 'Time period when an employee is not available.'
+    allOf:
+      - $ref: '#/definitions/Response'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              type:
+                type: string
+                enum:
+                  - 'TimeOffPeriod'
+                description: 'Time-off period resource name'
+              attributes:
+                properties:
+                  'id':
+                    type: integer
+                  status:
+                    type: string
+                  start_date:
+                    type: string
+                  end_date:
+                    type: string
+                  days_count:
+                    type: number
+                  half_day_start:
+                    type: number
+                  half_day_end:
+                    type: number
+                  time_off_type:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      attributes:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            'id':
+                              type: integer
+                            name:
+                              type: string
+                  employee:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      attributes:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            'id':
+                              type: integer
+                            first_name:
+                              type: string
+                            last_name:
+                              type: string
+                            email:
+                              type: string
+                  certificate:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                  created_at:
+                    type: string
 
   AbsencePeriodsResponse:
     title: List All Absence Periods response
