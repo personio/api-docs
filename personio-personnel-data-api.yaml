@@ -611,6 +611,42 @@ paths:
             properties:
               data:
                 $ref: '#/definitions/CreateTimeOffPeriodResponse'
+          examples:
+            application/json:
+              success: true
+              data:
+                type: TimeOffPeriod
+                attributes:
+                  id: 12345
+                  status: approved
+                  start_date: '2017-12-27T00:00:00+0100'
+                  end_date: '2017-12-29T00:00:00+0100'
+                  days_count: 3
+                  half_day_start: 0
+                  half_day_end: 0
+                  time_off_type:
+                    type: TimeOffType
+                    attributes:
+                      id: 54321
+                      name: Vacation
+                  employee:
+                    type: Employee
+                    attributes:
+                      id:
+                        label: id
+                        value: 4567
+                      first_name:
+                        label: First name
+                        value: Michael
+                      last_name:
+                        label: Last name
+                        value: Miller
+                      email:
+                        label: Email
+                        value: michael.miller@demo.com
+                  certificate:
+                    status: not-required
+                  created_at: '2017-01-17T10:32:18+0100'
         '400':
           description: 'Invalid request'
           schema:
