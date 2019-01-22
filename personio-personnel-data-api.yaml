@@ -144,6 +144,29 @@ paths:
                     dynamic_21827:
                       label: IBAN
                       value: DE98 8989 9898 0000 8989 00
+                    holiday_calendar:
+                      label: 'Holiday Calendar'
+                      value:
+                        type: HolidayCalendar
+                        attributes:
+                          id: 931
+                          name: 'DE (Hamburg) Feiertage'
+                          country: DE
+                          state: Hamburg
+                    work_schedule:
+                      label: 'Work Schedule'
+                      value:
+                        type: WorkSchedule
+                        attributes:
+                          id: 123
+                          name: 'Standard Hours'
+                          monday: '08:30'
+                          tuesday: '08:30'
+                          wednesday: '08:30'
+                          thursday: '08:30'
+                          friday: '06:00'
+                          saturday: '00:00'
+                          sunday: '00:00'
   '/company/employees/{employee_id}':
     get:
       description: 'Employee'
