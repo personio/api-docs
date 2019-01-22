@@ -144,29 +144,6 @@ paths:
                     dynamic_21827:
                       label: IBAN
                       value: DE98 8989 9898 0000 8989 00
-                    holiday_calendar:
-                      label: 'Holiday Calendar'
-                      value:
-                        type: HolidayCalendar
-                        attributes:
-                          id: 931
-                          name: 'DE (Hamburg) Feiertage'
-                          country: DE
-                          state: Hamburg
-                    work_schedule:
-                      label: 'Work Schedule'
-                      value:
-                        type: WorkSchedule
-                        attributes:
-                          id: 123
-                          name: 'Standard Hours'
-                          monday: '08:30'
-                          tuesday: '08:30'
-                          wednesday: '08:30'
-                          thursday: '08:30'
-                          friday: '06:00'
-                          saturday: '00:00'
-                          sunday: '00:00'
   '/company/employees/{employee_id}':
     get:
       description: 'Employee'
@@ -628,7 +605,7 @@ paths:
             $ref: '#/definitions/CreateTimeOffPeriodRequest'
       responses:
         '201':
-          description: 'The attendance period was created successfully'
+          description: 'The absence period was created successfully'
           schema:
             type: object
             properties:
@@ -670,6 +647,29 @@ paths:
                   certificate:
                     status: not-required
                   created_at: '2017-01-17T10:32:18+0100'
+        '422':
+          description: 'Validation error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          examples:
+            application/json:
+              success: false
+              error:
+                code: 0
+                message: 'The given data failed to pass validation.'
+                error_data: '{...}'
+
+        '404':
+          description: 'Employee or Absence type not found'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          examples:
+            application/json:
+              success: false
+              error:
+                code: 0
+                message: 'Something went wrong'
+
         '400':
           description: 'Invalid request'
           schema:
@@ -680,6 +680,39 @@ paths:
               error:
                 code: 400
                 message: 'Error when trying to insert absence period'
+  '/company/time-offs/{id}':
+    delete:
+      description: >-
+        This endpoint is responsible for deleting absence period data for the company employees.
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: 'ID of the absence period to delete'
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: 'Success response'
+          schema:
+            $ref: '#/definitions/Response'
+          examples:
+             application/json:
+              success: true
+              data:
+                message: 'The absence period was deleted.'
+        '404':
+          description: 'Not found response'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          examples:
+            application/json:
+              success: false
+              error:
+                code: 404
+                message: 'The absence period was not found.'
 
   '/company/time-off/{time_off_id}':
     get:
@@ -1124,51 +1157,36 @@ definitions:
     title: 'Create time-off periods'
     type: object
     properties:
-      data:
-        type: object
-        properties:
-          type:
-            type: string
-            enum:
-              - 'TimeOffPeriod'
-            description: 'Time-off period resource name'
-          attributes:
-            type: object
-            properties:
-              employee_id:
-                type: integer
-                description: 'Employee identifier'
-              time_off_type_id:
-                type: integer
-                description: 'Time-off type identifier'
-              start_date:
-                type: string
-                format: date
-                description: 'Absence start date as YYYY-MM-DD'
-              end_date:
-                type: string
-                format: date
-                description: 'Absence end date as YYYY-MM-DD'
-              half_day_start:
-                type: boolean
-                description: 'Weather the start date is a half-day off'
-              half_day_end:
-                type: boolean
-                description: 'Weather the end date is a half-day off'
-              comment:
-                type: string
-                description: 'Optional comment'
-            required:
-              - employee_id
-              - time_off_type_id
-              - start_date
-              - end_date
-              - half_day_start
-              - half_day_end
-              - comment
-        required:
-          - type
-          - attributes
+      employee_id:
+        type: integer
+        description: 'Employee identifier'
+      time_off_type_id:
+        type: integer
+        description: 'Time-off type identifier'
+      start_date:
+        type: string
+        format: date
+        description: 'Absence start date as YYYY-MM-DD'
+      end_date:
+        type: string
+        format: date
+        description: 'Absence end date as YYYY-MM-DD'
+      half_day_start:
+        type: boolean
+        description: 'Weather the start date is a half-day off'
+      half_day_end:
+        type: boolean
+        description: 'Weather the end date is a half-day off'
+      comment:
+        type: string
+        description: 'Optional comment'
+    required:
+      - employee_id
+      - time_off_type_id
+      - start_date
+      - end_date
+      - half_day_start
+      - half_day_end
 
   CreateTimeOffPeriodResponse:
     title: 'Time period when an employee is not available.'
@@ -1315,4 +1333,3 @@ definitions:
                       type: string
   AbsencePeriodResponse:
     type: object
-
