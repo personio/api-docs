@@ -736,18 +736,16 @@ paths:
               error:
                 code: 404
                 message: 'The absence period was not found.'
-
-  '/company/time-off/{time_off_id}':
     get:
       description: 'Absence Period'
       produces:
         - application/json
       parameters:
-        - name: time_off_id
+        - name: id
           in: path
           required: true
-          type: number
-          format: integer
+          type: integer
+          format: int32
           description: Numeric `id` of the absence period
       responses:
         '200':
