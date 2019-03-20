@@ -1136,30 +1136,25 @@ definitions:
     title: Update an existing attendance period
     type: object
     properties:
-      attendances:
-        type: array
-        items:
-          type: object
-          properties:
-            date:
-              type: string
-              format: date
-              description: 'Attendance date as YYYY-MM-DD'
-            start_time:
-              type: string
-              pattern: '^\d\d:\d\d$'
-              description: 'Start time as HH:MM'
-            end_time:
-              type: string
-              pattern: '^\d\d:\d\d$'
-              description: 'End time as HH:MM'
-            break:
-              type: integer
-              format: int32
-              description: 'Break in minutes'
-            comment:
-              type: string
-              description: 'Optional comment'
+      date:
+        type: string
+        format: date
+        description: 'Attendance date as YYYY-MM-DD'
+      start_time:
+        type: string
+        pattern: '^\d\d:\d\d$'
+        description: 'Start time as HH:MM'
+      end_time:
+        type: string
+        pattern: '^\d\d:\d\d$'
+        description: 'End time as HH:MM'
+      break:
+        type: integer
+        format: int32
+        description: 'Break in minutes'
+      comment:
+        type: string
+        description: 'Optional comment'
     example:
       date: '2019-03-17'
       start_time: '9:00'
