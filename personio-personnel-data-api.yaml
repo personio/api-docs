@@ -878,12 +878,10 @@ definitions:
           'type':
             type: string
           attributes:
-            type: array
-            items:
-              type: object
-              properties:
-                name:
-                  type: string
+            type: object
+            properties:
+              name:
+                type: string
   Department:
     type: object
     allOf:
@@ -895,12 +893,10 @@ definitions:
           'type':
             type: string
           attributes:
-            type: array
-            items:
-              type: object
-              properties:
-                name:
-                  type: string
+            type: object
+            properties:
+              name:
+                type: string
   CostCenters:
     type: object
     allOf:
