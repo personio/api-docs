@@ -167,6 +167,24 @@ paths:
                           friday: '06:00'
                           saturday: '00:00'
                           sunday: '00:00'
+                    absence_entitlement:
+                      label: Absence entitlement
+                      value:
+                        - type: TimeOffType
+                          attributes:
+                            id: 12345
+                            name: "Paid Vacation"
+                            entitlement: 30
+                        - type: TimeOffType
+                          attributes:
+                            id: 12346
+                            name: "Parental leave"
+                            entitlement: 0
+                        - type: TimeOffType
+                          attributes:
+                            id: 12347
+                            name: "Sick days"
+                            entitlement: 0
   '/company/employees/{employee_id}':
     get:
       description: 'Employee'
@@ -324,6 +342,24 @@ paths:
                         friday: '06:00'
                         saturday: '00:00'
                         sunday: '00:00'
+                  absence_entitlement:
+                    label: Absence entitlement
+                    value:
+                      - type: TimeOffType
+                        attributes:
+                          id: 12345
+                          name: "Paid Vacation"
+                          entitlement: 30
+                      - type: TimeOffType
+                        attributes:
+                          id: 12346
+                          name: "Parental leave"
+                          entitlement: 0
+                      - type: TimeOffType
+                        attributes:
+                          id: 12347
+                          name: "Sick days"
+                          entitlement: 0
 
   '/company/attendances':
     get:
@@ -983,6 +1019,32 @@ definitions:
               sunday:
                 type: string
                 pattern: '^\d\d:\d\d$'
+  AbsenceEntitlement:
+    type: object
+    properties:
+      label:
+        type: string
+      value:
+        type: array
+        items:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - 'TimeOffType'
+            attributes:
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                entitlement:
+                  type: number
+    required:
+      - label
+      - value
   Supervisor:
     type: object
     allOf:
@@ -1053,6 +1115,8 @@ definitions:
               $ref: '#/definitions/HolidayCalendar'
             work_schedule:
               $ref: '#/definitions/WorkSchedule'
+            absence_entitlement:
+              $ref: '#/definitions/AbsenceEntitlement'
   EmployeesResponse:
     title: List of Employees
     allOf:
