@@ -185,6 +185,70 @@ paths:
                             id: 12347
                             name: "Sick days"
                             entitlement: 0
+    post:
+      summary: Create an employee
+      description: >
+        Creates new employee. Status of the employee will be set to `active` if `hire_date` provided is in past.
+        Otherwise status will be set to `onboarding`.
+        This endpoint will respond with `id` of created employee in case of success.
+      produces:
+        - application/json
+      parameters:
+        - name: employee[email]
+          required: true
+          in: formData
+          description: Employee email
+          type: string
+        - name: employee[first_name]
+          required: true
+          in: formData
+          description: Employee first name
+          type: string
+        - name: employee[last_name]
+          required: true
+          in: formData
+          description: Employee last name
+          type: string
+        - name: employee[gender]
+          required: false
+          in: formData
+          description: Employee gender
+          type: string
+          enum: [male, female, diverse]
+        - name: employee[position]
+          required: false
+          in: formData
+          description: Employee position
+          type: string
+        - name: employee[department]
+          required: false
+          in: formData
+          description: Employee department
+          type: string
+        - name: employee[hire_date]
+          required: false
+          in: formData
+          description: Employee hire date
+          type: string
+          format: date
+        - name: employee[weekly_hours]
+          required: false
+          in: formData
+          description: Employee weekly working hours
+          type: number
+      responses:
+        200:
+          description: Successful creation of a employee
+          schema:
+            allOf:
+              - $ref: '#/definitions/Response'
+          examples:
+            application/json:
+              success: true
+              data:
+                id: 81723
+                message: "success"
+
   '/company/employees/{employee_id}':
     get:
       description: 'Employee'
