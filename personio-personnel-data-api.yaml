@@ -425,6 +425,30 @@ paths:
                           name: "Sick days"
                           entitlement: 0
 
+  '/company/employees/{employee_id}/profile-picture/{width}':
+    get:
+      description: 'Employee'
+      parameters:
+        - name: employee_id
+          in: path
+          required: true
+          type: integer
+          format: int32
+          description: Numeric `id` of the employee
+        - name: width
+          in: path
+          required: true
+          type: integer
+          format: int32
+          description: 'Width of the image. Default 75x75'
+      produces:
+        - image/png
+      responses:
+        '200':
+          description: 'OK'
+          schema:
+            type: file
+
   '/company/attendances':
     get:
       description: >-
