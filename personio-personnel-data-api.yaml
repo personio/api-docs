@@ -185,12 +185,18 @@ paths:
                             id: 12347
                             name: "Sick days"
                             entitlement: 0
+                    profile_picture:
+                      label: Profile Picture
+                      value: 'http://api.dev.personio.de/v1/company/employees/2/profile-picture'
     post:
       summary: Create an employee
       description: >
         Creates new employee. Status of the employee will be set to `active` if `hire_date` provided is in past.
         Otherwise status will be set to `onboarding`.
         This endpoint will respond with `id` of created employee in case of success.
+      consumes:
+        - application/x-www-form-urlencoded
+        - application/json
       produces:
         - application/json
       parameters:
@@ -251,7 +257,7 @@ paths:
 
   '/company/employees/{employee_id}':
     get:
-      description: 'Employee'
+      description: 'Show employee by ID'
       parameters:
         - name: employee_id
           in: path
@@ -427,7 +433,7 @@ paths:
 
   '/company/employees/{employee_id}/profile-picture/{width}':
     get:
-      description: 'Employee'
+      description: 'Show employee profile picture'
       parameters:
         - name: employee_id
           in: path
