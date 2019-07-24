@@ -1,0 +1,1382 @@
+openapi: 3.0.0
+info:
+  version: "1.0"
+  title: Personnel Data
+  description: API for reading and writing personnel data including data about attendances and absences
+paths:
+  /company/employees:
+    get:
+      tags: 
+        - Employees
+      description: List Company Employees
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeesResponse"
+              
+    post:
+      tags: 
+        - Employees
+      summary: Create an employee
+      description: >
+        Creates new employee. Status of the employee will be set to `active` if `hire_date` provided is in the past. Otherwise status will be set to `onboarding`. This endpoint responds with `id` of created employee in case of success.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                "employee[email]":
+                  description: Employee email
+                  type: string
+                "employee[first_name]":
+                  description: Employee first name
+                  type: string
+                "employee[last_name]":
+                  description: Employee last name
+                  type: string
+                "employee[gender]":
+                  description: Employee gender
+                  type: string
+                  enum:
+                    - male
+                    - female
+                    - diverse
+                "employee[position]":
+                  description: Employee position
+                  type: string
+                "employee[department]":
+                  description: Employee department
+                  type: string
+                "employee[hire_date]":
+                  description: Employee hire date
+                  type: string
+                  format: date
+                "employee[weekly_hours]":
+                  description: Employee weekly working hours
+                  type: number
+              required:
+                - employee[email]
+                - employee[first_name]
+                - employee[last_name]
+      responses:
+        "200":
+          description: Successful creation of a employee
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/EmployeeCreatedResponse"
+ 
+                      
+  "/company/employees/{employee_id}":
+    get:
+      tags: 
+        - Employees
+      description: Show employee by ID
+      parameters:
+        - name: employee_id
+          in: path
+          required: true
+          description: Numeric `id` of the employee
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeeResponse"
+        "404":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee404ErrorResponse"        
+              
+  "/company/employees/{employee_id}/profile-picture/{width}":
+    get:
+      tags: 
+        - Employees
+      description: Show employee profile picture
+      parameters:
+        - name: employee_id
+          in: path
+          required: true
+          description: Numeric `id` of the employee
+          schema:
+            type: integer
+            format: int32
+        - name: width
+          in: path
+          required: true
+          description: Width of the image. Default is original size
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee404ErrorResponse"            
+                
+  /company/employees/birthdays:
+    get:
+      tags: 
+        - Employees
+      description: Filters Employees By Birthday. Without parameters will be listed employees with today's birthday
+      parameters:
+        - name: from
+          in: query
+          required: false
+          description: Parameter `From` limits filter from the provided date. If blank then `Today` is used.
+          schema:
+            type: string
+            format: Y-m-d
+        - name: to
+          in: query
+          required: false
+          description: Parameter `To` limits filter to the provided date. If blank then
+            `Today` is used.
+          schema:
+            type: string
+            format: Y-m-d
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeesResponse"
+          
+  /company/attendances:
+    get:
+      tags: 
+        - Attendances
+      description: Fetche attendance data for the company employees. .The result can be `paginated` and `filtered` by period and/or specific employee/employees. The result contains a list of attendances.
+      parameters:
+        - name: start_date
+          in: query
+          required: true
+          description: First day of the period to be queried. It is inclusive, so the day specified as start_date will also be considered on the results
+          schema:
+            type: string
+            format: date
+        - name: end_date
+          in: query
+          required: true
+          description: Last day of the period to be queried. It is inclusive, so the day specified as end_date will also be considered on the results.
+          schema:
+            type: string
+            format: date
+        - name: employees
+          in: query
+          required: false
+          description: A list of Personio employee ID's to filter the results. The result filters including only absences of provided employees
+          explode: true
+          schema:
+            type: array
+            items:
+              type: integer
+        - name: limit
+          in: query
+          required: false
+          description: Pagination attribute to limit how many attendances are per page
+          schema:
+            type: integer
+            minimum: 1
+            default: 200
+        - name: offset
+          in: query
+          required: false
+          description: Pagination attribute to identify which page you are requesting, by the form of telling an offset from the first record that would be returned.
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AttendancePeriodsResponse"
+          
+    post:
+      tags: 
+        - Attendances
+      description: This endpoint is responsible for adding attendance data for the company employees. It is possible to add attendances for one or many employees at the same time. The payload sent on the request should be a list of attendance periods, in the form of an array containing attendance period objects.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                allOf:
+                  - $ref: "#/components/schemas/AttendanceCreateRequest"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/NewAttendancePeriodParametersRequest"
+
+
+        description: List of attendance periods to create
+        required: true
+      responses:
+        "200":
+          description: The attendance periods are successfullycreated 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NewAttendancePeriodResponse"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorCreateAttendanceResponse"
+                      
+  "/company/attendances/{id}":
+    delete:
+      tags: 
+        - Attendances
+      description: This endpoint is responsible for deleting attendance data for the
+        company employees.
+      parameters:
+        - name: id
+          in: path
+          description: ID of the attendance period to delete
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeletedAtendanceResponse"
+                
+        "404":
+          description: Not found response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAttendanceResponse"
+                
+    patch:
+      tags: 
+        - Attendances
+      description: This endpoint is responsible for updating attendance data for the
+        company employees. Attributes are not required and if not specified, the
+        current value will be used. It is not possible to change the employee
+        id.
+      parameters:
+        - name: id
+          in: path
+          description: ID of the attendance period to update
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AttendanceUpdateRequest"
+        description: attendance period data to update
+        required: true
+      responses:
+        "200":
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdatedAtendanceResponse"
+              examples:
+                response:
+                  value:
+                    success: true
+                    data:
+                      message: The attendance period was updated.
+        "404":
+          description: Not found response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAttendanceResponse"
+                      
+               
+               
+               
+               
+               
+               
+               
+                      
+  /company/time-off-types:
+    get:
+      tags: 
+        - Absences
+      description: Provides a list of available absences types. For example 'Paid vacation', 'Parental leave' or 'Home office'
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          description: Pagination attribute to limit how many records will be returned per page
+          schema:
+            type: integer
+            minimum: 1
+            default: 200
+        - name: offset
+          in: query
+          required: false
+          description: Pagination attribute to identify which page you are requesting, by the form of telling an offset from the first record that would be returned.
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/TimeOffTypeResource"
+  
+  /company/time-offs:
+    get:
+      tags: 
+        - Absences
+      description: This endpoint is responsible for fetching absence data for the company employees.The result can be `paginated` and `filtered` by period and/or specific employee/employees. The result contains a list of absence periods.
+      parameters:
+        - name: start_date
+          in: query
+          required: false
+          description: First day of the period to be queried. It is inclusive, so the result starts from and including the provided `start_date`
+          schema:
+            type: string
+            format: date
+        - name: end_date
+          in: query
+          required: false
+          description: Last day of the period to be queried. It is inclusive, so the result ends on `end_date` including absences from the `end_date`
+          schema:
+            type: string
+            format: date
+        - name: employees
+          in: query
+          required: false
+          description: A list of Personio employee ID's to filter the results. The result filters including only absences of provided employees
+          explode: true
+          schema:
+            type: array
+            items:
+              type: integer
+        - name: limit
+          in: query
+          required: false
+          description: Pagination attribute to limit how many attendances is returning per page
+          schema:
+            type: integer
+            minimum: 1
+            default: 200
+        - name: offset
+          in: query
+          required: false
+          description: Pagination attribute to identify which page you are requesting, by the form of telling an offset from the first record that would be returned.
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AbsencePeriodsResponse"
+    post:
+      tags: 
+        - Absences
+      description: This endpoint is responsible for adding absence data for the company employees.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/CreateTimeOffPeriodRequest"
+        description: Absense data
+        required: true
+      responses:
+        "201":
+          description: The absence period is successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/AbsencePeriodResponse"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorInsertingAbsenceResponse"
+      
+        "404":
+          description: Employee or Absence type not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+        "422":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorCreateAbsenceResponse"
+                
+  "/company/time-offs/{id}":
+    delete:
+      tags: 
+        - Absences
+      description: This endpoint is responsible for deleting absence period data for the company employees.
+      parameters:
+        - name: id
+          in: path
+          description: ID of the absence period to delete
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeletedAbsenceResponse"
+        "404":
+          description: Not found response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAbsenceResponse"
+    get:
+      tags: 
+        - Absences
+      description: Show Absence Period
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Numeric `id` of the absence period
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AbsencePeriodResponse"
+                
+        "404":
+          description: Not found response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAbsenceResponse"        
+servers:
+  - url: https://api.personio.de/v1
+components:
+  securitySchemes:
+    auth:
+      type: apiKey
+      name: Authorization
+      in: header
+  schemas:
+    Response:
+      title: Default response object
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+      required:
+        - success
+        - data
+    
+    DeletedAbsenceResponse:
+      title: Default response object
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+          properties:
+            message:
+              example: The absence period was deleted.
+        
+        
+    DeletedAtendanceResponse:
+      title: Default response object
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+          properties:
+            message:
+              example: The attendance period was deleted   
+        
+    UpdatedAtendanceResponse:
+      title: Default response object
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+          properties:
+            message:
+              example: The attendance period was updated.       
+        
+    ErrorResponse:
+      title: Default error response
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              example: 0
+            message:
+              example: Something went wrong
+              
+    ErrorCreateAbsenceResponse:
+      title: Default error response
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              example: 0
+            message:
+              example: The given data failed to pass validation.       
+        
+    ErrorAbsenceResponse:
+      title: 404 absense error 
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              example: 404
+            message:
+              example: The absence period was not found.          
+      
+    ErrorInsertingAbsenceResponse:
+      title: 400 absense error 
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              example: 400
+            message:
+              example: Error when trying to insert absence period    
+        
+    ErrorCreateAttendanceResponse:
+      title: 400 absense error 
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              example: 400
+            message:
+              example: Error when trying to insert Attendances periods rows        
+              
+    ErrorAttendanceResponse:
+      title: 404 absense error 
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              example: 404
+            message:
+              example: The attendance period was not found.  
+              
+         
+              
+    Employee404ErrorResponse:
+      title: 404 absense error 
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              example: 0
+            message:
+              example: Es ist ein Problem aufgetreten           
+              
+    EmployeeCreatedResponse:
+      title: Sucsefully created employee response
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+          properties:
+            id:
+              type: number
+              example: 1
+            message:
+              example: success
+        
+    Office:
+      type: object
+      properties:
+        label:
+          example: Office
+        value:
+          type: object
+          properties:
+            type:
+              type: string
+              example: Office
+            attributes:
+              type: object
+              properties:
+                name:
+                  example: Munich
+                  
+    Department:
+      type: object
+      properties:
+        label:
+          example: Department
+        value:
+          type: object
+          properties:
+            type:
+              type: string
+              example: Department
+            attributes:
+              type: object
+              properties:
+                name:
+                  example: Marketing
+    CostCenters:
+      type: object
+      properties:
+        label:
+          example: Cost center
+        value:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                example: CostCenter
+              attributes:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      example: Cost Center One
+                    id:
+                      type: number
+                      example: 1
+                    percentage:
+                      type: number
+                      example: 50
+    HolidayCalendar:
+      type: object
+      properties:
+        label:
+          example: Holiday Calendar
+        value:
+          type: object
+          properties:
+            type:
+              example: HolidayCalendar
+            attributes:
+              type: object
+              properties:
+                id:
+                  type: number
+                  example: 1
+                name:
+                  example: DE (Hamburg) Feiertage
+                country:
+                  example: DE
+                state:
+                  example: Hamburg
+    WorkSchedule:
+      type: object
+      properties:
+        label: 
+          example: WorkSchedule
+        value:
+          type: object
+          properties:
+            type:
+              example: WorkSchedule
+            attributes:
+              type: object
+              properties:
+                id:
+                  type: number
+                  example: 1 
+                name:
+                  example: Standard Hours
+                monday:
+                  example: 08:30
+                  pattern: ^\d\d:\d\d$
+                tuesday:
+                  example: 08:30
+                  pattern: ^\d\d:\d\d$
+                wednesday:
+                  example: 08:30
+                  pattern: ^\d\d:\d\d$
+                thursday:
+                  example: 08:30
+                  pattern: ^\d\d:\d\d$
+                friday:
+                  example: 08:30
+                  pattern: ^\d\d:\d\d$
+                saturday:
+                  example: 00:00
+                  pattern: ^\d\d:\d\d$
+                sunday:
+                  example: 00:00
+                  pattern: ^\d\d:\d\d$
+                  
+    AbsenceEntitlement:
+      type: object
+      properties:
+        label:
+          example: Absence entitlement
+        value:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                enum:
+                  - TimeOffType
+              attributes:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    example: Paid Vacation
+                  entitlement:
+                    example: 30
+      required:
+        - label
+        - value
+    Supervisor:
+      type: object
+      properties:
+        label:
+          type: string
+          example: Supervisor
+        value:
+          $ref: "#/components/schemas/ShortEmployee"
+
+    Employee:
+      type: object
+      properties:
+              id:
+                                  type: integer
+                                  example: 1
+              first_name:
+                                  type: object
+                                  properties:
+                                    label:
+                                      example: First name
+                                    value:
+                                      example: Michael
+              last_name:
+                                  type: object
+                                  properties:
+                                        label:
+                                          example: Last name
+                                        value:
+                                          example: Dou
+              email:
+                                  type: object
+                                  properties:
+                                      label:
+                                        example: Email
+                                      value:
+                                        example: michael.dou@personio.de
+              gender:
+                type: object
+                properties:
+                  label:
+                    example: Gender
+                  value:
+                    example: male
+              status:
+                type: object
+                properties:
+                  label:
+                    example: Status
+                  value:
+                    example: active
+              position:
+                type: object
+                properties:
+                  label:
+                    example: Position
+                  value:
+                    example: Online Marketing Specialist
+              supervisor:
+                $ref: "#/components/schemas/Supervisor"
+              employment_type:
+                type: object
+                properties:
+                  label:
+                    example: Employment type
+                  value:
+                    example: internal
+              weekly_working_hours:
+                type: object
+                properties:
+                  label:
+                    example: Weekly hours
+                  value:
+                    example: 40
+              hire_date:
+                type: object
+                properties:
+                  label:
+                    example: Hire date
+                  value:
+                    example: 2012-02-01T00:00:00+0100
+              contract_end_date:
+                type: object
+                properties:
+                  label:
+                    example: Contact end date
+                  value:
+                    example: 2020-02-01T00:00:00+0100
+              termination_date:
+                type: object
+                properties:
+                  label:
+                    example: Termonation date
+                  value:
+                    example: 2020-02-01T00:00:00+0100
+              termination_type:
+                type: object
+                properties:
+                  label:
+                    example: Termonation type
+                  value:
+                    example: 
+              termination_reason:
+                type: object
+                properties:
+                  label:
+                    example: Termonation reason
+                  value:
+                    example: 
+              probation_period_end:
+                type: object
+                properties:
+                  label:
+                    example: Probation period end
+                  value:
+                    example: 2020-02-01T00:00:00+0100
+              created_at:
+                type: object
+                properties:
+                  label:
+                    example: Created at
+                  value:
+                    example: 2018-02-01T00:00:00+0100
+              fix_salary:
+                type: object
+                properties:
+                  label:
+                    example: Fix salary
+                  value:
+                    example: 4000
+              hourly_salary:
+                type: object
+                properties:
+                  label:
+                    example: Hourly salary
+                  value:
+                    example: 0
+              vacation_day_balance:
+                type: object
+                properties:
+                  label:
+                    example: Vacation day balance
+                  value:
+                    example: 20.5
+              profile_picture:
+                type: object
+                properties:
+                  label:
+                    example: Profile Picture
+                  value:
+                    example: http://api.dev.personio.de/v1/company/employees/1/profile-picture    
+                    
+              office:
+                $ref: "#/components/schemas/Office"
+              department:
+                $ref: "#/components/schemas/Department"
+              cost_centers:
+                $ref: "#/components/schemas/CostCenters"
+              holiday_calendar:
+                $ref: "#/components/schemas/HolidayCalendar"
+              work_schedule:
+                $ref: "#/components/schemas/WorkSchedule"
+              absence_entitlement:
+                $ref: "#/components/schemas/AbsenceEntitlement"
+                
+    EmployeesResponse:
+      title: List of Employees
+      allOf:
+        - $ref: "#/components/schemas/Response"
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                type: object
+                properties:
+                  type:
+                    example: Employee
+                  attributes:
+                    type: array
+                    items:
+                       $ref: "#/components/schemas/Employee"
+                  
+    EmployeeResponse:
+      title: Employee
+      allOf:
+        - $ref: "#/components/schemas/Response"
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                type: object
+                properties:
+                  type:
+                    example: Employee
+                  attributes:
+                       $ref: "#/components/schemas/Employee"
+                
+    Attendance:
+      type: object
+      properties:
+                        employee:
+                          example: 1
+                        date:
+                          type: string
+                          format: date
+                        start_time:
+                          type: string
+                          pattern: ^\d\d:\d\d$
+                          example: "08:00"
+                        end_time:
+                          type: string
+                          pattern: ^\d\d:\d\d$
+                          example: "17:00"
+                        break:
+                          type: integer
+                          example: 60
+                        comment:
+                          type: string
+                          example: "I was productive as hell"
+                        is_holiday:
+                          type: boolean
+                          example: false
+                        is_on_time_off:
+                          type: boolean
+                          example: false
+               
+    AttendanceCreateRequest:
+      type: object
+      properties:
+                        employee:
+                          example: 1
+                        date:
+                          type: string
+                          format: date
+                        start_time:
+                          type: string
+                          pattern: ^\d\d:\d\d$
+                          example: "08:00"
+                        end_time:
+                          type: string
+                          pattern: ^\d\d:\d\d$
+                          example: "17:00"
+                        break:
+                          type: integer
+                          example: 60
+                        comment:
+                          type: string
+                          example: "I was productive as hell"              
+               
+    AttendanceUpdateRequest:
+      type: object
+      properties:
+                        date:
+                          type: string
+                          format: date
+                        start_time:
+                          type: string
+                          pattern: ^\d\d:\d\d$
+                          example: "08:00"
+                        end_time:
+                          type: string
+                          pattern: ^\d\d:\d\d$
+                          example: "17:00"
+                        break:
+                          type: integer
+                          example: 60
+                        comment:
+                          type: string
+                          example: "I was productive as hell"              
+                
+    AttendancePeriodsResponse:
+      title: List All Attenance Periods response
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/Response"
+        - type: object
+          properties:
+            offset:
+              type: integer
+            limit:
+              type: integer
+            data:
+              type: object
+              required:
+                          - id
+                          - type
+                          - attributes
+              properties:
+                          id:
+                            type: integer
+                          type:
+                            example: AttendancePeriod
+                          attributes:
+                            type: array
+                            items:
+                              $ref: "#/components/schemas/Attendance"
+            
+                
+      
+        
+    NewAttendancePeriodParametersRequest:
+      title: Create a New Attendance Period request
+      type: object
+      properties:
+              attendances[][employee]:
+                type: integer
+                description: Employee identifier
+              attendances[][date]:
+                type: string
+                format: date
+                description: Attendance date as YYYY-MM-DD
+              attendances[][start_time]:
+                type: string
+                pattern: ^\d\d:\d\d$
+                description: Start time as HH:MM
+              attendances[][end_time]:
+                type: string
+                pattern: ^\d\d:\d\d$
+                description: End time as HH:MM
+              attendances[]break:
+                type: integer
+                format: int32
+                description: Break in minutes
+              attendances[][comment]:
+                type: string
+                description: Optional comment
+      required:
+              - employee
+              - date
+              - start_time
+              - end_time
+              - break
+              - comment    
+              
+              
+    NewAttendancePeriodResponse:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/Response"
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                id:
+                  type: array
+                  items:
+                    type: integer
+                    example: 1
+                message:
+                  example: Success
+                  
+    TimeOffTypeResource:
+      title: Type of time-off resource
+      type: object
+      properties:
+        id:
+          type: integer
+          description: identifier
+        type:
+          type: string
+          enum:
+            - TimeOffType
+          description: Time-off type resource name
+        attributes:
+          type: object
+          properties:
+            name:
+              type: string
+              example: Paid vacation
+    CreateTimeOffPeriodRequest:
+      title: Create time-off periods
+      type: object
+      properties:
+        employee_id:
+          type: integer
+          description: Employee identifier
+        time_off_type_id:
+          type: integer
+          description: Time-off type identifier
+        start_date:
+          type: string
+          format: date
+          description: Absence start date as YYYY-MM-DD
+        end_date:
+          type: string
+          format: date
+          description: Absence end date as YYYY-MM-DD
+        half_day_start:
+          type: boolean
+          example: 0
+          description: Weather the start date is a half-day off
+        half_day_end:
+          type: boolean
+          example: 0
+          description: Weather the end date is a half-day off
+        comment:
+          type: string
+          example: Some Comment
+          description: Optional comment
+      required:
+        - employee_id
+        - time_off_type_id
+        - start_date
+        - end_date
+        - half_day_start
+        - half_day_end
+    AbsencePeriodsResponse:
+      title: List All Absence Periods response
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/Response"
+        - type: object
+          properties:
+            data:
+              type: object
+              required:
+                - type
+                - attributes
+              properties:
+                type:
+                  example: TimeOffPeriod
+                attributes:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Absence"
+                  
+    AbsencePeriodResponse:
+      title: Absence Periods response
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/Response"
+        - type: object
+          properties:
+            data:
+              type: object
+              required:
+                - type
+                - attributes
+              properties:
+                type:
+                  example: TimeOffPeriod
+                attributes:
+                    $ref: "#/components/schemas/Absence"
+      
+    Absence:
+      type: object
+      properties:
+                      id:
+                        type: integer
+                        example: 1
+                      status:
+                        type: string
+                        example: approved
+                      start_date:
+                        type: string
+                        example: 2017-12-27T00:00:00+0100
+                      end_date:
+                        type: string
+                        example: 2017-12-79T00:00:00+0100
+                      days_count:
+                        type: number
+                        example: 3
+                      half_day_start:
+                        type: number
+                        example: 0
+                      half_day_end:
+                        type: number
+                        example: 0
+                      time_off_type:
+                        type: object
+                        properties:
+                          type:
+                            type: string
+                            example: TimeOffType
+                          attributes:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 1
+                                name:
+                                  type: string
+                                  example: Vacation
+                      employee:
+                        $ref: "#/components/schemas/ShortEmployee"
+                      certificate:
+                        type: object
+                        properties:
+                          status:
+                            example: not-required
+                            type: string
+                      created_at:
+                        type: string
+                        example: 2017-01-17T10:32:18+0100
+                        
+                        
+    ShortEmployee:
+                        type: object
+                        properties:
+                          type:
+                            type: string
+                            example: Employee
+                          attributes:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 1
+                                first_name:
+                                  type: object
+                                  properties:
+                                    label:
+                                      example: First Name
+                                    value:
+                                      example: Michael
+                                last_name:
+                                  type: object
+                                  properties:
+                                        label:
+                                          example: Last Name
+                                        value:
+                                          example: Dou
+                                email:
+                                  type: object
+                                  properties:
+                                      label:
+                                        example: Email
+                                      value:
+                                        example: michael.dou@personio.de
