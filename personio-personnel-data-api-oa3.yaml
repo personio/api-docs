@@ -16,7 +16,168 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EmployeesResponse"
-              
+              examples:
+                response:
+                  value:
+                    success: true
+                    data:
+                      - type: Employee
+                        attributes:
+                          id:
+                            label: id
+                            value: 83752
+                          first_name:
+                            label: First name
+                            value: Andreas
+                          last_name:
+                            label: Last name
+                            value: Anderson
+                          email:
+                            label: Email
+                            value: andreas.anderson@demo.com
+                          gender:
+                            label: Gender
+                            value: male
+                          status:
+                            label: Status
+                            value: active
+                          position:
+                            label: Position
+                            value: Online Marketing Specialist
+                          supervisor:
+                            label: Supervisor
+                            value:
+                              type: Employee
+                              attributes:
+                                id:
+                                  label: id
+                                  value: 423506
+                                first_name:
+                                  label: First name
+                                  value: Max
+                                last_name:
+                                  label: Last name
+                                  value: Mustermann
+                                email:
+                                  label: Email
+                                  value: max.mustermann@example.org
+                          employment_type:
+                            label: Employment type
+                            value: internal
+                          weekly_working_hours:
+                            label: Weekly hours
+                            value: '40'
+                          hire_date:
+                            label: Hire date
+                            value: '2012-02-01T00:00:00+0100'
+                          contract_end_date:
+                            label: Contract ends
+                            value:
+                          termination_date:
+                            label: Termination date
+                            value:
+                          termination_type:
+                            label: Termination type
+                            value: ''
+                          termination_reason:
+                            label: Termination reason
+                            value: ''
+                          probation_period_end:
+                            label: Probation period end
+                            value: '2012-07-31T00:00:00+0200'
+                          created_at:
+                            label: created_at
+                            value: '2016-10-20T16:15:55+0200'
+                          last_modified_at:
+                            label: Last modified
+                            value: '2016-10-22T16:15:55+0200'
+                          office:
+                            label: Office
+                            value:
+                              type: Office
+                              attributes:
+                                name: Munich
+                          department:
+                            label: Department
+                            value:
+                              type: Department
+                              attributes:
+                                name: Marketing
+                          cost_centers:
+                            label: Cost center
+                            value:
+                            - type: CostCenter
+                              attributes:
+                                name: Cost Center One
+                                id: 320
+                                percentage: 50
+                            - type: CostCenter
+                              attributes:
+                                name: Cost Center Two
+                                id: 321
+                                percentage: 50
+                          fix_salary:
+                            label: Fix salary
+                            value: 4000
+                          hourly_salary:
+                            label: Hourly salary
+                            value: 0
+                          vacation_day_balance:
+                            label: Vacation day balance
+                            value: 28.5
+                          last_working_day:
+                            label: Last working day
+                            value: '2017-02-28T00:00:00+0200'
+                          dynamic_24407:
+                            label: Titel
+                            value: Dr
+                          dynamic_21827:
+                            label: IBAN
+                            value: DE98 8989 9898 0000 8989 00
+                          holiday_calendar:
+                            label: 'Holiday Calendar'
+                            value:
+                              type: HolidayCalendar
+                              attributes:
+                                id: 931
+                                name: 'DE (Hamburg) Feiertage'
+                                country: DE
+                                state: Hamburg
+                          work_schedule:
+                            label: 'Work Schedule'
+                            value:
+                              type: WorkSchedule
+                              attributes:
+                                id: 123
+                                name: 'Standard Hours'
+                                monday: '08:30'
+                                tuesday: '08:30'
+                                wednesday: '08:30'
+                                thursday: '08:30'
+                                friday: '06:00'
+                                saturday: '00:00'
+                                sunday: '00:00'
+                          absence_entitlement:
+                            label: Absence entitlement
+                            value:
+                              - type: TimeOffType
+                                attributes:
+                                  id: 12345
+                                  name: "Paid Vacation"
+                                  entitlement: 30
+                              - type: TimeOffType
+                                attributes:
+                                  id: 12346
+                                  name: "Parental leave"
+                                  entitlement: 0
+                              - type: TimeOffType
+                                attributes:
+                                  id: 12347
+                                  name: "Sick days"
+                                  entitlement: 0
+                          profile_picture:
+                            label: Profile Picture
+                            value: 'http://api.dev.personio.de/v1/company/employees/2/profile-picture'
     post:
       tags: 
         - Employees
@@ -70,7 +231,13 @@ paths:
               schema:
                 allOf:
                   - $ref: "#/components/schemas/EmployeeCreatedResponse"
- 
+              examples:
+                response:
+                  value:
+                    success: true
+                    data:
+                      id: 81723
+                      message: "success"
                       
   "/company/employees/{employee_id}":
     get:
@@ -92,12 +259,178 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EmployeeResponse"
+              examples:
+                response:
+                  value:
+                    success: true
+                    data:
+                      type: Employee
+                      attributes:
+                        id:
+                          label: id
+                          value: 83752
+                        first_name:
+                          label: First name
+                          value: Andreas
+                        last_name:
+                          label: Last name
+                          value: Anderson
+                        email:
+                          label: Email
+                          value: andreas.anderson@demo.com
+                        gender:
+                          label: Gender
+                          value: male
+                        status:
+                          label: Status
+                          value: active
+                        position:
+                          label: Position
+                          value: Online Marketing Specialist
+                        supervisor:
+                          label: Supervisor
+                          value:
+                            type: Employee
+                            attributes:
+                              id:
+                                label: id
+                                value: 423506
+                              first_name:
+                                label: First name
+                                value: Max
+                              last_name:
+                                label: Last name
+                                value: Mustermann
+                              email:
+                                label: Email
+                                value: max.mustermann@example.org
+                        employment_type:
+                          label: Employment type
+                          value: internal
+                        weekly_working_hours:
+                          label: Weekly hours
+                          value: '40'
+                        hire_date:
+                          label: Hire date
+                          value: '2012-02-01T00:00:00+0100'
+                        contract_end_date:
+                          label: Contract ends
+                          value:
+                        termination_date:
+                          label: Termination date
+                          value:
+                        termination_type:
+                          label: Termination type
+                          value: ''
+                        termination_reason:
+                          label: Termination reason
+                          value: ''
+                        probation_period_end:
+                          label: Probation period end
+                          value: '2012-07-31T00:00:00+0200'
+                        created_at:
+                          label: created_at
+                          value: '2016-10-20T16:15:55+0200'
+                        last_modified_at:
+                          label: Last modified
+                          value: '2016-10-22T16:15:55+0200'
+                        office:
+                          label: Office
+                          value:
+                            type: Office
+                            attributes:
+                              name: Munich
+                        department:
+                          label: Department
+                          value:
+                            type: Department
+                            attributes:
+                              name: Marketing
+                        cost_centers:
+                          label: Cost center
+                          value:
+                          - type: CostCenter
+                            attributes:
+                              name: Cost Center One
+                              id: 320
+                              percentage: 50
+                          - type: CostCenter
+                            attributes:
+                              name: Cost Center Two
+                              id: 321
+                              percentage: 50
+                        fix_salary:
+                          label: Fix salary
+                          value: 4000
+                        hourly_salary:
+                          label: Hourly salary
+                          value: 0
+                        vacation_day_balance:
+                          label: Vacation day balance
+                          value: 28.5
+                        last_working_day:
+                          label: Last working day
+                          value: '2017-02-28T00:00:00+0200'
+                        dynamic_24407:
+                          label: Titel
+                          value: Dr
+                        dynamic_21827:
+                          label: IBAN
+                          value: DE98 8989 9898 0000 8989 00
+                        holiday_calendar:
+                          label: 'Holiday Calendar'
+                          value:
+                            type: HolidayCalendar
+                            attributes:
+                              id: 931
+                              name: 'DE (Hamburg) Feiertage'
+                              country: DE
+                              state: Hamburg
+                        work_schedule:
+                          label: 'Work Schedule'
+                          value:
+                            type: WorkSchedule
+                            attributes:
+                              id: 123
+                              name: 'Standard Hours'
+                              monday: '08:30'
+                              tuesday: '08:30'
+                              wednesday: '08:30'
+                              thursday: '08:30'
+                              friday: '06:00'
+                              saturday: '00:00'
+                              sunday: '00:00'
+                        absence_entitlement:
+                          label: Absence entitlement
+                          value:
+                            - type: TimeOffType
+                              attributes:
+                                id: 12345
+                                name: "Paid Vacation"
+                                entitlement: 30
+                            - type: TimeOffType
+                              attributes:
+                                id: 12346
+                                name: "Parental leave"
+                                entitlement: 0
+                            - type: TimeOffType
+                              attributes:
+                                id: 12347
+                                name: "Sick days"
+                                entitlement: 0  
         "404":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Employee404ErrorResponse"        
+                $ref: "#/components/schemas/Employee404ErrorResponse"  
+              examples:
+                response:
+                  value:
+                    success: false
+                    error:
+                      code: 404
+                      message: 'Es ist ein Problem aufgetreten '  
               
   "/company/employees/{employee_id}/profile-picture/{width}":
     get:
@@ -132,37 +465,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Employee404ErrorResponse"            
-                
-  /company/employees/birthdays:
-    get:
-      tags: 
-        - Employees
-      description: Filters Employees By Birthday. Without parameters will be listed employees with today's birthday
-      parameters:
-        - name: from
-          in: query
-          required: false
-          description: Parameter `From` limits filter from the provided date. If blank then `Today` is used.
-          schema:
-            type: string
-            format: Y-m-d
-        - name: to
-          in: query
-          required: false
-          description: Parameter `To` limits filter to the provided date. If blank then
-            `Today` is used.
-          schema:
-            type: string
-            format: Y-m-d
-      responses:
-        "200":
-          description: ""
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/EmployeesResponse"
-          
+                $ref: "#/components/schemas/Employee404ErrorResponse" 
+              examples:
+                response:
+                  value:
+                    success: false
+                    error:
+                      code: 404
+                      message: 'Es ist ein Problem aufgetreten '
+           
   /company/attendances:
     get:
       tags: 
@@ -215,7 +526,35 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AttendancePeriodsResponse"
-          
+              examples:
+                response:
+                  value:
+                      success: true
+                      offset: 0
+                      limit: 200
+                      data:
+                      - id: 1234
+                        type: AttendancePeriod
+                        attributes:
+                          employee: 325659
+                          date: '2017-01-17'
+                          start_time: '9:00'
+                          end_time: '18:00'
+                          break: 50
+                          comment: I was productive as hell
+                          is_holiday: false
+                          is_on_time_off: false
+                      - id: 1235
+                        type: AttendancePeriod
+                        attributes:
+                          employee: 325660
+                          date: '2017-01-18'
+                          start_time: '9:30'
+                          end_time: '18:30'
+                          break: 60
+                          comment: I wasn't productive
+                          is_holiday: false
+                          is_on_time_off: true
     post:
       tags: 
         - Attendances
@@ -242,12 +581,25 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/NewAttendancePeriodResponse"
+              examples:
+                response:
+                  value:
+                    success: true
+                    data:
+                      message: 'success'
         "400":
           description: Invalid request
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorCreateAttendanceResponse"
+              examples:
+                response:
+                  value:
+                    success: true
+                    error:
+                      code: 400
+                      message: 'Error when trying to insert Attendances periods rows'
                       
   "/company/attendances/{id}":
     delete:
@@ -270,21 +622,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DeletedAtendanceResponse"
-                
+              examples:
+                response:
+                  value:
+                    success: true
+                    data:
+                      message: 'The attendance period was deleted.' 
         "404":
           description: Not found response
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorAttendanceResponse"
+              examples:
+                response:
+                  value:
+                    success: false
+                    error:
+                      code: 404
+                      message: 'The attendance period was not found.'
                 
     patch:
       tags: 
         - Attendances
-      description: This endpoint is responsible for updating attendance data for the
-        company employees. Attributes are not required and if not specified, the
-        current value will be used. It is not possible to change the employee
-        id.
+      description: This endpoint is responsible for updating attendance data for the company employees. Attributes are not required and if not specified, the current value will be used. It is not possible to change the employee id.
       parameters:
         - name: id
           in: path
@@ -319,6 +680,14 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorAttendanceResponse"
+              examples:
+                response:
+                  value:
+                    success: false
+                    error:
+                      code: 404
+                      message: 'The attendance period was not found.'
+              
                       
                
                
@@ -364,6 +733,19 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/TimeOffTypeResource"
+              examples:
+                response:
+                  value:   
+                    success: true
+                    data:
+                    - id: 1234
+                      type: TimeOffType
+                      attributes:
+                        name: 'Paid vacation'
+                    - id: 1235
+                      type: TimeOffType
+                      attributes:
+                        name: 'Home office'
   
   /company/time-offs:
     get:
@@ -417,6 +799,43 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AbsencePeriodsResponse"
+              examples:
+                response:
+                  value:  
+                    success: true
+                    data:
+                    - type: TimeOffPeriod
+                      attributes:
+                        id: 12345
+                        status: approved
+                        start_date: '2017-12-27T00:00:00+0100'
+                        end_date: '2017-12-29T00:00:00+0100'
+                        days_count: 3
+                        half_day_start: 0
+                        half_day_end: 0
+                        time_off_type:
+                          type: TimeOffType
+                          attributes:
+                            id: 54321
+                            name: Vacation
+                        employee:
+                          type: Employee
+                          attributes:
+                            id:
+                              label: id
+                              value: 4567
+                            first_name:
+                              label: First name
+                              value: Michael
+                            last_name:
+                              label: Last name
+                              value: Miller
+                            email:
+                              label: Email
+                              value: michael.miller@demo.com
+                        certificate:
+                          status: not-required
+                        created_at: '2017-01-17T10:32:18+0100'
     post:
       tags: 
         - Absences
@@ -438,12 +857,56 @@ paths:
                 properties:
                   data:
                     $ref: "#/components/schemas/AbsencePeriodResponse"
+              examples:
+                response:
+                  value:      
+                    success: true
+                    data:
+                      type: TimeOffPeriod
+                      attributes:
+                        id: 12345
+                        status: approved
+                        start_date: '2017-12-27T00:00:00+0100'
+                        end_date: '2017-12-29T00:00:00+0100'
+                        days_count: 3
+                        half_day_start: 0
+                        half_day_end: 0
+                        time_off_type:
+                          type: TimeOffType
+                          attributes:
+                            id: 54321
+                            name: Vacation
+                        employee:
+                          type: Employee
+                          attributes:
+                            id:
+                              label: id
+                              value: 4567
+                            first_name:
+                              label: First name
+                              value: Michael
+                            last_name:
+                              label: Last name
+                              value: Miller
+                            email:
+                              label: Email
+                              value: michael.miller@demo.com
+                        certificate:
+                          status: not-required
+                        created_at: '2017-01-17T10:32:18+0100'
         "400":
           description: Invalid request
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorInsertingAbsenceResponse"
+              examples:
+                response:
+                  value: 
+                    success: false
+                    error:
+                      code: 400
+                      message: 'Error when trying to insert absence period'
       
         "404":
           description: Employee or Absence type not found
@@ -451,6 +914,13 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                response:
+                  value:
+                    success: false
+                    error:
+                      code: 0
+                      message: 'Something went wrong'
 
         "422":
           description: Validation error
@@ -458,6 +928,14 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorCreateAbsenceResponse"
+              examples:
+                response:
+                  value:
+                    success: false
+                    error:
+                      code: 0
+                      message: 'The given data failed to pass validation.'
+                      error_data: '{...}'
                 
   "/company/time-offs/{id}":
     delete:
@@ -479,12 +957,25 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DeletedAbsenceResponse"
+              examples:
+                response:
+                  value:
+                    success: true
+                    data:
+                      message: The absence period was deleted.
         "404":
           description: Not found response
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorAbsenceResponse"
+              examples:
+                response:
+                  value: 
+                    success: false
+                    error:
+                      code: 404
+                      message: 'The absence period was not found.'
     get:
       tags: 
         - Absences
@@ -504,13 +995,57 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AbsencePeriodResponse"
+              examples:
+                response:
+                  value: 
+                    success: true
+                    data:
+                      type: TimeOffPeriod
+                      attributes:
+                        id: 12345
+                        status: approved
+                        start_date: '2017-12-27T00:00:00+0100'
+                        end_date: '2017-12-29T00:00:00+0100'
+                        days_count: 3
+                        half_day_start: 0
+                        half_day_end: 0
+                        time_off_type:
+                          type: TimeOffType
+                          attributes:
+                            id: 45678
+                            name: Vacation
+                        employee:
+                          type: Employee
+                          attributes:
+                            id:
+                              label: id
+                              value: 2367
+                            first_name:
+                              label: First name
+                              value: Michael
+                            last_name:
+                              label: Last name
+                              value: Miller
+                            email:
+                              label: Email
+                              value: michael.miller@demo.com
+                        certificate:
+                          status: not-required
+                        created_at: '2017-01-17T10:32:18+0100'
                 
         "404":
           description: Not found response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorAbsenceResponse"        
+                $ref: "#/components/schemas/ErrorAbsenceResponse" 
+              examples:
+                response:
+                  value:  
+                    success: false
+                    error:
+                      code: 404
+                      message: 'The absence period was not found.'
 servers:
   - url: https://api.personio.de/v1
 components:
