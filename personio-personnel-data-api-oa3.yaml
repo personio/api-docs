@@ -238,8 +238,74 @@ paths:
                     data:
                       id: 81723
                       message: "success"
+    
                       
   "/company/employees/{employee_id}":
+    patch:
+      tags: 
+        - Employees
+      summary: Update an employee
+      description: >
+        Update existing employee.
+      parameters:
+        - name: employee_id
+          in: path
+          required: true
+          description: Numeric `id` of the employee
+          schema:
+            type: integer
+            format: int32  
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                "employee[email]":
+                  description: Employee email
+                  type: string
+                "employee[first_name]":
+                  description: Employee first name
+                  type: string
+                "employee[last_name]":
+                  description: Employee last name
+                  type: string
+                "employee[gender]":
+                  description: Employee gender
+                  type: string
+                  enum:
+                    - male
+                    - female
+                    - diverse
+                "employee[position]":
+                  description: Employee position
+                  type: string
+                "employee[department]":
+                  description: Employee department
+                  type: string
+                "employee[hire_date]":
+                  description: Employee hire date
+                  type: string
+                  format: date
+                "employee[weekly_hours]":
+                  description: Employee weekly working hours
+                  type: number
+      responses:
+        "200":
+          description: Employee is updated
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/EmployeeCreatedResponse"
+              examples:
+                response:
+                  value:
+                    success: true
+                    data:
+                      id: 81723
+                      message: "success"
+  
     get:
       tags: 
         - Employees
