@@ -544,7 +544,7 @@ paths:
     get:
       tags: 
         - Attendances
-      description: Fetche attendance data for the company employees. .The result can be `paginated` and `filtered` by period and/or specific employee/employees. The result contains a list of attendances.
+      description: Fetch attendance data for the company employees. .The result can be `paginated` and `filtered` by period and/or specific employee/employees. The result contains a list of attendances.
       parameters:
         - name: start_date
           in: query
@@ -563,7 +563,7 @@ paths:
         - name: employees
           in: query
           required: false
-          description: A list of Personio employee ID's to filter the results. The result filters including only absences of provided employees
+          description: A list of Personio employee ID's to filter the results. The result filters including only attendances of provided employees. Maximum values passed for this field is 100
           explode: true
           schema:
             type: array
