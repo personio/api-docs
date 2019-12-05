@@ -1838,11 +1838,11 @@ components:
         half_day_start:
           type: boolean
           example: 0
-          description: Weather the start date is a half-day off
+          description: Whether the start date is a half-day off
         half_day_end:
           type: boolean
           example: 0
-          description: Weather the end date is a half-day off
+          description: Whether the end date is a half-day off
         comment:
           type: string
           example: Some Comment
