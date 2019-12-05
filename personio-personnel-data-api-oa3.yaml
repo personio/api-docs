@@ -616,6 +616,7 @@ paths:
                           comment: I was productive as hell
                           is_holiday: false
                           is_on_time_off: false
+                          project_id: null
                       - id: 1235
                         type: AttendancePeriod
                         attributes:
@@ -624,9 +625,10 @@ paths:
                           start_time: '9:30'
                           end_time: '18:30'
                           break: 60
-                          comment: I wasn't productive
+                          comment: I wasn't productive on this project
                           is_holiday: false
                           is_on_time_off: true
+                          project_id: 716563
     post:
       tags:
         - Attendances
