@@ -178,6 +178,13 @@ paths:
                           profile_picture:
                             label: Profile Picture
                             value: 'http://api.dev.personio.de/v1/company/employees/2/profile-picture'
+                          team:
+                            label: Team
+                            value:
+                              type: Team
+                              attributes:
+                                id: 1
+                                name: Team name
     post:
       tags: 
         - Employees
@@ -1609,7 +1616,9 @@ components:
                 $ref: "#/components/schemas/WorkSchedule"
               absence_entitlement:
                 $ref: "#/components/schemas/AbsenceEntitlement"
-                
+              team:
+                $ref: "#/components/schemas/Team"
+
     EmployeesResponse:
       title: List of Employees
       allOf:
@@ -1981,3 +1990,24 @@ components:
                                         example: Email
                                       value:
                                         example: michael.dou@personio.de
+    Team:
+      type: object
+      properties:
+        label:
+          type: string
+          example: Team
+        value:
+          type: object
+          properties:
+            type:
+              type: string
+              example: Team
+            attributes:
+              type: object
+              properties:
+                id:
+                  type: number
+                  example: 1
+                name:
+                  type: string
+                  example: Team name
