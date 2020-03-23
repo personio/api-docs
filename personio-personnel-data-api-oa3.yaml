@@ -878,6 +878,7 @@ paths:
                       attributes:
                         id: 12345
                         status: approved
+                        comment: Comment
                         start_date: '2017-12-27T00:00:00+0100'
                         end_date: '2017-12-29T00:00:00+0100'
                         days_count: 3
@@ -1074,6 +1075,7 @@ paths:
                       attributes:
                         id: 12345
                         status: approved
+                        comment: Comment
                         start_date: '2017-12-27T00:00:00+0100'
                         end_date: '2017-12-29T00:00:00+0100'
                         days_count: 3
