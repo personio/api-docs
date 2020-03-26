@@ -1909,6 +1909,9 @@ components:
                       status:
                         type: string
                         example: approved
+                      comment:
+                        type: string
+                        example: comment
                       start_date:
                         type: string
                         example: 2017-12-27T00:00:00+0100
