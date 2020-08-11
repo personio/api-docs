@@ -669,7 +669,7 @@ paths:
         - BearerAuth: []
       tags:
         - Attendances
-      description: Fetche attendance data for the company employees. .The result can be `paginated` and `filtered` by period and/or specific employee/employees. The result contains a list of attendances.
+      description: Fetch attendance data for the company employees. The result can be `paginated` and `filtered` by period and/or specific employee/employees. The result contains a list of attendances.
       parameters:
         - name: start_date
           in: query
