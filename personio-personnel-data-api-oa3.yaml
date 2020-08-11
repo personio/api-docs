@@ -6,6 +6,8 @@ info:
 paths:
   /company/employees:
     get:
+      security:
+        - BearerAuth: []
       tags:
         - Employees
       description: List Company Employees
@@ -179,6 +181,8 @@ paths:
                             label: Profile Picture
                             value: 'http://api.dev.personio.de/v1/company/employees/2/profile-picture'
     post:
+      security:
+        - BearerAuth: []
       tags:
         - Employees
       summary: Create an employee
@@ -290,6 +294,8 @@ paths:
 
   "/company/employees/{employee_id}":
     patch:
+      security:
+        - BearerAuth: []
       tags:
         - Employees
       summary: Update an employee
@@ -397,6 +403,8 @@ paths:
                       message: "success"
 
     get:
+      security:
+        - BearerAuth: []
       tags:
         - Employees
       description: Show employee by ID
@@ -589,6 +597,8 @@ paths:
                       message: 'Es ist ein Problem aufgetreten '
   "/company/employees/custom-attributes":
     get:
+      security:
+        - BearerAuth: []
       tags:
         - Employees
       description: Lists all the custom atrributes.
@@ -611,6 +621,8 @@ paths:
 
   "/company/employees/{employee_id}/profile-picture/{width}":
     get:
+      security:
+        - BearerAuth: []
       tags:
         - Employees
       description: Show employee profile picture
@@ -653,6 +665,8 @@ paths:
 
   /company/attendances:
     get:
+      security:
+        - BearerAuth: []
       tags:
         - Attendances
       description: Fetche attendance data for the company employees. .The result can be `paginated` and `filtered` by period and/or specific employee/employees. The result contains a list of attendances.
@@ -733,6 +747,8 @@ paths:
                           is_holiday: false
                           is_on_time_off: true
     post:
+      security:
+        - BearerAuth: []
       tags:
         - Attendances
       description: This endpoint is responsible for adding attendance data for the company employees. It is possible to add attendances for one or many employees at the same time. The payload sent on the request should be a list of attendance periods, in the form of an array containing attendance period objects.
@@ -763,6 +779,10 @@ paths:
                   value:
                     success: true
                     data:
+                      id: [
+                        1,
+                        2,
+                      ]
                       message: 'success'
         "400":
           description: Invalid request
@@ -780,6 +800,8 @@ paths:
 
   "/company/attendances/{id}":
     delete:
+      security:
+        - BearerAuth: []
       tags:
         - Attendances
       description: This endpoint is responsible for deleting attendance data for the
@@ -820,6 +842,8 @@ paths:
                       message: 'The attendance period was not found.'
 
     patch:
+      security:
+        - BearerAuth: []
       tags:
         - Attendances
       description: This endpoint is responsible for updating attendance data for the company employees. Attributes are not required and if not specified, the current value will be used. It is not possible to change the employee id.
@@ -865,17 +889,10 @@ paths:
                       code: 404
                       message: 'The attendance period was not found.'
 
-
-
-
-
-
-
-
-
-
   /company/time-off-types:
     get:
+      security:
+        - BearerAuth: []
       tags:
         - Absences
       description: Provides a list of available absences types. For example 'Paid vacation', 'Parental leave' or 'Home office'
@@ -926,6 +943,8 @@ paths:
 
   /company/time-offs:
     get:
+      security:
+        - BearerAuth: []
       tags:
         - Absences
       description: This endpoint is responsible for fetching absence data for the company employees.The result can be `paginated` and `filtered` by period and/or specific employee/employees. The result contains a list of absence periods.
@@ -981,40 +1000,41 @@ paths:
                   value:
                     success: true
                     data:
-                    - type: TimeOffPeriod
-                      attributes:
-                        id: 12345
-                        status: approved
-                        comment: Comment
-                        start_date: '2017-12-27T00:00:00+0100'
-                        end_date: '2017-12-29T00:00:00+0100'
-                        days_count: 3
-                        half_day_start: 0
-                        half_day_end: 0
-                        time_off_type:
-                          type: TimeOffType
-                          attributes:
-                            id: 54321
-                            name: Vacation
-                        employee:
-                          type: Employee
-                          attributes:
-                            id:
-                              label: id
-                              value: 4567
-                            first_name:
-                              label: First name
-                              value: Michael
-                            last_name:
-                              label: Last name
-                              value: Miller
-                            email:
-                              label: Email
-                              value: michael.miller@demo.com
-                        certificate:
-                          status: not-required
-                        created_at: '2017-01-17T10:32:18+0100'
+                      - type: TimeOffPeriod
+                        attributes:
+                          id: 12345
+                          status: approved
+                          start_date: '2017-12-27T00:00:00+0100'
+                          end_date: '2017-12-29T00:00:00+0100'
+                          days_count: 3
+                          half_day_start: 0
+                          half_day_end: 0
+                          time_off_type:
+                            type: TimeOffType
+                            attributes:
+                              id: 54321
+                              name: Vacation
+                          employee:
+                            type: Employee
+                            attributes:
+                              id:
+                                label: id
+                                value: 4567
+                              first_name:
+                                label: First name
+                                value: Michael
+                              last_name:
+                                label: Last name
+                                value: Miller
+                              email:
+                                label: Email
+                                value: michael.miller@demo.com
+                          certificate:
+                            status: not-required
+                          created_at: '2017-01-17T10:32:18+0100'
     post:
+      security:
+        - BearerAuth: []
       tags:
         - Absences
       description: This endpoint is responsible for adding absence data for the company employees.
@@ -1117,6 +1137,8 @@ paths:
 
   "/company/time-offs/{id}":
     delete:
+      security:
+        - BearerAuth: []
       tags:
         - Absences
       description: This endpoint is responsible for deleting absence period data for the company employees.
@@ -1155,6 +1177,8 @@ paths:
                       code: 404
                       message: 'The absence period was not found.'
     get:
+      security:
+        - BearerAuth: []
       tags:
         - Absences
       description: Show Absence Period
@@ -1182,7 +1206,6 @@ paths:
                       attributes:
                         id: 12345
                         status: approved
-                        comment: Comment
                         start_date: '2017-12-27T00:00:00+0100'
                         end_date: '2017-12-29T00:00:00+0100'
                         days_count: 3
@@ -1229,10 +1252,9 @@ servers:
   - url: https://api.personio.de/v1
 components:
   securitySchemes:
-    auth:
-      type: apiKey
-      name: Authorization
-      in: header
+    BearerAuth:
+      type: http
+      scheme: bearer
   schemas:
     Response:
       title: Default response object
@@ -1572,8 +1594,12 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          example: 1
+          type: object
+          properties:
+            label:
+              example: id
+            value:
+              example: 1
         first_name:
           type: object
           properties:
@@ -1737,9 +1763,7 @@ components:
                   type:
                     example: Employee
                   attributes:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Employee"
+                    $ref: "#/components/schemas/Employee"
 
     EmployeeResponse:
       title: Employee
@@ -1887,12 +1911,12 @@ components:
           type: string
           description: Optional comment
       required:
-        - employee
-        - date
-        - start_time
-        - end_time
-        - break
-        - comment
+        - attendances[][employee]
+        - attendances[][date]
+        - attendances[][start_time]
+        - attendances[][end_time]
+        - attendances[]break
+        - attendances[][comment]
 
 
     NewAttendancePeriodResponse:
@@ -2008,113 +2032,89 @@ components:
     Absence:
       type: object
       properties:
-                      id:
-                        type: integer
-                        example: 1
-                      status:
-                        type: string
-                        example: approved
-                      comment:
-                        type: string
-                        example: comment
-                      start_date:
-                        type: string
-                        example: 2017-12-27T00:00:00+0100
-                      end_date:
-                        type: string
-                        example: 2017-12-79T00:00:00+0100
-                      days_count:
-                        type: number
-                        example: 3
-                      half_day_start:
-                        type: number
-                        example: 0
-                      half_day_end:
-                        type: number
-                        example: 0
-                      time_off_type:
-                        type: object
-                        properties:
-                          type:
-                            type: string
-                            example: TimeOffType
-                          attributes:
-                            type: array
-                            items:
-                              type: object
-                              properties:
-                                id:
-                                  type: integer
-                                  example: 1
-                                name:
-                                  type: string
-                                  example: Vacation
-                      employee:
-                        $ref: "#/components/schemas/ShortEmployee"
-                      certificate:
-                        type: object
-                        properties:
-                          status:
-                            example: not-required
-                            type: string
-                      created_at:
-                        type: string
-                        example: 2017-01-17T10:32:18+0100
-                        
-                        
-    ShortEmployee:
-                        type: object
-                        properties:
-                          type:
-                            type: string
-                            example: Employee
-                          attributes:
-                            type: array
-                            items:
-                              type: object
-                              properties:
-                                id:
-                                  type: integer
-                                  example: 1
-                                first_name:
-                                  type: object
-                                  properties:
-                                    label:
-                                      example: First Name
-                                    value:
-                                      example: Michael
-                                last_name:
-                                  type: object
-                                  properties:
-                                        label:
-                                          example: Last Name
-                                        value:
-                                          example: Dou
-                                email:
-                                  type: object
-                                  properties:
-                                      label:
-                                        example: Email
-                                      value:
-                                        example: michael.dou@personio.de
-    Team:
-      type: object
-      properties:
-        label:
+        id:
+          type: integer
+          example: 1
+        status:
           type: string
-          example: Team
-        value:
+          example: approved
+        start_date:
+          type: string
+          example: 2017-12-27T00:00:00+0100
+        end_date:
+          type: string
+          example: 2017-12-79T00:00:00+0100
+        days_count:
+          type: number
+          example: 3
+        half_day_start:
+          type: number
+          example: 0
+        half_day_end:
+          type: number
+          example: 0
+        time_off_type:
           type: object
           properties:
             type:
               type: string
-              example: Team
+              example: TimeOffType
             attributes:
-              type: object
-              properties:
-                id:
-                  type: number
-                  example: 1
-                name:
-                  type: string
-                  example: Team name
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: Vacation
+        employee:
+          $ref: "#/components/schemas/ShortEmployee"
+        certificate:
+          type: object
+          properties:
+            status:
+              example: not-required
+              type: string
+        created_at:
+          type: string
+          example: 2017-01-17T10:32:18+0100
+
+
+    ShortEmployee:
+      type: object
+      properties:
+        type:
+          type: string
+          example: Employee
+        attributes:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              first_name:
+                type: object
+                properties:
+                  label:
+                    example: First Name
+                  value:
+                    example: Michael
+              last_name:
+                type: object
+                properties:
+                  label:
+                    example: Last Name
+                  value:
+                    example: Dou
+              email:
+                type: object
+                properties:
+                  label:
+                    example: Email
+                  value:
+                    example: michael.dou@personio.de
