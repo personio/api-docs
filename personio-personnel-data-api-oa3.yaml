@@ -1874,10 +1874,10 @@ components:
               properties:
                 total_elements:
                   type: integer
-                  description: Total number of items matching the query filters.
+                  description: The total number of items matching the query filters.
                 total_pages:
                   type: integer
-                  description: Total number of pages distributing sets of items matching the query filters.
+                  description: The total number of pages distributing sets of items matching the query filters.
                 current_page:
                   type: integer
                   description: Current page number containing the returned set of items matching with the query filters. The page number range is from 0 to total_pages - 1
