@@ -721,6 +721,10 @@ paths:
                 response:
                   value:
                     success: true
+                    metadata:
+                      total_elements: 2
+                      current_page: 0
+                      total_pages: 3
                     offset: 0
                     limit: 200
                     data:
@@ -1861,6 +1865,22 @@ components:
         - $ref: "#/components/schemas/Response"
         - type: object
           properties:
+            metadata:
+              type: object
+              required:
+                - total_elements
+                - current_page
+                - total_pages
+              properties:
+                total_elements:
+                  type: integer
+                  description: Total number of items matching the query filters.
+                total_pages:
+                  type: integer
+                  description: Total number of pages distributing sets of items matching the query filters.
+                current_page:
+                  type: integer
+                  description: Current page number containing the returned set of items matching with the query filters. The page number range is from 0 to total_pages - 1
             offset:
               type: integer
             limit:
