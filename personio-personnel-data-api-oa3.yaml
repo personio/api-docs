@@ -1465,159 +1465,163 @@ components:
     Employee:
       type: object
       properties:
-              id:
-                                  type: integer
-                                  example: 1
-              first_name:
-                                  type: object
-                                  properties:
-                                    label:
-                                      example: First name
-                                    value:
-                                      example: Michael
-              last_name:
-                                  type: object
-                                  properties:
-                                        label:
-                                          example: Last name
-                                        value:
-                                          example: Dou
-              email:
-                                  type: object
-                                  properties:
-                                      label:
-                                        example: Email
-                                      value:
-                                        example: michael.dou@personio.de
-              gender:
-                type: object
-                properties:
-                  label:
-                    example: Gender
-                  value:
-                    example: male
-              status:
-                type: object
-                properties:
-                  label:
-                    example: Status
-                  value:
-                    example: active
-              position:
-                type: object
-                properties:
-                  label:
-                    example: Position
-                  value:
-                    example: Online Marketing Specialist
-              supervisor:
-                $ref: "#/components/schemas/Supervisor"
-              employment_type:
-                type: object
-                properties:
-                  label:
-                    example: Employment type
-                  value:
-                    example: internal
-              weekly_working_hours:
-                type: object
-                properties:
-                  label:
-                    example: Weekly hours
-                  value:
-                    example: 40
-              hire_date:
-                type: object
-                properties:
-                  label:
-                    example: Hire date
-                  value:
-                    example: 2012-02-01T00:00:00+0100
-              contract_end_date:
-                type: object
-                properties:
-                  label:
-                    example: Contact end date
-                  value:
-                    example: 2020-02-01T00:00:00+0100
-              termination_date:
-                type: object
-                properties:
-                  label:
-                    example: Termonation date
-                  value:
-                    example: 2020-02-01T00:00:00+0100
-              termination_type:
-                type: object
-                properties:
-                  label:
-                    example: Termonation type
-                  value:
-                    example: 
-              termination_reason:
-                type: object
-                properties:
-                  label:
-                    example: Termonation reason
-                  value:
-                    example: 
-              probation_period_end:
-                type: object
-                properties:
-                  label:
-                    example: Probation period end
-                  value:
-                    example: 2020-02-01T00:00:00+0100
-              created_at:
-                type: object
-                properties:
-                  label:
-                    example: Created at
-                  value:
-                    example: 2018-02-01T00:00:00+0100
-              fix_salary:
-                type: object
-                properties:
-                  label:
-                    example: Fix salary
-                  value:
-                    example: 4000
-              hourly_salary:
-                type: object
-                properties:
-                  label:
-                    example: Hourly salary
-                  value:
-                    example: 0
-              vacation_day_balance:
-                type: object
-                properties:
-                  label:
-                    example: Vacation day balance
-                  value:
-                    example: 20.5
-              profile_picture:
-                type: object
-                properties:
-                  label:
-                    example: Profile Picture
-                  value:
-                    example: http://api.dev.personio.de/v1/company/employees/1/profile-picture    
-                    
-              office:
-                $ref: "#/components/schemas/Office"
-              department:
-                $ref: "#/components/schemas/Department"
-              cost_centers:
-                $ref: "#/components/schemas/CostCenters"
-              holiday_calendar:
-                $ref: "#/components/schemas/HolidayCalendar"
-              work_schedule:
-                $ref: "#/components/schemas/WorkSchedule"
-              absence_entitlement:
-                $ref: "#/components/schemas/AbsenceEntitlement"
-              team:
-                $ref: "#/components/schemas/Team"
+        id:
+          type: object
+          properties:
+            label:
+              example: ID
+            value:
+              example: 1
+        first_name:
+          type: object
+          properties:
+            label:
+              example: First name
+            value:
+              example: Michael
+        last_name:
+          type: object
+          properties:
+            label:
+              example: Last name
+            value:
+              example: Dou
+        email:
+          type: object
+          properties:
+            label:
+              example: Email
+            value:
+              example: michael.dou@personio.de
+        gender:
+          type: object
+          properties:
+            label:
+              example: Gender
+            value:
+              example: male
+        status:
+          type: object
+          properties:
+            label:
+              example: Status
+            value:
+              example: active
+        position:
+          type: object
+          properties:
+            label:
+              example: Position
+            value:
+              example: Online Marketing Specialist
+        supervisor:
+          $ref: "#/components/schemas/Supervisor"
+        employment_type:
+          type: object
+          properties:
+            label:
+              example: Employment type
+            value:
+              example: internal
+        weekly_working_hours:
+          type: object
+          properties:
+            label:
+              example: Weekly hours
+            value:
+              example: 40
+        hire_date:
+          type: object
+          properties:
+            label:
+              example: Hire date
+            value:
+              example: 2012-02-01T00:00:00+0100
+        contract_end_date:
+          type: object
+          properties:
+            label:
+              example: Contact end date
+            value:
+              example: 2020-02-01T00:00:00+0100
+        termination_date:
+          type: object
+          properties:
+            label:
+              example: Termonation date
+            value:
+              example: 2020-02-01T00:00:00+0100
+        termination_type:
+          type: object
+          properties:
+            label:
+              example: Termonation type
+            value:
+              example:
+        termination_reason:
+          type: object
+          properties:
+            label:
+              example: Termonation reason
+            value:
+              example:
+        probation_period_end:
+          type: object
+          properties:
+            label:
+              example: Probation period end
+            value:
+              example: 2020-02-01T00:00:00+0100
+        created_at:
+          type: object
+          properties:
+            label:
+              example: Created at
+            value:
+              example: 2018-02-01T00:00:00+0100
+        fix_salary:
+          type: object
+          properties:
+            label:
+              example: Fix salary
+            value:
+              example: 4000
+        hourly_salary:
+          type: object
+          properties:
+            label:
+              example: Hourly salary
+            value:
+              example: 0
+        vacation_day_balance:
+          type: object
+          properties:
+            label:
+              example: Vacation day balance
+            value:
+              example: 20.5
+        profile_picture:
+          type: object
+          properties:
+            label:
+              example: Profile Picture
+            value:
+              example: http://api.dev.personio.de/v1/company/employees/1/profile-picture
+
+        office:
+          $ref: "#/components/schemas/Office"
+        department:
+          $ref: "#/components/schemas/Department"
+        cost_centers:
+          $ref: "#/components/schemas/CostCenters"
+        holiday_calendar:
+          $ref: "#/components/schemas/HolidayCalendar"
+        work_schedule:
+          $ref: "#/components/schemas/WorkSchedule"
+        absence_entitlement:
+          $ref: "#/components/schemas/AbsenceEntitlement"
+        team:
+          $ref: "#/components/schemas/Team"
 
     EmployeesResponse:
       title: List of Employees
@@ -1633,9 +1637,7 @@ components:
                   type:
                     example: Employee
                   attributes:
-                    type: array
-                    items:
-                       $ref: "#/components/schemas/Employee"
+                    $ref: "#/components/schemas/Employee"
                   
     EmployeeResponse:
       title: Employee
