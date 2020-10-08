@@ -4,6 +4,39 @@ info:
   title: Personnel Data
   description: API for reading and writing personnel data including data about attendances and absences
 paths:
+  /auth:
+    post:
+      tags:
+        - Auth
+      description: 'Request Authentication Token'
+      parameters:
+        - name: client_id
+          in: query
+          required: true
+          description: Client id of the downloaded credentials file
+          schema:
+            type: string
+        - name: client_secret
+          in: query
+          required: true
+          description: Client secret of the downloaded credentials file
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Bearer token
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/AuthenticationTokenResponse"
+              examples:
+                response:
+                  value:
+                    success: true
+                    data:
+                      token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLmRldi5wZXJzb25pby5kZTozMDAwMS92MS9hdXRoIiwiaWF0IjoxNDg5MDkxMzA2LCJleHAiOjE0ODkxNzc3MDYsIm5iZiI6MTQ4OTA5MTMwNiwianRpIjoiZmU1ZjkxOGY2MDZjOWI4OGMwMzM0ZmJkZjkyYzkwMzgiLCJzdWIiOiJPR014TVdRd1kySmxZbVF6Tm1RNVpqQmxOell6WmpsaSJ9.QZZCdlDjmL-LYdoDx2XLUfhwTdcjDgm9h4t-6JoACiM"
+
   /company/employees:
     get:
       security:
@@ -1484,18 +1517,16 @@ components:
               type:
                 example: CostCenter
               attributes:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
-                      example: Cost Center One
-                    id:
-                      type: number
-                      example: 1
-                    percentage:
-                      type: number
-                      example: 50
+                type: object
+                properties:
+                  name:
+                    example: Cost Center One
+                  id:
+                    type: number
+                    example: 1
+                  percentage:
+                    type: number
+                    example: 50
     HolidayCalendar:
       type: object
       properties:
@@ -1790,6 +1821,7 @@ components:
       properties:
         employee:
           example: 1
+          type: integer
         date:
           type: string
           format: date
@@ -1886,23 +1918,21 @@ components:
             limit:
               type: integer
             data:
-              type: object
-              required:
-                - id
-                - type
-                - attributes
-              properties:
-                id:
-                  type: integer
-                type:
-                  example: AttendancePeriod
-                attributes:
-                  type: array
-                  items:
+              type: array
+              items:
+                type: object
+                required:
+                  - id
+                  - type
+                  - attributes
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  type:
+                    example: AttendancePeriod
+                  attributes:
                     $ref: "#/components/schemas/Attendance"
-
-
-
 
     NewAttendancePeriodParametersRequest:
       title: Create a New Attendance Period request
@@ -1963,6 +1993,7 @@ components:
         id:
           type: integer
           description: identifier
+          example: 1
         type:
           type: string
           enum:
@@ -2019,16 +2050,16 @@ components:
         - type: object
           properties:
             data:
-              type: object
-              required:
-                - type
-                - attributes
-              properties:
-                type:
-                  example: TimeOffPeriod
-                attributes:
-                  type: array
-                  items:
+              type: array
+              items:
+                type: object
+                required:
+                  - type
+                  - attributes
+                properties:
+                  type:
+                    example: TimeOffPeriod
+                  attributes:
                     $ref: "#/components/schemas/Absence"
 
     AbsencePeriodResponse:
@@ -2080,16 +2111,14 @@ components:
               type: string
               example: TimeOffType
             attributes:
-              type: array
-              items:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    example: 1
-                  name:
-                    type: string
-                    example: Vacation
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                name:
+                  type: string
+                  example: Vacation
         employee:
           $ref: "#/components/schemas/ShortEmployee"
         certificate:
@@ -2110,31 +2139,47 @@ components:
           type: string
           example: Employee
         attributes:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-                example: 1
-              first_name:
-                type: object
-                properties:
-                  label:
-                    example: First Name
-                  value:
-                    example: Michael
-              last_name:
-                type: object
-                properties:
-                  label:
-                    example: Last Name
-                  value:
-                    example: Dou
-              email:
-                type: object
-                properties:
-                  label:
-                    example: Email
-                  value:
-                    example: michael.dou@personio.de
+          type: object
+          properties:
+            id:
+              type: object
+              properties:
+                label:
+                  example: 1
+                value:
+                  example: id
+            first_name:
+              type: object
+              properties:
+                label:
+                  example: First Name
+                value:
+                  example: Michael
+            last_name:
+              type: object
+              properties:
+                label:
+                  example: Last Name
+                value:
+                  example: Dou
+            email:
+              type: object
+              properties:
+                label:
+                  example: Email
+                value:
+                  example: michael.dou@personio.de
+
+    AuthenticationTokenResponse:
+      title: Request Authentication Token response
+      allOf:
+        - $ref: '#/components/schemas/Response'
+        - type: object
+          properties:
+            data:
+              type: object
+              required:
+                - token
+              properties:
+                token:
+                  type: string
