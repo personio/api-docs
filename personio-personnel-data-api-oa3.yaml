@@ -700,7 +700,7 @@ paths:
     get:
       security:
         - BearerAuth: []
-      tags: 
+      tags:
         - Attendances
       description: Fetch attendance data for the company employees. The result can be `paginated` and `filtered` by period and/or specific employee/employees. The result contains a list of attendances.
       parameters:
