@@ -698,9 +698,7 @@ paths:
 
   /company/attendances:
     get:
-      security:
-        - BearerAuth: []
-      tags:
+      tags: 
         - Attendances
       description: Fetch attendance data for the company employees. The result can be `paginated` and `filtered` by period and/or specific employee/employees. The result contains a list of attendances.
       parameters:
@@ -969,14 +967,16 @@ paths:
                   value:
                     success: true
                     data:
-                      - id: 1234
-                        type: TimeOffType
+                      - type: TimeOffType
                         attributes:
+                          id: 1234
                           name: 'Paid vacation'
-                      - id: 1235
-                        type: TimeOffType
+                          category: null
+                      - type: TimeOffType
                         attributes:
+                          id: 1235
                           name: 'Home office'
+                          category: offsite_work
 
   /company/time-offs:
     get:
@@ -1051,6 +1051,7 @@ paths:
                             attributes:
                               id: 54321
                               name: Vacation
+                              category: offsite_work
                           employee:
                             type: Employee
                             attributes:
@@ -1111,6 +1112,7 @@ paths:
                           attributes:
                             id: 54321
                             name: Vacation
+                            category: offsite_work
                         employee:
                           type: Employee
                           attributes:
@@ -1253,6 +1255,7 @@ paths:
                           attributes:
                             id: 45678
                             name: Vacation
+                            category: offsite_work
                         employee:
                           type: Employee
                           attributes:
@@ -1990,10 +1993,6 @@ components:
       title: Type of time-off resource
       type: object
       properties:
-        id:
-          type: integer
-          description: identifier
-          example: 1
         type:
           type: string
           enum:
@@ -2002,9 +2001,17 @@ components:
         attributes:
           type: object
           properties:
+            id:
+              type: integer
+              description: identifier
+              example: 1
             name:
               type: string
               example: Paid vacation
+            category:
+              type: string
+              nullable: true
+              example: offsite_work
     CreateTimeOffPeriodRequest:
       title: Create time-off periods
       type: object
@@ -2111,14 +2118,17 @@ components:
               type: string
               example: TimeOffType
             attributes:
-              type: object
-              properties:
-                id:
-                  type: integer
-                  example: 1
-                name:
-                  type: string
-                  example: Vacation
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: Vacation
+                  category:
+                    type: string
+                    example: offsite_work
         employee:
           $ref: "#/components/schemas/ShortEmployee"
         certificate:
