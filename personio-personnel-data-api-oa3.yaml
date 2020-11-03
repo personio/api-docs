@@ -766,7 +766,7 @@ paths:
                         attributes:
                           employee: 325659
                           date: '2017-01-17'
-                          start_time: '9:00'
+                          start_time: '09:00'
                           end_time: '18:00'
                           break: 50
                           comment: I was productive as hell
@@ -777,7 +777,7 @@ paths:
                         attributes:
                           employee: 325660
                           date: '2017-01-18'
-                          start_time: '9:30'
+                          start_time: '09:30'
                           end_time: '18:30'
                           break: 60
                           comment: I wasn't productive
@@ -830,10 +830,34 @@ paths:
               examples:
                 response:
                   value:
-                    success: true
+                    success: false
                     error:
                       code: 400
                       message: 'Error when trying to insert Attendances periods rows'
+                      detailed_message: [
+                        {
+                          success: true,
+                          error_msg: null,
+                          id: 1,
+                          employee: 1234,
+                          date: "2017-01-01",
+                          start_time: "09:00",
+                          end_time: "18:00",
+                          break: 60,
+                          comment: ""
+                        },
+                        {
+                          success: false,
+                          error_msg: "Existing overlapping attendances periods",
+                          id: null,
+                          employee: 1234,
+                          date: "2017-01-01",
+                          start_time: "09:00",
+                          end_time: "18:00",
+                          break: 60,
+                          comment: ""
+                        }
+                      ]
 
   "/company/attendances/{id}":
     delete:
@@ -1412,7 +1436,7 @@ components:
               example: Error when trying to insert absence period
 
     ErrorCreateAttendanceResponse:
-      title: 400 absense error
+      title: 400 attendances error
       type: object
       properties:
         success:
@@ -1425,7 +1449,41 @@ components:
               type: integer
               example: 400
             message:
+              type: string
               example: Error when trying to insert Attendances periods rows
+            detailed_message:
+              type: array
+              items:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_msg:
+                    type: string
+                    example: Existing overlapping attendances periods
+                  'id':
+                    type: integer
+                    nullable: true
+                    example: null
+                  employee:
+                    type: integer
+                    example: 1234
+                  date:
+                    type: string
+                    example: 2017-01-01
+                  start_time:
+                    type: string
+                    example: 09:00
+                  end_time:
+                    type: string
+                    example: 18:00
+                  break:
+                    type: integer
+                    example: 60
+                  comment:
+                    type: string
+                    example:
 
     ErrorAttendanceResponse:
       title: 404 absense error

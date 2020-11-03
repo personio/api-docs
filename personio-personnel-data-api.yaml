@@ -116,16 +116,16 @@ paths:
                     cost_centers:
                       label: Cost center
                       value:
-                      - type: CostCenter
-                        attributes:
-                          name: Cost Center One
-                          id: 320
-                          percentage: 50
-                      - type: CostCenter
-                        attributes:
-                          name: Cost Center Two
-                          id: 321
-                          percentage: 50
+                        - type: CostCenter
+                          attributes:
+                            name: Cost Center One
+                            id: 320
+                            percentage: 50
+                        - type: CostCenter
+                          attributes:
+                            name: Cost Center Two
+                            id: 321
+                            percentage: 50
                     fix_salary:
                       label: Fix salary
                       value: 4000
@@ -220,7 +220,7 @@ paths:
           in: formData
           description: Employee gender
           type: string
-          enum: [male, female, diverse]
+          enum: [ male, female, diverse ]
         - name: employee[position]
           required: false
           in: formData
@@ -361,16 +361,16 @@ paths:
                   cost_centers:
                     label: Cost center
                     value:
-                    - type: CostCenter
-                      attributes:
-                        name: Cost Center One
-                        id: 320
-                        percentage: 50
-                    - type: CostCenter
-                      attributes:
-                        name: Cost Center Two
-                        id: 321
-                        percentage: 50
+                      - type: CostCenter
+                        attributes:
+                          name: Cost Center One
+                          id: 320
+                          percentage: 50
+                      - type: CostCenter
+                        attributes:
+                          name: Cost Center Two
+                          id: 321
+                          percentage: 50
                   fix_salary:
                     label: Fix salary
                     value: 4000
@@ -516,42 +516,42 @@ paths:
               offset: 0
               limit: 200
               data:
-              - id: 1234
-                type: AttendancePeriod
-                attributes:
-                  employee: 325659
-                  date: '2017-01-17'
-                  start_time: '9:00'
-                  end_time: '18:00'
-                  break: 50
-                  comment: I was productive as hell
-                  is_holiday: false
-                  is_on_time_off: false
-              - id: 1235
-                type: AttendancePeriod
-                attributes:
-                  employee: 325660
-                  date: '2017-01-18'
-                  start_time: '9:30'
-                  end_time: '18:30'
-                  break: 60
-                  comment:
-                  is_holiday: false
-                  is_on_time_off: true
+                - id: 1234
+                  type: AttendancePeriod
+                  attributes:
+                    employee: 325659
+                    date: '2017-01-17'
+                    start_time: '9:00'
+                    end_time: '18:00'
+                    break: 50
+                    comment: I was productive as hell
+                    is_holiday: false
+                    is_on_time_off: false
+                - id: 1235
+                  type: AttendancePeriod
+                  attributes:
+                    employee: 325660
+                    date: '2017-01-18'
+                    start_time: '9:30'
+                    end_time: '18:30'
+                    break: 60
+                    comment:
+                    is_holiday: false
+                    is_on_time_off: true
     post:
       description: >-
         This endpoint is responsible for adding attendance data for the company employees.
         It is possible to add attendances for one or many employees at the same time.
         The payload sent on the request should be a list of attendance periods, in the form of an array containing attendance period objects.
       produces:
-      - application/json
+        - application/json
       parameters:
-      - name: body
-        in: body
-        description: 'List of attendance periods to create'
-        required: true
-        schema:
-          $ref: '#/definitions/NewAttendancePeriodRequest'
+        - name: body
+          in: body
+          description: 'List of attendance periods to create'
+          required: true
+          schema:
+            $ref: '#/definitions/NewAttendancePeriodRequest'
       responses:
         '200':
           description: 'The attendance periods were created successfully'
@@ -561,17 +561,45 @@ paths:
             application/json:
               success: true
               data:
+                id: [
+                  1,
+                  2
+                ]
                 message: 'success'
         '400':
           description: 'Invalid request'
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: '#/definitions/DetailedErrorResponse'
           examples:
             application/json:
-              success: true
+              success: false
               error:
                 code: 400
                 message: 'Error when trying to insert Attendances periods rows'
+                detailed_message: [
+                  {
+                    success: true,
+                    error_msg: null,
+                    id: 1,
+                    employee: 1234,
+                    date: "2017-01-01",
+                    start_time: "09:00",
+                    end_time: "18:00",
+                    break: 60,
+                    comment: ""
+                  },
+                  {
+                    success: false,
+                    error_msg: "Existing overlapping attendances periods",
+                    id: null,
+                    employee: 1234,
+                    date: "2017-01-01",
+                    start_time: "09:00",
+                    end_time: "18:00",
+                    break: 60,
+                    comment: ""
+                  }
+                ]
   '/company/attendances/{id}':
     delete:
       description: >-
@@ -591,7 +619,7 @@ paths:
           schema:
             $ref: '#/definitions/Response'
           examples:
-             application/json:
+            application/json:
               success: true
               data:
                 message: 'The attendance period was deleted.'
@@ -631,7 +659,7 @@ paths:
           schema:
             $ref: '#/definitions/Response'
           examples:
-             application/json:
+            application/json:
               success: true
               data:
                 message: 'The attendance period was updated.'
@@ -685,14 +713,14 @@ paths:
             application/json:
               success: true
               data:
-              - id: 1234
-                type: TimeOffType
-                attributes:
-                  name: 'Paid vacation'
-              - id: 1235
-                type: TimeOffType
-                attributes:
-                  name: 'Home office'
+                - id: 1234
+                  type: TimeOffType
+                  attributes:
+                    name: 'Paid vacation'
+                - id: 1235
+                  type: TimeOffType
+                  attributes:
+                    name: 'Home office'
 
   '/company/time-offs':
     get:
@@ -753,38 +781,38 @@ paths:
             application/json:
               success: true
               data:
-              - type: TimeOffPeriod
-                attributes:
-                  id: 12345
-                  status: approved
-                  start_date: '2017-12-27T00:00:00+0100'
-                  end_date: '2017-12-29T00:00:00+0100'
-                  days_count: 3
-                  half_day_start: 0
-                  half_day_end: 0
-                  time_off_type:
-                    type: TimeOffType
-                    attributes:
-                      id: 54321
-                      name: Vacation
-                  employee:
-                    type: Employee
-                    attributes:
-                      id:
-                        label: id
-                        value: 4567
-                      first_name:
-                        label: First name
-                        value: Michael
-                      last_name:
-                        label: Last name
-                        value: Miller
-                      email:
-                        label: Email
-                        value: michael.miller@demo.com
-                  certificate:
-                    status: not-required
-                  created_at: '2017-01-17T10:32:18+0100'
+                - type: TimeOffPeriod
+                  attributes:
+                    id: 12345
+                    status: approved
+                    start_date: '2017-12-27T00:00:00+0100'
+                    end_date: '2017-12-29T00:00:00+0100'
+                    days_count: 3
+                    half_day_start: 0
+                    half_day_end: 0
+                    time_off_type:
+                      type: TimeOffType
+                      attributes:
+                        id: 54321
+                        name: Vacation
+                    employee:
+                      type: Employee
+                      attributes:
+                        id:
+                          label: id
+                          value: 4567
+                        first_name:
+                          label: First name
+                          value: Michael
+                        last_name:
+                          label: Last name
+                          value: Miller
+                        email:
+                          label: Email
+                          value: michael.miller@demo.com
+                    certificate:
+                      status: not-required
+                    created_at: '2017-01-17T10:32:18+0100'
     post:
       description: >-
         This endpoint is responsible for adding absence data for the company employees.
@@ -893,7 +921,7 @@ paths:
           schema:
             $ref: '#/definitions/Response'
           examples:
-             application/json:
+            application/json:
               success: true
               data:
                 message: 'The absence period was deleted.'
@@ -984,6 +1012,45 @@ definitions:
             type: integer
           message:
             type: string
+    required:
+      - success
+      - error
+  DetailedErrorResponse:
+    title: Default error response
+    type: object
+    properties:
+      success:
+        type: boolean
+      error:
+        type: object
+        properties:
+          code:
+            type: integer
+          message:
+            type: string
+          detailed_message:
+            type: array
+            items:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                error_msg:
+                  type: string
+                'id':
+                  type: integer
+                employee:
+                  type: integer
+                date:
+                  type: string
+                start_time:
+                  type: string
+                end_time:
+                  type: string
+                break:
+                  type: integer
+                comment:
+                  type: string
     required:
       - success
       - error
@@ -1358,13 +1425,13 @@ definitions:
       attendances:
         - employee: 1234
           date: '2017-01-18'
-          start_time: '8:00'
+          start_time: '08:00'
           end_time: '18:00'
           break: 120
           comment:
         - employee: 1235
           date: '2017-01-17'
-          start_time: '9:00'
+          start_time: '09:00'
           end_time: '12:00'
           break: 35
           comment: I was productive as hell
@@ -1378,6 +1445,10 @@ definitions:
           data:
             type: object
             properties:
+              id:
+                type: array
+                items:
+                  type: integer
               message:
                 type: string
 
