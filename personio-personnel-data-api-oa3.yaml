@@ -1695,7 +1695,7 @@ components:
           type: object
           properties:
             label:
-              example: id
+              example: ID
             value:
               example: 1
         first_name:
@@ -1846,6 +1846,8 @@ components:
           $ref: "#/components/schemas/WorkSchedule"
         absence_entitlement:
           $ref: "#/components/schemas/AbsenceEntitlement"
+        team:
+          $ref: "#/components/schemas/Team"
 
     EmployeesResponse:
       title: List of Employees
@@ -1862,7 +1864,7 @@ components:
                     example: Employee
                   attributes:
                     $ref: "#/components/schemas/Employee"
-
+                    
     EmployeeResponse:
       title: Employee
       allOf:
