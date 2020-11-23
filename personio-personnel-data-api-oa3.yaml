@@ -223,43 +223,6 @@ paths:
         Creates new employee. Status of the employee will be set to `active` if `hire_date` provided is in the past. Otherwise status will be set to `onboarding`. This endpoint responds with `id` of created employee in case of success.
       requestBody:
         content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              properties:
-                "employee[email]":
-                  description: Employee email
-                  type: string
-                "employee[first_name]":
-                  description: Employee first name
-                  type: string
-                "employee[last_name]":
-                  description: Employee last name
-                  type: string
-                "employee[gender]":
-                  description: Employee gender
-                  type: string
-                  enum:
-                    - male
-                    - female
-                    - diverse
-                "employee[position]":
-                  description: Employee position
-                  type: string
-                "employee[department]":
-                  description: Employee department
-                  type: string
-                "employee[hire_date]":
-                  description: Employee hire date
-                  type: string
-                  format: date
-                "employee[weekly_hours]":
-                  description: Employee weekly working hours
-                  type: number
-              required:
-                - employee[email]
-                - employee[first_name]
-                - employee[last_name]
           application/json:
             schema:
               type: object
@@ -308,6 +271,43 @@ paths:
                           type: string
                           description: Dynamic field, represented by unique id.
                           example: "German"
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                "employee[email]":
+                  description: Employee email
+                  type: string
+                "employee[first_name]":
+                  description: Employee first name
+                  type: string
+                "employee[last_name]":
+                  description: Employee last name
+                  type: string
+                "employee[gender]":
+                  description: Employee gender
+                  type: string
+                  enum:
+                    - male
+                    - female
+                    - diverse
+                "employee[position]":
+                  description: Employee position
+                  type: string
+                "employee[department]":
+                  description: Employee department
+                  type: string
+                "employee[hire_date]":
+                  description: Employee hire date
+                  type: string
+                  format: date
+                "employee[weekly_hours]":
+                  description: Employee weekly working hours
+                  type: number
+              required:
+                - employee[email]
+                - employee[first_name]
+                - employee[last_name]
       responses:
         "200":
           description: Successful creation of a employee
@@ -344,36 +344,6 @@ paths:
             format: int32
       requestBody:
         content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              properties:
-                "employee[first_name]":
-                  description: Employee first name
-                  type: string
-                "employee[last_name]":
-                  description: Employee last name
-                  type: string
-                "employee[gender]":
-                  description: Employee gender
-                  type: string
-                  enum:
-                    - male
-                    - female
-                    - diverse
-                "employee[position]":
-                  description: Employee position
-                  type: string
-                "employee[department]":
-                  description: Employee department
-                  type: string
-                "employee[hire_date]":
-                  description: Employee hire date
-                  type: string
-                  format: date
-                "employee[weekly_hours]":
-                  description: Employee weekly working hours
-                  type: number
           application/json:
             schema:
               type: object
@@ -419,6 +389,36 @@ paths:
                           type: string
                           description: Dynamic field, represented by unique id.
                           example: "German"
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                "employee[first_name]":
+                  description: Employee first name
+                  type: string
+                "employee[last_name]":
+                  description: Employee last name
+                  type: string
+                "employee[gender]":
+                  description: Employee gender
+                  type: string
+                  enum:
+                    - male
+                    - female
+                    - diverse
+                "employee[position]":
+                  description: Employee position
+                  type: string
+                "employee[department]":
+                  description: Employee department
+                  type: string
+                "employee[hire_date]":
+                  description: Employee hire date
+                  type: string
+                  format: date
+                "employee[weekly_hours]":
+                  description: Employee weekly working hours
+                  type: number
       responses:
         "200":
           description: Employee is updated
