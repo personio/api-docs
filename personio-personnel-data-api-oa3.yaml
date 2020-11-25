@@ -223,6 +223,54 @@ paths:
         Creates new employee. Status of the employee will be set to `active` if `hire_date` provided is in the past. Otherwise status will be set to `onboarding`. This endpoint responds with `id` of created employee in case of success.
       requestBody:
         content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                employee:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      example: "john.dou@demo.com"
+                    first_name:
+                      type: string
+                      example: "John"
+                    last_name:
+                      type: string
+                      example: "Dou"
+                    gender:
+                      type: string
+                      example: male
+                    position:
+                      type: string
+                      example: developer
+                    subcompany:
+                      type: string
+                      description: The subcompany employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
+                      example: ACME
+                    department:
+                      type: string
+                      description: The department employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
+                      example: IT
+                    office:
+                      type: string
+                      description: The office employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
+                      example: Madrid
+                    hire_date:
+                      type: string
+                      example: '2020-01-31'
+                      format: yyyy-mm-dd
+                    weekly_hours:
+                      type: number
+                      example: 40
+                    custom_attributes:
+                      type: object
+                      properties:
+                        dynamic_{{ field uid }}:
+                          type: string
+                          description: Dynamic field, represented by unique id.
+                          example: "German"
           application/x-www-form-urlencoded:
             schema:
               type: object
@@ -260,54 +308,6 @@ paths:
                 - employee[email]
                 - employee[first_name]
                 - employee[last_name]
-          application/json:
-            schema:
-              type: object
-              properties:
-                employee:
-                  type: object
-                  properties:
-                    email:
-                      type: string
-                      example: "john.dou@demo.com"
-                    first_name:
-                      type: string
-                      example: "John"
-                    last_name:
-                      type: string
-                      example: "Dou"
-                    custom_attributes:
-                      type: object
-                      properties:
-                        gender:
-                          type: string
-                          example: male
-                        position:
-                          type: string
-                          example: developer
-                        subcompany:
-                          type: string
-                          description: The subcompany employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
-                          example: ACME
-                        department:
-                          type: string
-                          description: The department employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
-                          example: IT
-                        office:
-                          type: string
-                          description: The office employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
-                          example: Madrid
-                        hire_date:
-                          type: string
-                          example: '2020-01-31'
-                          format: yyyy-mm-dd
-                        weekly_hours:
-                          type: number
-                          example: 40
-                        dynamic_{{ field uid }}:
-                          type: string
-                          description: Dynamic field, represented by unique id.
-                          example: "German"
       responses:
         "200":
           description: Successful creation of a employee
@@ -344,6 +344,51 @@ paths:
             format: int32
       requestBody:
         content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                employee:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                      example: "John"
+                    last_name:
+                      type: string
+                      example: "Dou"
+                    gender:
+                      type: string
+                      example: male
+                    position:
+                      type: string
+                      example: developer
+                    subcompany:
+                      type: string
+                      description: The subcompany employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
+                      example: ACME
+                    department:
+                      type: string
+                      description: The department employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
+                      example: IT
+                    office:
+                      type: string
+                      description: The office employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
+                      example: Madrid
+                    hire_date:
+                      type: string
+                      example: '2020-01-31'
+                      format: yyyy-mm-dd
+                    weekly_hours:
+                      type: number
+                      example: 40
+                    custom_attributes:
+                      type: object
+                      properties:
+                        dynamic_{{ field uid }}:
+                          type: string
+                          description: Dynamic field, represented by unique id.
+                          example: "German"
           application/x-www-form-urlencoded:
             schema:
               type: object
@@ -374,51 +419,6 @@ paths:
                 "employee[weekly_hours]":
                   description: Employee weekly working hours
                   type: number
-          application/json:
-            schema:
-              type: object
-              properties:
-                employee:
-                  type: object
-                  properties:
-                    first_name:
-                      type: string
-                      example: "John"
-                    last_name:
-                      type: string
-                      example: "Dou"
-                    custom_attributes:
-                      type: object
-                      properties:
-                        gender:
-                          type: string
-                          example: male
-                        position:
-                          type: string
-                          example: developer
-                        subcompany:
-                          type: string
-                          description: The subcompany employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
-                          example: ACME
-                        department:
-                          type: string
-                          description: The department employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
-                          example: IT
-                        office:
-                          type: string
-                          description: The office employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
-                          example: Madrid
-                        hire_date:
-                          type: string
-                          example: '2020-01-31'
-                          format: yyyy-mm-dd
-                        weekly_hours:
-                          type: number
-                          example: 40
-                        dynamic_{{ field uid }}:
-                          type: string
-                          description: Dynamic field, represented by unique id.
-                          example: "German"
       responses:
         "200":
           description: Employee is updated
