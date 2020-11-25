@@ -59,17 +59,17 @@ paths:
                       - type: Employee
                         attributes:
                           id:
-                            label: id
-                            value: 83752
+                            label: ID
+                            value: 1132888
                           first_name:
                             label: First name
-                            value: Andreas
+                            value: Alexander
                           last_name:
                             label: Last name
-                            value: Anderson
+                            value: Bergmann
                           email:
                             label: Email
-                            value: andreas.anderson@demo.com
+                            value: alexander.bergmann@demo.com
                           gender:
                             label: Gender
                             value: male
@@ -78,33 +78,19 @@ paths:
                             value: active
                           position:
                             label: Position
-                            value: Online Marketing Specialist
+                            value: CTO
                           supervisor:
                             label: Supervisor
                             value:
-                              type: Employee
-                              attributes:
-                                id:
-                                  label: id
-                                  value: 423506
-                                first_name:
-                                  label: First name
-                                  value: Max
-                                last_name:
-                                  label: Last name
-                                  value: Mustermann
-                                email:
-                                  label: Email
-                                  value: max.mustermann@example.org
                           employment_type:
                             label: Employment type
-                            value: internal
+                            value: external
                           weekly_working_hours:
                             label: Weekly hours
                             value: '40'
                           hire_date:
                             label: Hire date
-                            value: '2012-02-01T00:00:00+0100'
+                            value: '2014-11-09T00:00:00+01:00'
                           contract_end_date:
                             label: Contract ends
                             value:
@@ -119,100 +105,106 @@ paths:
                             value: ''
                           probation_period_end:
                             label: Probation period end
-                            value: '2012-07-31T00:00:00+0200'
+                            value:
                           created_at:
                             label: created_at
-                            value: '2016-10-20T16:15:55+0200'
+                            value: '2017-05-23T09:49:03+02:00'
                           last_modified_at:
                             label: Last modified
-                            value: '2016-10-22T16:15:55+0200'
+                            value: '2020-11-18T17:33:55+01:00'
+                          subcompany:
+                            label: Subcompany
+                            value:
+                              type: Subcompany
+                              attributes:
+                                id: 7033
+                                name: CS Demo GmbH
                           office:
                             label: Office
                             value:
                               type: Office
                               attributes:
+                                id: 131014
                                 name: Munich
                           department:
                             label: Department
                             value:
                               type: Department
                               attributes:
-                                name: Marketing
+                                id: 281521
+                                name: Customer Support
                           cost_centers:
                             label: Cost center
                             value:
                               - type: CostCenter
                                 attributes:
-                                  name: Cost Center One
-                                  id: 320
-                                  percentage: 50
-                              - type: CostCenter
+                                  id: 82957
+                                  name: Cost center 1
+                                  percentage: 100
+                          holiday_calendar:
+                            label: Public holidays
+                            value:
+                              type: HolidayCalendar
+                              attributes:
+                                id: 2
+                                name: Deutschland (Bayern) Feiertage
+                                country: DE
+                                state: Bayern
+                          absence_entitlement:
+                            label: Absence entitlement
+                            value:
+                              - type: TimeOffType
                                 attributes:
-                                  name: Cost Center Two
-                                  id: 321
-                                  percentage: 50
+                                  id: 113437
+                                  name: Paid vacation
+                                  category: paid_vacation
+                                  entitlement: 24
+                          work_schedule:
+                            label: Work schedule
+                            value:
+                              type: WorkSchedule
+                              attributes:
+                                id: 97188
+                                name: Full-time, 40 hours without time tracking, (mon,tue,wed,thu,fri)
+                                valid_from:
+                                monday: '08:00'
+                                tuesday: '08:00'
+                                wednesday: '08:00'
+                                thursday: '08:00'
+                                friday: '08:00'
+                                saturday: '00:00'
+                                sunday: '00:00'
                           fix_salary:
                             label: Fix salary
-                            value: 4000
+                            value: 3000
+                          fix_salary_interval:
+                            label: Salary interval
+                            value: monthly
                           hourly_salary:
                             label: Hourly salary
                             value: 0
                           vacation_day_balance:
                             label: Vacation day balance
-                            value: 28.5
+                            value: 2
                           last_working_day:
-                            label: Last working day
-                            value: '2017-02-28T00:00:00+0200'
+                            label: Last day of work
+                            value:
+                          profile_picture:
+                            label: Profile Picture
+                            value: https://api.personio.de/v1/company/employees/1132888/profile-picture
+                          team:
+                            label: Team
+                            value:
+                              type: Team
+                              attributes:
+                                id: 59026
+                                name: T_X
                           dynamic_24407:
                             label: Titel
                             value: Dr
                           dynamic_21827:
                             label: IBAN
                             value: DE98 8989 9898 0000 8989 00
-                          holiday_calendar:
-                            label: 'Holiday Calendar'
-                            value:
-                              type: HolidayCalendar
-                              attributes:
-                                id: 931
-                                name: 'DE (Hamburg) Feiertage'
-                                country: DE
-                                state: Hamburg
-                          work_schedule:
-                            label: 'Work Schedule'
-                            value:
-                              type: WorkSchedule
-                              attributes:
-                                id: 123
-                                name: 'Standard Hours'
-                                monday: '08:30'
-                                tuesday: '08:30'
-                                wednesday: '08:30'
-                                thursday: '08:30'
-                                friday: '06:00'
-                                saturday: '00:00'
-                                sunday: '00:00'
-                          absence_entitlement:
-                            label: Absence entitlement
-                            value:
-                              - type: TimeOffType
-                                attributes:
-                                  id: 12345
-                                  name: "Paid Vacation"
-                                  entitlement: 30
-                              - type: TimeOffType
-                                attributes:
-                                  id: 12346
-                                  name: "Parental leave"
-                                  entitlement: 0
-                              - type: TimeOffType
-                                attributes:
-                                  id: 12347
-                                  name: "Sick days"
-                                  entitlement: 0
-                          profile_picture:
-                            label: Profile Picture
-                            value: 'http://api.dev.personio.de/v1/company/employees/2/profile-picture'
     post:
       security:
         - BearerAuth: []
@@ -464,17 +456,17 @@ paths:
                       type: Employee
                       attributes:
                         id:
-                          label: id
-                          value: 83752
+                          label: ID
+                          value: 1132888
                         first_name:
                           label: First name
-                          value: Andreas
+                          value: Alexander
                         last_name:
                           label: Last name
-                          value: Anderson
+                          value: Bergmann
                         email:
                           label: Email
-                          value: andreas.anderson@demo.com
+                          value: alexander.bergmann@demo.com
                         gender:
                           label: Gender
                           value: male
@@ -483,33 +475,19 @@ paths:
                           value: active
                         position:
                           label: Position
-                          value: Online Marketing Specialist
+                          value: CTO
                         supervisor:
                           label: Supervisor
                           value:
-                            type: Employee
-                            attributes:
-                              id:
-                                label: id
-                                value: 423506
-                              first_name:
-                                label: First name
-                                value: Max
-                              last_name:
-                                label: Last name
-                                value: Mustermann
-                              email:
-                                label: Email
-                                value: max.mustermann@example.org
                         employment_type:
                           label: Employment type
-                          value: internal
+                          value: external
                         weekly_working_hours:
                           label: Weekly hours
                           value: '40'
                         hire_date:
                           label: Hire date
-                          value: '2012-02-01T00:00:00+0100'
+                          value: '2014-11-09T00:00:00+01:00'
                         contract_end_date:
                           label: Contract ends
                           value:
@@ -524,97 +502,106 @@ paths:
                           value: ''
                         probation_period_end:
                           label: Probation period end
-                          value: '2012-07-31T00:00:00+0200'
+                          value:
                         created_at:
                           label: created_at
-                          value: '2016-10-20T16:15:55+0200'
+                          value: '2017-05-23T09:49:03+02:00'
                         last_modified_at:
                           label: Last modified
-                          value: '2016-10-22T16:15:55+0200'
+                          value: '2020-11-18T17:33:55+01:00'
+                        subcompany:
+                          label: Subcompany
+                          value:
+                            type: Subcompany
+                            attributes:
+                              id: 7033
+                              name: CS Demo GmbH
                         office:
                           label: Office
                           value:
                             type: Office
                             attributes:
+                              id: 131014
                               name: Munich
                         department:
                           label: Department
                           value:
                             type: Department
                             attributes:
-                              name: Marketing
+                              id: 281521
+                              name: Customer Support
                         cost_centers:
                           label: Cost center
                           value:
                             - type: CostCenter
                               attributes:
-                                name: Cost Center One
-                                id: 320
-                                percentage: 50
-                            - type: CostCenter
+                                id: 82957
+                                name: Cost center 1
+                                percentage: 100
+                        holiday_calendar:
+                          label: Public holidays
+                          value:
+                            type: HolidayCalendar
+                            attributes:
+                              id: 2
+                              name: Deutschland (Bayern) Feiertage
+                              country: DE
+                              state: Bayern
+                        absence_entitlement:
+                          label: Absence entitlement
+                          value:
+                            - type: TimeOffType
                               attributes:
-                                name: Cost Center Two
-                                id: 321
-                                percentage: 50
+                                id: 113437
+                                name: Paid vacation
+                                category: paid_vacation
+                                entitlement: 24
+                        work_schedule:
+                          label: Work schedule
+                          value:
+                            type: WorkSchedule
+                            attributes:
+                              id: 97188
+                              name: Full-time, 40 hours without time tracking, (mon,tue,wed,thu,fri)
+                              valid_from:
+                              monday: '08:00'
+                              tuesday: '08:00'
+                              wednesday: '08:00'
+                              thursday: '08:00'
+                              friday: '08:00'
+                              saturday: '00:00'
+                              sunday: '00:00'
                         fix_salary:
                           label: Fix salary
-                          value: 4000
+                          value: 3000
+                        fix_salary_interval:
+                          label: Salary interval
+                          value: monthly
                         hourly_salary:
                           label: Hourly salary
                           value: 0
                         vacation_day_balance:
                           label: Vacation day balance
-                          value: 28.5
+                          value: 2
                         last_working_day:
-                          label: Last working day
-                          value: '2017-02-28T00:00:00+0200'
+                          label: Last day of work
+                          value:
+                        profile_picture:
+                          label: Profile Picture
+                          value: https://api.personio.de/v1/company/employees/1132888/profile-picture
+                        team:
+                          label: Team
+                          value:
+                            type: Team
+                            attributes:
+                              id: 59026
+                              name: T_X
                         dynamic_24407:
                           label: Titel
                           value: Dr
                         dynamic_21827:
                           label: IBAN
                           value: DE98 8989 9898 0000 8989 00
-                        holiday_calendar:
-                          label: 'Holiday Calendar'
-                          value:
-                            type: HolidayCalendar
-                            attributes:
-                              id: 931
-                              name: 'DE (Hamburg) Feiertage'
-                              country: DE
-                              state: Hamburg
-                        work_schedule:
-                          label: 'Work Schedule'
-                          value:
-                            type: WorkSchedule
-                            attributes:
-                              id: 123
-                              name: 'Standard Hours'
-                              monday: '08:30'
-                              tuesday: '08:30'
-                              wednesday: '08:30'
-                              thursday: '08:30'
-                              friday: '06:00'
-                              saturday: '00:00'
-                              sunday: '00:00'
-                        absence_entitlement:
-                          label: Absence entitlement
-                          value:
-                            - type: TimeOffType
-                              attributes:
-                                id: 12345
-                                name: "Paid Vacation"
-                                entitlement: 30
-                            - type: TimeOffType
-                              attributes:
-                                id: 12346
-                                name: "Parental leave"
-                                entitlement: 0
-                            - type: TimeOffType
-                              attributes:
-                                id: 12347
-                                name: "Sick days"
-                                entitlement: 0
         "404":
           description: ""
           content:
@@ -835,28 +822,28 @@ paths:
                       code: 400
                       message: 'Error when trying to insert Attendances periods rows'
                       detailed_message: [
-                        {
-                          success: true,
-                          error_msg: null,
-                          id: 1,
-                          employee: 1234,
-                          date: "2017-01-01",
-                          start_time: "09:00",
-                          end_time: "18:00",
-                          break: 60,
-                          comment: ""
-                        },
-                        {
-                          success: false,
-                          error_msg: "Existing overlapping attendances periods",
-                          id: null,
-                          employee: 1234,
-                          date: "2017-01-01",
-                          start_time: "09:00",
-                          end_time: "18:00",
-                          break: 60,
-                          comment: ""
-                        }
+                      {
+                        success: true,
+                        error_msg: null,
+                        id: 1,
+                        employee: 1234,
+                        date: "2017-01-01",
+                        start_time: "09:00",
+                        end_time: "18:00",
+                        break: 60,
+                        comment: ""
+                      },
+                      {
+                        success: false,
+                        error_msg: "Existing overlapping attendances periods",
+                        id: null,
+                        employee: 1234,
+                        date: "2017-01-01",
+                        start_time: "09:00",
+                        end_time: "18:00",
+                        break: 60,
+                        comment: ""
+                      }
                       ]
 
   "/company/attendances/{id}":
@@ -1651,6 +1638,33 @@ components:
                 sunday:
                   example: 00:00
                   pattern: ^\d\d:\d\d$
+    Team:
+      type: object
+      properties:
+        label:
+          example: Absence entitlement
+        value:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                enum:
+                  - TimeOffType
+              attributes:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    example: Paid Vacation
+                  entitlement:
+                    example: 30
+      required:
+        - label
+        - value
 
     AbsenceEntitlement:
       type: object
@@ -1695,7 +1709,7 @@ components:
           type: object
           properties:
             label:
-              example: id
+              example: ID
             value:
               example: 1
         first_name:
@@ -1805,6 +1819,29 @@ components:
               example: Created at
             value:
               example: 2018-02-01T00:00:00+0100
+        last_modified_at:
+          type: object
+          properties:
+            label:
+              example: Last modified
+            value:
+              example: '2020-11-18T17:33:55+01:00'
+        subcompany:
+          $ref: "#/components/schemas/Office"
+        office:
+          $ref: "#/components/schemas/Office"
+        department:
+          $ref: "#/components/schemas/Department"
+        cost_centers:
+          $ref: "#/components/schemas/CostCenters"
+        holiday_calendar:
+          $ref: "#/components/schemas/HolidayCalendar"
+        work_schedule:
+          $ref: "#/components/schemas/WorkSchedule"
+        absence_entitlement:
+          $ref: "#/components/schemas/AbsenceEntitlement"
+        team:
+          $ref: "#/components/schemas/Team"
         fix_salary:
           type: object
           properties:
@@ -1812,6 +1849,13 @@ components:
               example: Fix salary
             value:
               example: 4000
+        fix_salary_interval:
+          type: object
+          properties:
+            label:
+              example: Salary interval
+            value:
+              example: monthly
         hourly_salary:
           type: object
           properties:
@@ -1826,6 +1870,13 @@ components:
               example: Vacation day balance
             value:
               example: 20.5
+        last_working_day:
+          type: object
+          properties:
+            label:
+              example: Last day of work
+            value:
+              example:
         profile_picture:
           type: object
           properties:
@@ -1833,20 +1884,13 @@ components:
               example: Profile Picture
             value:
               example: http://api.dev.personio.de/v1/company/employees/1/profile-picture
-
-        office:
-          $ref: "#/components/schemas/Office"
-        department:
-          $ref: "#/components/schemas/Department"
-        cost_centers:
-          $ref: "#/components/schemas/CostCenters"
-        holiday_calendar:
-          $ref: "#/components/schemas/HolidayCalendar"
-        work_schedule:
-          $ref: "#/components/schemas/WorkSchedule"
-        absence_entitlement:
-          $ref: "#/components/schemas/AbsenceEntitlement"
-
+        dynamic_21827:
+          type: object
+          properties:
+            label:
+              example: IBAN
+            value:
+              example: DE98 8989 9898 0000 8989 00
     EmployeesResponse:
       title: List of Employees
       allOf:
@@ -2178,17 +2222,17 @@ components:
               type: string
               example: TimeOffType
             attributes:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    example: 1
-                  name:
-                    type: string
-                    example: Vacation
-                  category:
-                    type: string
-                    example: offsite_work
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                name:
+                  type: string
+                  example: Vacation
+                category:
+                  type: string
+                  example: offsite_work
         employee:
           $ref: "#/components/schemas/ShortEmployee"
         certificate:
