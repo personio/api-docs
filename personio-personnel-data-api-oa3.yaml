@@ -225,6 +225,8 @@ paths:
                     email:
                       type: string
                       example: "john.dou@demo.com"
+                      required: true
+                      description: The email field is required for the employee creation. Updating of this field is not currently supported.
                     first_name:
                       type: string
                       example: "John"
@@ -252,7 +254,9 @@ paths:
                     hire_date:
                       type: string
                       example: '2020-01-31'
-                      format: yyyy-mm-dd
+                      format: date
+                      description: "Employee hire date. Format: yyyy-mm-dd"
+                      pattern: ^\d{4}-\d{2}-\d{2}$
                     weekly_hours:
                       type: number
                       example: 40
@@ -290,9 +294,11 @@ paths:
                   description: Employee department
                   type: string
                 "employee[hire_date]":
-                  description: Employee hire date
                   type: string
+                  example: '2020-01-31'
                   format: date
+                  description: "Employee hire date. Format: yyyy-mm-dd"
+                  pattern: ^\d{4}-\d{2}-\d{2}$
                 "employee[weekly_hours]":
                   description: Employee weekly working hours
                   type: number
@@ -369,6 +375,7 @@ paths:
                       type: string
                       example: '2020-01-31'
                       format: date
+                      description: "Employee hire date. Format: yyyy-mm-dd"
                       pattern: ^\d{4}-\d{2}-\d{2}$
                     weekly_hours:
                       type: number
@@ -404,9 +411,11 @@ paths:
                   description: Employee department
                   type: string
                 "employee[hire_date]":
-                  description: Employee hire date
                   type: string
+                  example: '2020-01-31'
                   format: date
+                  description: "Employee hire date. Format: yyyy-mm-dd"
+                  pattern: ^\d{4}-\d{2}-\d{2}$
                 "employee[weekly_hours]":
                   description: Employee weekly working hours
                   type: number
@@ -636,7 +645,6 @@ paths:
                       -
                         key: dynamic_1
                         label: IBAN
-
 
   "/company/employees/{employee_id}/profile-picture/{width}":
     get:
@@ -1962,10 +1970,12 @@ components:
           type: string
           pattern: ^\d\d:\d\d$
           example: "08:00"
+          description: "Format: hh:mm"
         end_time:
           type: string
           pattern: ^\d\d:\d\d$
           example: "17:00"
+          description: "Format: hh:mm"
         break:
           type: integer
           example: 60
@@ -1983,10 +1993,12 @@ components:
           type: string
           pattern: ^\d\d:\d\d$
           example: "08:00"
+          description: "Format: hh:mm"
         end_time:
           type: string
           pattern: ^\d\d:\d\d$
           example: "17:00"
+          description: "Format: hh:mm"
         break:
           type: integer
           example: 60
@@ -2048,15 +2060,18 @@ components:
         attendances[][date]:
           type: string
           format: date
-          description: Attendance date as YYYY-MM-DD
+          description: "Attendance date. Format: yyyy-mm-dd"
+          example: '2020-01-31'
         attendances[][start_time]:
           type: string
           pattern: ^\d\d:\d\d$
-          description: Start time as HH:MM
+          description: "Start time. Format: hh:mm"
+          example: '08:00'
         attendances[][end_time]:
           type: string
           pattern: ^\d\d:\d\d$
-          description: End time as HH:MM
+          description: "End time. Format: hh:mm"
+          example: '12:00'
         attendances[]break:
           type: integer
           format: int32
@@ -2126,11 +2141,13 @@ components:
         start_date:
           type: string
           format: date
-          description: Absence start date as YYYY-MM-DD
+          description: "Absence start date. Format: yyyy-mm-dd"
+          example: '2020-01-31'
         end_date:
           type: string
           format: date
-          description: Absence end date as YYYY-MM-DD
+          description: "Absence end date. Format: yyyy-mm-dd"
+          example: '2020-01-31'
         half_day_start:
           type: boolean
           example: 0
