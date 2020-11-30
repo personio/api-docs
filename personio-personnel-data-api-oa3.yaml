@@ -315,8 +315,6 @@ paths:
                     data:
                       id: 81723
                       message: "success"
-
-
   "/company/employees/{employee_id}":
     patch:
       security:
@@ -370,7 +368,8 @@ paths:
                     hire_date:
                       type: string
                       example: '2020-01-31'
-                      format: yyyy-mm-dd
+                      format: date
+                      pattern: '^\d{4}-\d{2}-\d{2}$'
                     weekly_hours:
                       type: number
                       example: 40
@@ -787,8 +786,6 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: "#/components/schemas/NewAttendancePeriodParametersRequest"
-
-
         description: List of attendance periods to create
         required: true
       responses:
@@ -822,28 +819,28 @@ paths:
                       code: 400
                       message: 'Error when trying to insert Attendances periods rows'
                       detailed_message: [
-                      {
-                        success: true,
-                        error_msg: null,
-                        id: 1,
-                        employee: 1234,
-                        date: "2017-01-01",
-                        start_time: "09:00",
-                        end_time: "18:00",
-                        break: 60,
-                        comment: ""
-                      },
-                      {
-                        success: false,
-                        error_msg: "Existing overlapping attendances periods",
-                        id: null,
-                        employee: 1234,
-                        date: "2017-01-01",
-                        start_time: "09:00",
-                        end_time: "18:00",
-                        break: 60,
-                        comment: ""
-                      }
+                        {
+                          success: true,
+                          error_msg: null,
+                          id: 1,
+                          employee: 1234,
+                          date: "2017-01-01",
+                          start_time: "09:00",
+                          end_time: "18:00",
+                          break: 60,
+                          comment: ""
+                        },
+                        {
+                          success: false,
+                          error_msg: "Existing overlapping attendances periods",
+                          id: null,
+                          employee: 1234,
+                          date: "2017-01-01",
+                          start_time: "09:00",
+                          end_time: "18:00",
+                          break: 60,
+                          comment: ""
+                        }
                       ]
 
   "/company/attendances/{id}":
@@ -2244,8 +2241,6 @@ components:
         created_at:
           type: string
           example: 2017-01-17T10:32:18+0100
-
-
     ShortEmployee:
       type: object
       properties:
