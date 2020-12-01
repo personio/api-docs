@@ -266,6 +266,10 @@ paths:
                           type: string
                           description: Dynamic field, represented by unique id.
                           example: "German"
+                  required:
+                    - email
+                    - first_name
+                    - last_name
           application/x-www-form-urlencoded:
             schema:
               type: object
