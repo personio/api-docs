@@ -225,6 +225,7 @@ paths:
                     email:
                       type: string
                       example: "john.dou@demo.com"
+                      description: The email field is required for the employee creation. Updating of this field is not currently supported.
                     first_name:
                       type: string
                       example: "John"
@@ -252,7 +253,9 @@ paths:
                     hire_date:
                       type: string
                       example: '2020-01-31'
-                      format: yyyy-mm-dd
+                      format: date
+                      description: "Employee hire date. Format: yyyy-mm-dd"
+                      pattern: ^\d{4}-\d{2}-\d{2}$
                     weekly_hours:
                       type: number
                       example: 40
@@ -263,6 +266,10 @@ paths:
                           type: string
                           description: Dynamic field, represented by unique id.
                           example: "German"
+                  required:
+                    - email
+                    - first_name
+                    - last_name
           application/x-www-form-urlencoded:
             schema:
               type: object
@@ -290,9 +297,11 @@ paths:
                   description: Employee department
                   type: string
                 "employee[hire_date]":
-                  description: Employee hire date
                   type: string
+                  example: '2020-01-31'
                   format: date
+                  description: "Employee hire date. Format: yyyy-mm-dd"
+                  pattern: ^\d{4}-\d{2}-\d{2}$
                 "employee[weekly_hours]":
                   description: Employee weekly working hours
                   type: number
@@ -315,8 +324,6 @@ paths:
                     data:
                       id: 81723
                       message: "success"
-
-
   "/company/employees/{employee_id}":
     patch:
       security:
@@ -325,7 +332,7 @@ paths:
         - Employees
       summary: Update an employee
       description: >
-        Update existing employee.
+        Update existing employee. Note: Updating of Email field is not currently supported.
       parameters:
         - name: employee_id
           in: path
@@ -370,7 +377,9 @@ paths:
                     hire_date:
                       type: string
                       example: '2020-01-31'
-                      format: yyyy-mm-dd
+                      format: date
+                      description: "Employee hire date. Format: yyyy-mm-dd"
+                      pattern: ^\d{4}-\d{2}-\d{2}$
                     weekly_hours:
                       type: number
                       example: 40
@@ -381,6 +390,10 @@ paths:
                           type: string
                           description: Dynamic field, represented by unique id.
                           example: "German"
+                  required:
+                    - email
+                    - first_name
+                    - last_name
           application/x-www-form-urlencoded:
             schema:
               type: object
@@ -405,9 +418,11 @@ paths:
                   description: Employee department
                   type: string
                 "employee[hire_date]":
-                  description: Employee hire date
                   type: string
+                  example: '2020-01-31'
                   format: date
+                  description: "Employee hire date. Format: yyyy-mm-dd"
+                  pattern: ^\d{4}-\d{2}-\d{2}$
                 "employee[weekly_hours]":
                   description: Employee weekly working hours
                   type: number
@@ -638,7 +653,6 @@ paths:
                         key: dynamic_1
                         label: IBAN
 
-
   "/company/employees/{employee_id}/profile-picture/{width}":
     get:
       security:
@@ -787,8 +801,6 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: "#/components/schemas/NewAttendancePeriodParametersRequest"
-
-
         description: List of attendance periods to create
         required: true
       responses:
@@ -822,28 +834,28 @@ paths:
                       code: 400
                       message: 'Error when trying to insert Attendances periods rows'
                       detailed_message: [
-                      {
-                        success: true,
-                        error_msg: null,
-                        id: 1,
-                        employee: 1234,
-                        date: "2017-01-01",
-                        start_time: "09:00",
-                        end_time: "18:00",
-                        break: 60,
-                        comment: ""
-                      },
-                      {
-                        success: false,
-                        error_msg: "Existing overlapping attendances periods",
-                        id: null,
-                        employee: 1234,
-                        date: "2017-01-01",
-                        start_time: "09:00",
-                        end_time: "18:00",
-                        break: 60,
-                        comment: ""
-                      }
+                        {
+                          success: true,
+                          error_msg: null,
+                          id: 1,
+                          employee: 1234,
+                          date: "2017-01-01",
+                          start_time: "09:00",
+                          end_time: "18:00",
+                          break: 60,
+                          comment: ""
+                        },
+                        {
+                          success: false,
+                          error_msg: "Existing overlapping attendances periods",
+                          id: null,
+                          employee: 1234,
+                          date: "2017-01-01",
+                          start_time: "09:00",
+                          end_time: "18:00",
+                          break: 60,
+                          comment: ""
+                        }
                       ]
 
   "/company/attendances/{id}":
@@ -1965,10 +1977,12 @@ components:
           type: string
           pattern: ^\d\d:\d\d$
           example: "08:00"
+          description: "Format: hh:mm"
         end_time:
           type: string
           pattern: ^\d\d:\d\d$
           example: "17:00"
+          description: "Format: hh:mm"
         break:
           type: integer
           example: 60
@@ -1986,10 +2000,12 @@ components:
           type: string
           pattern: ^\d\d:\d\d$
           example: "08:00"
+          description: "Format: hh:mm"
         end_time:
           type: string
           pattern: ^\d\d:\d\d$
           example: "17:00"
+          description: "Format: hh:mm"
         break:
           type: integer
           example: 60
@@ -2051,15 +2067,18 @@ components:
         attendances[][date]:
           type: string
           format: date
-          description: Attendance date as YYYY-MM-DD
+          description: "Attendance date. Format: yyyy-mm-dd"
+          example: '2020-01-31'
         attendances[][start_time]:
           type: string
           pattern: ^\d\d:\d\d$
-          description: Start time as HH:MM
+          description: "Start time. Format: hh:mm"
+          example: '08:00'
         attendances[][end_time]:
           type: string
           pattern: ^\d\d:\d\d$
-          description: End time as HH:MM
+          description: "End time. Format: hh:mm"
+          example: '12:00'
         attendances[]break:
           type: integer
           format: int32
@@ -2129,11 +2148,13 @@ components:
         start_date:
           type: string
           format: date
-          description: Absence start date as YYYY-MM-DD
+          description: "Absence start date. Format: yyyy-mm-dd"
+          example: '2020-01-31'
         end_date:
           type: string
           format: date
-          description: Absence end date as YYYY-MM-DD
+          description: "Absence end date. Format: yyyy-mm-dd"
+          example: '2020-01-31'
         half_day_start:
           type: boolean
           example: 0
@@ -2244,8 +2265,6 @@ components:
         created_at:
           type: string
           example: 2017-01-17T10:32:18+0100
-
-
     ShortEmployee:
       type: object
       properties:
