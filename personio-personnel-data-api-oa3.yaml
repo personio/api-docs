@@ -332,7 +332,7 @@ paths:
         - Employees
       summary: Update an employee
       description: >
-        Update existing employee.
+        Update existing employee. Note: Updating of Email field is not currently supported.
       parameters:
         - name: employee_id
           in: path
