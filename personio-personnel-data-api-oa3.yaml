@@ -1025,6 +1025,20 @@ paths:
           schema:
             type: string
             format: date
+        - name: updated_from
+          in: query
+          required: false
+          description: Query the periods that created or modified from the date `updated_from`. It is inclusive, so all the periods created or modified from the beginning of the `updated_from` will be included in the results
+          schema:
+            type: string
+            format: date
+        - name: updated_to
+          in: query
+          required: false
+          description: Query the periods that created or modified until the date `updated_to`. It is inclusive, so all the periods created or modified until the end of the `updated_to` will be included in the results
+          schema:
+            type: string
+            format: date
         - name: employees
           in: query
           required: false
@@ -1061,6 +1075,10 @@ paths:
                 response:
                   value:
                     success: true
+                    metadata:
+                      total_elements: 1
+                      current_page: 1
+                      total_pages: 1
                     data:
                       - type: TimeOffPeriod
                         attributes:
@@ -1095,6 +1113,9 @@ paths:
                           certificate:
                             status: not-required
                           created_at: '2017-01-17T10:32:18+0100'
+                          updated_at: '2017-01-17T10:32:18+0100'
+                    offset: 0,
+                    limit: 200,
     post:
       security:
         - BearerAuth: []
@@ -1156,6 +1177,7 @@ paths:
                         certificate:
                           status: not-required
                         created_at: '2017-01-17T10:32:18+0100'
+                        updated_at: '2017-01-17T10:32:18+0100'
         "400":
           description: Invalid request
           content:
@@ -1299,6 +1321,7 @@ paths:
                         certificate:
                           status: not-required
                         created_at: '2017-01-17T10:32:18+0100'
+                        updated_at: '2017-01-17T10:32:18+0100'
 
         "404":
           description: Not found response
@@ -2181,6 +2204,26 @@ components:
         - $ref: "#/components/schemas/Response"
         - type: object
           properties:
+            metadata:
+              type: object
+              required:
+                - total_elements
+                - current_page
+                - total_pages
+              properties:
+                total_elements:
+                  type: integer
+                  description: The total number of items matching the query filters.
+                total_pages:
+                  type: integer
+                  description: The total number of pages distributing sets of items matching the query filters.
+                current_page:
+                  type: integer
+                  description: Current page number containing the returned set of items matching with the query filters. The page number range is from 0 to total_pages - 1
+            offset:
+              type: integer
+            limit:
+              type: integer
             data:
               type: array
               items:
@@ -2263,6 +2306,9 @@ components:
               example: not-required
               type: string
         created_at:
+          type: string
+          example: 2017-01-17T10:32:18+0100
+        updated_at:
           type: string
           example: 2017-01-17T10:32:18+0100
     ShortEmployee:
