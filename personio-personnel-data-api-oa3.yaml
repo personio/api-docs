@@ -659,7 +659,7 @@ paths:
         - BearerAuth: []
       tags:
         - Employees
-      description: Show employee profile picture
+      description: "Show employee's profile picture. If profile picture is missing, the 404 error will be thrown. The `Profile Picture` attribute has to be whitelisted."
       parameters:
         - name: employee_id
           in: path
@@ -684,7 +684,7 @@ paths:
                 type: string
                 format: binary
         "404":
-          description: ""
+          description: "When the employee doesn't exist or employee doesn't have profile picture set or Profile Picture attribute is not whitelisted, this error occurs."
           content:
             application/json:
               schema:
@@ -695,7 +695,7 @@ paths:
                     success: false
                     error:
                       code: 404
-                      message: 'Es ist ein Problem aufgetreten '
+                      message: 'Etwas ist schiefgelaufen ...'
 
   /company/attendances:
     get:
