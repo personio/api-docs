@@ -997,11 +997,13 @@ paths:
                           id: 1234
                           name: 'Paid vacation'
                           category: null
+                          unit: 'day'
                       - type: TimeOffType
                         attributes:
                           id: 1235
                           name: 'Home office'
-                          category: offsite_work
+                          category: 'offsite_work'
+                          unit: 'hour'
 
   /company/time-offs:
     get:
@@ -2158,6 +2160,12 @@ components:
               type: string
               nullable: true
               example: offsite_work
+            unit:
+              type: string
+              enum:
+              - day
+              - hour
+              example: day
     CreateTimeOffPeriodRequest:
       title: Create time-off periods
       type: object
