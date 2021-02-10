@@ -480,6 +480,22 @@ paths:
           description: >-
             Last day of the period to be queried.
             It is inclusive, so the day specified as end_date will also be considered on the results.
+        - name: updated_from
+          in: query
+          required: false
+          type: string
+          format: datetime
+          description: >-
+            First day of the period to be queried on which it could have been updated.
+            It is inclusive, so the day specified as updated_from will also be considered on the results.
+        - name: updated_to
+          in: query
+          required: false
+          type: string
+          format: datetime
+          description: >-
+            Last day of the period to be queried on which it could have been updated.
+            It is inclusive, so the day specified as updated_to will also be considered on the results.
         - name: employees
           in: query
           required: false
