@@ -459,7 +459,7 @@ paths:
     get:
       description: >-
         This endpoint is responsible for fetching attendance data for the company employees.
-        It is possible to paginate results, filter by period and/or specific employees.
+        It is possible to paginate results, filter by period, the date and/or time it was updated, and/or specific employees.
         The result will contain a list of attendance periods, structured as defined here.
       produces:
         - application/json
@@ -539,6 +539,7 @@ paths:
                     date: '2017-01-17'
                     start_time: '9:00'
                     end_time: '18:00'
+                    updated_at: '2017-01-17T16:41:08Z'
                     break: 50
                     comment: I was productive as hell
                     is_holiday: false
@@ -550,6 +551,7 @@ paths:
                     date: '2017-01-18'
                     start_time: '9:30'
                     end_time: '18:30'
+                    updated_at: '2017-01-18T16:41:08Z'
                     break: 60
                     comment:
                     is_holiday: false
@@ -763,6 +765,22 @@ paths:
           description: >-
             Last day of the period to be queried.
             It is inclusive, so the day specified as end_date will also be considered on the results.
+        - name: updated_from
+          in: query
+          required: false
+          type: string
+          format: datetime
+          description: >-
+            First day of the period to be queried on which it could have been updated.
+            It is inclusive, so the day specified as updated_from will also be considered on the results.
+        - name: updated_to
+          in: query
+          required: false
+          type: string
+          format: datetime
+          description: >-
+            Last day of the period to be queried on which it could have been updated.
+            It is inclusive, so the day specified as updated_to will also be considered on the results.
         - name: employees
           in: query
           required: false
