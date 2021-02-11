@@ -486,7 +486,7 @@ paths:
           type: string
           format: datetime
           description: >-
-            First day of the period to be queried on which it could have been updated.
+            Datetime from when the queried periods have been updated.
             It is inclusive, so the day specified as updated_from will also be considered on the results.
         - name: updated_to
           in: query
@@ -494,7 +494,7 @@ paths:
           type: string
           format: datetime
           description: >-
-            Last day of the period to be queried on which it could have been updated.
+            Datetime until when the queried periods have been updated.
             It is inclusive, so the day specified as updated_to will also be considered on the results.
         - name: employees
           in: query
@@ -771,7 +771,7 @@ paths:
           type: string
           format: datetime
           description: >-
-            First day of the period to be queried on which it could have been updated.
+            Datetime from when the queried periods have been updated.
             It is inclusive, so the day specified as updated_from will also be considered on the results.
         - name: updated_to
           in: query
@@ -779,7 +779,7 @@ paths:
           type: string
           format: datetime
           description: >-
-            Last day of the period to be queried on which it could have been updated.
+            Datetime until when the queried periods have been updated.
             It is inclusive, so the day specified as updated_to will also be considered on the results.
         - name: employees
           in: query
