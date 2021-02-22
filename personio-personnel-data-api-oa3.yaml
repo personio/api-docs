@@ -2198,6 +2198,10 @@ components:
           type: string
           example: Some Comment
           description: Optional comment
+        skip_approval:
+          type: boolean
+          example: 0
+          description: Optional, default value is true. Setting this to false will run the approval flow for the period
       required:
         - employee_id
         - time_off_type_id
