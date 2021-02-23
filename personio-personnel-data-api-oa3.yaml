@@ -719,7 +719,7 @@ paths:
           schema:
             type: string
             format: date
-        - name: employees
+        - name: employees[]
           in: query
           required: false
           description: A list of Personio employee ID's to filter the results. The result filters including only absences of provided employees
@@ -728,6 +728,7 @@ paths:
             type: array
             items:
               type: integer
+          allowReserved: true
         - name: limit
           in: query
           required: false
@@ -1041,7 +1042,7 @@ paths:
           schema:
             type: string
             format: date
-        - name: employees
+        - name: employees[]
           in: query
           required: false
           description: A list of Personio employee ID's to filter the results. The result filters including only absences of provided employees
@@ -1050,6 +1051,7 @@ paths:
             type: array
             items:
               type: integer
+          allowReserved: true
         - name: limit
           in: query
           required: false
