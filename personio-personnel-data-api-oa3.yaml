@@ -2201,7 +2201,7 @@ components:
         skip_approval:
           type: boolean
           example: 0
-          description: Optional, default value is true. Setting this to false will run the approval flow for the period
+          description: Optional, default value is true. If set to false, the approval status of the absence request will be "pending" if an approval rule is set for the absence type in Personio. The respective approval flow will be triggered.
       required:
         - employee_id
         - time_off_type_id
