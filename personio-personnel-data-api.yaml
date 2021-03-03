@@ -486,16 +486,18 @@ paths:
           type: string
           format: datetime
           description: >-
-            Datetime from when the queried periods have been updated.
+            Datetime from when the queried periods have been updated. Same format as updated_at.
             It is inclusive, so the day specified as updated_from will also be considered on the results.
+            Can be just the date, or the date and the time, with or without the timezone.
         - name: updated_to
           in: query
           required: false
           type: string
           format: datetime
           description: >-
-            Datetime until when the queried periods have been updated.
+            Datetime until when the queried periods have been updated. Same format as updated_at.
             It is inclusive, so the day specified as updated_to will also be considered on the results.
+            Can be just the date, or the date and the time, with or without the timezone.
         - name: employees
           in: query
           required: false
@@ -539,7 +541,7 @@ paths:
                     date: '2017-01-17'
                     start_time: '9:00'
                     end_time: '18:00'
-                    updated_at: '2017-01-17T16:41:08Z'
+                    updated_at: '2017-01-17T16:41:08+00:00'
                     break: 50
                     comment: I was productive as hell
                     is_holiday: false
@@ -551,7 +553,7 @@ paths:
                     date: '2017-01-18'
                     start_time: '9:30'
                     end_time: '18:30'
-                    updated_at: '2017-01-18T16:41:08Z'
+                    updated_at: '2017-01-18T16:41:08+01:00'
                     break: 60
                     comment:
                     is_holiday: false
