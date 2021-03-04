@@ -703,7 +703,7 @@ paths:
         - BearerAuth: []
       tags:
         - Attendances
-      description: Fetch attendance data for the company employees. The result can be `paginated` and `filtered` by period and/or specific employee/employees. The result contains a list of attendances.
+      description: Fetch attendance data for the company employees. The result can be `paginated` and `filtered` by period, the date and/or time they were updated, and/or specific employee/employees. The result contains a list of attendances.
       parameters:
         - name: start_date
           in: query
@@ -719,6 +719,24 @@ paths:
           schema:
             type: string
             format: date
+        - name: updated_from
+          in: query
+          required: false
+          description: Datetime from when the queried periods have been updated. Same format as updated_at.
+            It is inclusive, so the day specified as updated_from will also be considered on the results.
+            Can be just the date, or the date and the time, with or without the timezone.
+          schema:
+            type: string
+            format: datetime
+        - name: updated_to
+          in: query
+          required: false
+          schema:
+            type: string
+            format: datetime
+          description: Datetime until when the queried periods have been updated. Same format as updated_at.
+            It is inclusive, so the day specified as updated_to will also be considered on the results.
+            Can be just the date, or the date and the time, with or without the timezone.
         - name: employees[]
           in: query
           required: false
@@ -770,6 +788,7 @@ paths:
                           date: '2017-01-17'
                           start_time: '09:00'
                           end_time: '18:00'
+                          updated_at: '2017-01-17T16:41:08+00:00'
                           break: 50
                           comment: I was productive as hell
                           is_holiday: false
@@ -781,6 +800,7 @@ paths:
                           date: '2017-01-18'
                           start_time: '09:30'
                           end_time: '18:30'
+                          updated_at: '2017-01-18T16:41:08+01:00'
                           break: 60
                           comment: I wasn't productive
                           is_holiday: false
