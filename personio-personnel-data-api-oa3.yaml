@@ -737,6 +737,12 @@ paths:
           description: Datetime until when the queried periods have been updated. Same format as updated_at.
             It is inclusive, so the day specified as updated_to will also be considered on the results.
             Can be just the date, or the date and the time, with or without the timezone.
+        - name: includePending
+          in: query
+          required: false
+          description: Returns AttendancePeriods with a status of pending as well as confirmed. In this case, the end_date attribute is nullable. The status of each period is included in the response.
+          schema:
+            type: boolean
         - name: employees[]
           in: query
           required: false
@@ -789,6 +795,7 @@ paths:
                           start_time: '09:00'
                           end_time: '18:00'
                           updated_at: '2017-01-17T16:41:08+00:00'
+                          status: 'confirmed'
                           break: 50
                           comment: I was productive as hell
                           is_holiday: false
@@ -801,6 +808,7 @@ paths:
                           start_time: '09:30'
                           end_time: '18:30'
                           updated_at: '2017-01-18T16:41:08+01:00'
+                          status: 'confirmed', 'pending'
                           break: 60
                           comment: I wasn't productive
                           is_holiday: false
