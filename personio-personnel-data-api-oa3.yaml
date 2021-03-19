@@ -808,7 +808,7 @@ paths:
                           start_time: '09:30'
                           end_time: '18:30'
                           updated_at: '2017-01-18T16:41:08+01:00'
-                          status: 'confirmed', 'pending'
+                          status: ['confirmed', 'pending']
                           break: 60
                           comment: I wasn't productive
                           is_holiday: false
