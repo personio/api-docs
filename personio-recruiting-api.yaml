@@ -1,0 +1,329 @@
+openapi: 3.0.0
+info:
+  version: "1.0"
+  title: Recruiting
+  description: API for reading and writing personnel data including data about attendances and absences
+paths:
+  /xml:
+    get:
+      security:
+        - BearerAuth: [ ]
+      tags:
+        - XML
+      summary: Retrieving open positions
+      description: Description of the positions xml feed of the Personio Recruiting API
+      responses:
+        "200":
+          description: ""
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/XmlResponse"
+  /recruiting/applicant:
+    post:
+      security:
+        - BearerAuth: [ ]
+      tags:
+        - Applicant
+      summary: Passing applications to Personio
+      description: Description of the applicant endpoint of the Personio Recruiting API
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Applicant"
+        description: Applicant data
+        required: true
+      responses:
+        "200":
+          description: "Everything went well and the application was created in Personio."
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    success: true
+                    data:
+                      message: "Applicant successfully applied to the job position."
+        "400":
+          description: "Something went wrong and the application was not created in Personio. Specifically, the following cases can lead to an error 400:"
+          content:
+            application/json:
+              examples:
+                File too large:
+                  value:
+                    success: false
+                    data:
+                      message: "Unsupported extension or file greater than 20Mb."
+                Unsupported file extension:
+                  value:
+                    success: false
+                    data:
+                      message: "Unsupported extension or file greater than 20Mb."
+                Required field empty (e.g. name, email):
+                  value:
+                    success: false
+                    data:
+                      message: "The {field_name} field is required."
+                Invalid custom attribute (custom attribute ID does not exist):
+                  value:
+                    success: false
+                    data:
+                      message: "Parameter {parameter_name} does not exist."
+                Invalid job position:
+                  value:
+                    success: false
+                    data:
+                      message: "Could not find the job position."
+                Applicant already applied:
+                  value:
+                    success: false
+                    data:
+                      message: "Applicant already applied to this position."
+        "422":
+          description: Something went wrong and the attachments could not be processed at this moment. Please try again.
+          content:
+            application/json:
+              examples:
+                Unprocessable Entity 1:
+                  value:
+                    success: false
+                    data:
+                      message: "There was a problem while processing attachments. Try again later"
+                Unprocessable Entity 2:
+                  value:
+                    success: false
+                    data:
+                      message: "Job position not published"
+        "403":
+          description: Something went wrong and the application was not created in Personio. In this case, the API access token provided doesn't match the company ID.
+          content:
+            application/json:
+              examples:
+                Not Authorized:
+                  value:
+                    success: false
+                    data:
+                      message: "This action is unauthorized."
+        "500":
+          description: Something went wrong and the application was not created in Personio. This particular case the transaction failed due to an issue on Personio's end, e.g. server error.
+          content:
+            application/json:
+              examples:
+                Internal Server Error:
+                  value:
+                    success: false
+                    data:
+                      message: "Something went wrong, please try again later!"
+        "503":
+          description: The server is currently unable to handle the request due to a temporary overload or scheduled maintenance, which will likely be alleviated after some delay.
+          content:
+            application/json:
+              examples:
+                Service Unavailable:
+                  value:
+                    success: false
+                    data:
+                      message: ""
+
+
+servers:
+  - url: https://api.personio.de/v1
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    Response:
+      title: Default response object
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+      required:
+        - success
+        - data
+
+    XmlResponse:
+      title: XmlResponse
+      type: object
+      properties:
+        posting:
+          type: array
+          items:
+            $ref: "#/components/schemas/JobPosting"
+      xml:
+        name: workzag-jobs
+
+    JobPosting:
+      title: Job Posting
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 4103
+        subcompany:
+          type: string
+          example: ''
+        office:
+          type: string
+          example: Munich
+        department:
+          type: string
+          example: Management
+        recruitingCategory:
+          example: Various
+        name:
+          example: Office- und Feelgood Manager (m/w)
+        jobDescriptions:
+          type: array
+          items:
+            allOf:
+              - $ref: "#/components/schemas/JobDescription"
+#        test:
+#          type: array
+#          items:
+#            allOf:
+#              - $ref: "#/components/schemas/JobDescription"
+#          example:
+#            jobDescription:
+#              name: job
+#              value: value
+#            jobDescription1:
+#              name: job1
+#              value: value1
+#            jobDescription2:
+#              name: job2
+#              value: value2
+        employmentType:
+          type: string
+          enum: ['permanent', 'intern', 'trainee', 'freelance']
+          example: permanent
+        seniority:
+          type: string
+          enum: ['entry-level', 'experienced', 'executive', 'student']
+          example: entry-level
+        schedule:
+          type: string
+          enum: ['full-time', 'part-time']
+          example: full-time
+        yearsOfExperience:
+          type: string
+          enum: ['lt-1', '1-2', '2-5', '5-7', '7-10', '10-15', 'gt-15']
+          example: lt-1
+        keywords:
+          type: string
+          example: office manager,project management,büro,assistenz,organisation,part time,Teilzeit
+        occupation:
+          example: office_management
+        occupationCategory:
+          example: administrative_and_clerical
+        createdAt:
+          example: 2016-05-31T12:14:07+0200
+      xml:
+        name: position
+
+    JobDescription:
+      title: Job Description
+      type: object
+      properties:
+        jobDescription:
+          type: object
+          properties:
+            name:
+              type: string
+              example: Beschreibung
+            value:
+              type: string
+              example: <![CDATA[
+                Für unser Büro mitten im Münchner Glockenbachviertel suchen wir zum nächstmöglichen Zeitpunkt einen Office Manager (m/w) in Teilzeit, der/ die sich um alle Themen rund ums Office zuverlässig kümmert.<br><br><strong>Deine Aufgaben:</strong><br><br><ul><li>Ansprechpartner in Sachen Büro, Ausstattung und anderer “Wohlfühl”-Themen, die unseren Mitarbeiter/innen auf dem Herzen liegen</li><li>Bearbeitung von generellen Anfragen, Post und Eingangsrechnungen</li><li>Kommunikation und Organisation unserer Servicedienstleister und Zulieferer</li><li>Selbstständige Entwicklung &amp; Umsetzung neuer Ideen, Aktionen und Events für unsere Mitarbeiter</li><li>Unterstützung unseres Management-Teams bei organisatorischen Aufgaben</li><li>Management unserer <strong><a href="http://www.unumotors.com">Unu-Elektroroller</a></strong>-Flotte (ja, du bekommst auch einen, wenn du möchtest)</li></ul>
+                ]]>
+
+    Applicant:
+      title: Applicant
+      type: object
+      properties:
+        company_id:
+          description: Your company ID (see above)
+          type: integer
+        access_token:
+          description: API Access token for your company account (see above)
+          type: string
+        job_position_id:
+          description: ID of the published job position that this application is for (from XML feed)
+          type: integer
+        first_name:
+          description: First name of the applicant
+          type: string
+          maxLength: 255
+        last_name:
+          description: Last name of the applicant
+          type: string
+          maxLength: 255
+        email:
+          description: Email address of the applicant
+          type: string
+          maxLength: 255
+        gender:
+          description: Gender of the applicant
+          type: string
+          enum: [ male, female, diverse ]
+        recruiting_channel_id:
+          description: ID of the recruiting channel that this applicant applied through recruiting_channel_id has to match the id of a channel you created in Personio
+          type: integer
+        phone:
+          description: Phone number of the applicant
+          type: string
+          maxLength: 255
+        location:
+          description: Current location of the applicant
+          type: string
+          maxLength: 255
+        salary_expectations:
+          description: Salary expectations of the applicant (Will not be parsed, so you can transfer values like "minimum 50k")
+          type: string
+          maxLength: 255
+        available_from:
+          description: Date from which this applicant is available from
+          type: string
+          maxLength: 100
+        categorised_documents:
+          description: Categorised documents
+          type: object
+          allOf:
+            - $ref: "#/components/schemas/CategorizedDocument"
+        #        documents:
+        #        documentn:
+        message:
+          description: Initial message from the applicant
+          type: string
+        tags:
+          description: Existing tags (new ones cannot be created via API)	[array of strings], e.g. [ “tag_1”, “tag_2" ]
+        birthday:
+          description: Birthday of the applicant
+          type: string
+          pattern: ^\d\d\d\d-\d\d-\d\d$
+        custom_attribute_{id}:
+          description: Custom applicant attribute (see below)
+          type: integer
+      required:
+        - company_id
+        - access_token
+        - job_position_id
+        - first_name
+        - last_name
+        - email
+
+    CategorizedDocument:
+      title: Categorized document
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+        category:
+          type: string
+          enum: ['cv', 'cover-letter', 'employment-reference', 'certificate', 'work-sample', 'other']
