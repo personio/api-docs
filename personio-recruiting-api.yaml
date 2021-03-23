@@ -179,25 +179,13 @@ components:
         name:
           example: Office- und Feelgood Manager (m/w)
         jobDescriptions:
-          type: array
-          items:
-            allOf:
-              - $ref: "#/components/schemas/JobDescription"
-#        test:
-#          type: array
-#          items:
-#            allOf:
-#              - $ref: "#/components/schemas/JobDescription"
-#          example:
-#            jobDescription:
-#              name: job
-#              value: value
-#            jobDescription1:
-#              name: job1
-#              value: value1
-#            jobDescription2:
-#              name: job2
-#              value: value2
+          title: Job Descriptions
+          type: object
+          properties:
+            jobDescription:
+              type: array
+              items:
+                $ref: "#/components/schemas/jobDescriptionItem"
         employmentType:
           type: string
           enum: ['permanent', 'intern', 'trainee', 'freelance']
@@ -226,6 +214,25 @@ components:
       xml:
         name: position
 
+    jobDescriptionItem:
+      type: array
+      items:
+        allOf:
+          - $ref: "#/components/schemas/JobDescription"
+      example:
+        - name: Beschreibung
+          value: <![CDATA[
+            Für unser Büro mitten im Münchner Glockenbachviertel suchen wir zum nächstmöglichen Zeitpunkt einen Office Manager (m/w) in Teilzeit, der/ die sich um alle Themen rund ums Office zuverlässig kümmert.<br><br><strong>Deine Aufgaben:</strong><br><br><ul><li>Ansprechpartner in Sachen Büro, Ausstattung und anderer “Wohlfühl”-Themen, die unseren Mitarbeiter/innen auf dem Herzen liegen</li><li>Bearbeitung von generellen Anfragen, Post und Eingangsrechnungen</li><li>Kommunikation und Organisation unserer Servicedienstleister und Zulieferer</li><li>Selbstständige Entwicklung &amp; Umsetzung neuer Ideen, Aktionen und Events für unsere Mitarbeiter</li><li>Unterstützung unseres Management-Teams bei organisatorischen Aufgaben</li><li>Management unserer <strong><a href="http://www.unumotors.com">Unu-Elektroroller</a></strong>-Flotte (ja, du bekommst auch einen, wenn du möchtest)</li></ul>
+            ]]>
+        - name: Dein Profil
+          value: <![CDATA[
+            <ul><li>Du bist herzlich, offen und kommunikativ</li><li>Du bist ein Organisationstalent und magst den Umgang mit Zahlen</li><li>Du bist gewissenhaft, sorgfältig und strukturiert</li><li>Du zeigst Eigeninitiative und Kreativität bei der Planung neuer Aktionen</li><li>Du sprichst Deutsch auf muttersprachlichem Niveau und hast gute Englischkenntnisse</li><li>Du hast Spaß an vielfältigen Aufgaben und unterstützt gerne dort, wo Hilfe gebraucht wird</li></ul>
+            ]]>
+        - name: Warum Personio
+          value: <![CDATA[
+            <ul><li>Chance in einem schnell wachsenden Unternehmen an vielfältigen Aufgaben zu wachsen und zu lernen</li><li>Kreatives Arbeitsumfeld und kurze Entscheidungswege</li><li>Von Anfang an volle Verantwortung in Deinem Bereich</li><li>Regelmäßige Team-Events, Tischtennis und Ausflüge ins Münchner Nachtleben</li><li>Büro im Herzen von München (nahe Gärtnerplatz)</li><li>Blitzschneller Elektroroller deiner Wahl als “Geschäftswagen”</li></ul>
+            ]]>
+
     JobDescription:
       title: Job Description
       type: object
@@ -235,12 +242,8 @@ components:
           properties:
             name:
               type: string
-              example: Beschreibung
             value:
               type: string
-              example: <![CDATA[
-                Für unser Büro mitten im Münchner Glockenbachviertel suchen wir zum nächstmöglichen Zeitpunkt einen Office Manager (m/w) in Teilzeit, der/ die sich um alle Themen rund ums Office zuverlässig kümmert.<br><br><strong>Deine Aufgaben:</strong><br><br><ul><li>Ansprechpartner in Sachen Büro, Ausstattung und anderer “Wohlfühl”-Themen, die unseren Mitarbeiter/innen auf dem Herzen liegen</li><li>Bearbeitung von generellen Anfragen, Post und Eingangsrechnungen</li><li>Kommunikation und Organisation unserer Servicedienstleister und Zulieferer</li><li>Selbstständige Entwicklung &amp; Umsetzung neuer Ideen, Aktionen und Events für unsere Mitarbeiter</li><li>Unterstützung unseres Management-Teams bei organisatorischen Aufgaben</li><li>Management unserer <strong><a href="http://www.unumotors.com">Unu-Elektroroller</a></strong>-Flotte (ja, du bekommst auch einen, wenn du möchtest)</li></ul>
-                ]]>
 
     Applicant:
       title: Applicant
