@@ -294,36 +294,36 @@ components:
           type: string
           maxLength: 100
         categorised_documents:
-          description: Array of files and category names.
-            Each file in the array should be an upload stream.
-            Each category in the array should be a category name.
-            You can check a request example in the "A note on categorised documents" section.
-            [array of files]
-            allowed extensions are 'pdf', 'docx', 'doc', 'jpg', 'png', 'txt', 'jpeg', 'odt', 'ods','xlsx', 'rtf', 'xls', 'pptx', 'ppt', 'gif', 'tif', 'tiff', 'bmp', 'csv', 'rar', 'gz', 'zip', '7z';
-            filesize per document < 20M;
-            total post size < 64M;
-            [array of category names]
-            allowed values are 'cv', 'cover-letter', 'employment-reference', 'certificate', 'work-sample' or 'other'
+          description: Array of files and category names. <br/>
+            Each file in the array should be an upload stream. <br/>
+            Each category in the array should be a category name. <br/>
+            You can check a request example in the "A note on categorised documents" section. <br/>
+            [array of files] <br/>
+            allowed extensions are 'pdf', 'docx', 'doc', 'jpg', 'png', 'txt', 'jpeg', 'odt', 'ods','xlsx', 'rtf', 'xls', 'pptx', 'ppt', 'gif', 'tif', 'tiff', 'bmp', 'csv', 'rar', 'gz', 'zip', '7z'; <br/>
+            filesize per document < 20M; <br/>
+            total post size < 64M; <br/>
+            [array of category names] <br/>
+            allowed values are 'cv', 'cover-letter', 'employment-reference', 'certificate', 'work-sample' or 'other' <br/>
           type: array
           items:
             $ref: "#/components/schemas/CategorizedDocument"
         documents:
-          description: Array of documents that are attached to this application.
-            [array of files]
-            allowed extensions are 'pdf', 'docx', 'doc', 'jpg', 'png', 'txt', 'jpeg', 'odt', 'ods','xlsx', 'rtf', 'xls', 'pptx', 'ppt', 'gif', 'tif', 'tiff', 'bmp', 'csv', 'rar', 'gz', 'zip', '7z';
-            filesize per document < 20M;
-            total post size < 64M;
-            [array of category names]
-            allowed values are 'cv', 'cover-letter', 'employment-reference', 'certificate', 'work-sample' or 'other'
+          description: Array of documents that are attached to this application. <br/>
+            [array of files] <br/>
+            allowed extensions are 'pdf', 'docx', 'doc', 'jpg', 'png', 'txt', 'jpeg', 'odt', 'ods','xlsx', 'rtf', 'xls', 'pptx', 'ppt', 'gif', 'tif', 'tiff', 'bmp', 'csv', 'rar', 'gz', 'zip', '7z'; <br/>
+            filesize per document < 20M; <br/>
+            total post size < 64M; <br/>
+            [array of category names] <br/>
+            allowed values are 'cv', 'cover-letter', 'employment-reference', 'certificate', 'work-sample' or 'other' <br/>
           type: array
           items:
             $ref: "#/components/schemas/Document"
         documentn:
-          description: Alternatively to an array (see above), documents can also be transferred individually numbered document1, document2, etc (the numbering starts at 1) with the absolute path to the document in an upload stream.
-            [file]
-            allowed extensions are 'pdf', 'docx', 'doc', 'jpg', 'png', 'txt', 'jpeg', 'odt', 'ods','xlsx', 'rtf', 'xls', 'pptx', 'ppt', 'gif', 'tif', 'tiff', 'bmp', 'csv', 'rar', 'gz', 'zip', '7z';
-            filesize per document < 20M;
-            total post size < 64M
+          description: Alternatively to an array (see above), documents can also be transferred individually numbered document1, document2, etc (the numbering starts at 1) with the absolute path to the document in an upload stream. <br/>
+            [file] <br/>
+            allowed extensions are 'pdf', 'docx', 'doc', 'jpg', 'png', 'txt', 'jpeg', 'odt', 'ods','xlsx', 'rtf', 'xls', 'pptx', 'ppt', 'gif', 'tif', 'tiff', 'bmp', 'csv', 'rar', 'gz', 'zip', '7z'; <br/>
+            filesize per document < 20M; <br/>
+            total post size < 64M <br/>
           type: object
           allOf:
             - $ref: "#/components/schemas/Document"
@@ -331,15 +331,17 @@ components:
           description: Initial message from the applicant
           type: string
         tags:
-          description: Existing tags (new ones cannot be created via API)  [array of strings], e.g. [ “tag_1”, “tag_2" ]
+          description: Existing tags (new ones cannot be created via API) <br/>
+            [array of strings], e.g. [ “tag_1”, “tag_2" ]
         birthday:
-          description: Birthday of the applicant. date according to ISO 8601 format (YYYY-MM-DD)
+          description: Birthday of the applicant. <br/>
+            Date according to ISO 8601 format (YYYY-MM-DD)
           type: string
-          pattern: ^\d\d\d\d-\d\d-\d\d$
+          pattern: ^\d{4}-\d{2}-\d{2}$
         custom_attribute_{id}:
-          description: Custom applicant attribute.
-            Custom applicant attributes that were created individually can also be passed.
-            You can find the unique parameter names of these attributes in your Personio account under https://mycompany.personio.de/configuration/recruiting/applicants
+          description: Custom applicant attribute. <br/>
+            Custom applicant attributes that were created individually can also be passed. <br/>
+            You can find the unique parameter names of these attributes in your Personio account under https://mycompany.personio.de/configuration/recruiting/applicants <br/>
           type: integer
       required:
         - company_id
