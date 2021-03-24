@@ -11,7 +11,42 @@ paths:
       tags:
         - XML
       summary: Retrieving open positions
-      description: Description of the positions xml feed of the Personio Recruiting API
+      description: "<p>Description of the positions xml feed of the Personio Recruiting API</p>
+        <p>
+        Custom applicant attributes that were created individually can also be passed. <br/>
+        You can find the unique parameter names of these attributes in your Personio account under <pre>https://mycompany.personio.de/configuration/recruiting/applicants</pre>
+        </p>
+        <p>
+        <strong>A note on categorised documents</strong><br/>
+        Categorised documents are represented as a multidimensional array. <br/>
+        Each object has two fields: 'file' and 'category'. The 'file' field contains an upload stream. The 'category field' contains the category name, the allowed category names are listed in the table above. An example in pseudo code would be: <br/>
+        <pre>
+        val request = HttpRequest()<br/><br/>
+        // Example of a CV file <br/>
+        request.body[\"categorised_documents[0]['file']\"] = UploadFile('path-to-cv-file') <br/>
+        request.body[\"categorised_documents[0]['category']\"] = 'cv' <br/><br/>
+        // Example of a cover letter file <br/>
+        request.body[\"categorised_documents[1]['file']\"] = UploadFile('path-to-cover-letter') <br/>
+        request.body[\"categorised_documents[1]['category']\"] = 'cover-letter'
+        </pre>
+        </p>
+        <p>
+        <strong>A note on documents</strong><br/>
+        Documents need to be submitted as an upload stream not just with a plain file path. An example in pseudo code would be: <br/>
+        <pre>
+        val request = HttpRequest() <br/>
+        request.body['document1'] = 'path-to-file' ----> WRONG <br/>
+        request.body['document1'] = UploadFile('path-to-file') ----> CORRECT
+        </pre>
+        </p>
+        <p>
+        <strong>A note on spamming</strong><br/>
+        Please be aware that the access_token in company with your company_id allows the creation of applications in your account. When building your own career page, we would recommend that you call our endpoints from a backend service, rather than from your frontend directly, in order to avoid making the token publicly accessible. In addition to this, we recommend the inclusion of a captcha or similar into your own career page to avoid bot applications.
+        </p>
+        <p>
+        <strong>Rate limiting</strong><br/>
+        Our applicant API is a rate limit of 100 applications in 60 seconds per IP address. After submitting this amount of applications, you will need to wait 60 seconds before you can submit more applications.
+        </p>"
       responses:
         "200":
           description: "An example response looks like this:"
