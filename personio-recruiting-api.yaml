@@ -2,7 +2,17 @@ openapi: 3.0.0
 info:
   version: "1.0"
   title: Recruiting
-  description: API for reading and writing personnel data including data about attendances and absences
+  description: "<p>The Recruiting API allows you to GET open job positions (<i>XML</i> endpoint) and POST applications to Personio (<i>Applicant</i> endpoint). Other methods are currently not supported.</p>
+    <p>For the Recruiting API endpoint, please use the separate access token provided under Settings > API > Access Data > Recruiting API Access Tokens as described above.</p>
+    <p><b>POST</b><p/>
+    <ul>
+    <li>Applicants can only be transferred via the API for assigned job postings that are published at that time</li>
+    <li>Size per documentation is a maximum of 20 MB</li>
+    <li>General transmission size is a maximum of 64 MB</li>
+    <li>The following document types are allowed: 'pdf', 'docx', 'doc', 'jpg', 'png', 'txt', 'jpeg', 'odt', 'ods', 'xlsx', 'rtf', 'xls', 'pptx', 'ppt', 'gif', 'tif', 'tiff', 'bmp', 'csv', 'rar', 'gz', 'zip', '7z'.</li>
+    <li>System attributes are described in this documentation. You can also transfer user-defined applicant attributes using the applicant API. To do this, check the dynamic name of the respective attribute in Personio under Settings > Recruiting > Applicant > Edit Attribute > API Attribute Name</li>
+    <li>You can transfer job postings from Personio to your career site via xml feed. You can find further information here.</li>
+    </ul>"
 paths:
   /xml:
     get:
@@ -61,7 +71,8 @@ paths:
       tags:
         - Applicant
       summary: Passing applications to Personio
-      description: Description of the applicant endpoint of the Personio Recruiting API
+      description: <p>Description of the applicant endpoint of the Personio Recruiting API <p/>
+        <p>The API access token as well as the company ID can be found in your Personio account under Settings > API.</p>
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -285,10 +296,10 @@ components:
       type: object
       properties:
         company_id:
-          description: Your company ID (see above)
+          description: Your company ID (see endpoint description)
           type: integer
         access_token:
-          description: API Access token for your company account (see above)
+          description: API Access token for your company account (see endpoint description)
           type: string
         job_position_id:
           description: ID of the published job position that this application is for (from XML feed)
@@ -353,8 +364,8 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Document"
-        documentn:
-          description: Alternatively to an array (see above), documents can also be transferred individually numbered document1, document2, etc (the numbering starts at 1) with the absolute path to the document in an upload stream. <br/>
+        document{n}:
+          description: Alternatively to an array (see 'documents'), documents can also be transferred individually numbered document1, document2, etc (the numbering starts at 1) with the absolute path to the document in an upload stream. <br/>
             [file] <br/>
             allowed extensions are 'pdf', 'docx', 'doc', 'jpg', 'png', 'txt', 'jpeg', 'odt', 'ods','xlsx', 'rtf', 'xls', 'pptx', 'ppt', 'gif', 'tif', 'tiff', 'bmp', 'csv', 'rar', 'gz', 'zip', '7z'; <br/>
             filesize per document < 20M; <br/>
@@ -372,11 +383,11 @@ components:
           description: Birthday of the applicant. <br/>
             Date according to ISO 8601 format (YYYY-MM-DD)
           type: string
-          pattern: ^\d{4}-\d{2}-\d{2}$
+          format: date
         custom_attribute_{id}:
-          description: Custom applicant attribute. <br/>
+          description: "Custom applicant attribute. <br/>
             Custom applicant attributes that were created individually can also be passed. <br/>
-            You can find the unique parameter names of these attributes in your Personio account under https://mycompany.personio.de/configuration/recruiting/applicants <br/>
+            You can find the unique parameter names of these attributes in your Personio account under: <pre>https://mycompany.personio.de/configuration/recruiting/applicants</pre>"
           type: integer
       required:
         - company_id
