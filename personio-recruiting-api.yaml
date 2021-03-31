@@ -75,7 +75,7 @@ paths:
         <p>The API access token as well as the company ID can be found in your Personio account under Settings > API.</p>
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          multipart/form-data:
             schema:
               $ref: "#/components/schemas/Applicant"
         description: Applicant data
@@ -99,32 +99,32 @@ paths:
                 File too large:
                   value:
                     success: false
-                    data:
+                    error:
                       message: "Unsupported extension or file greater than 20Mb."
                 Unsupported file extension:
                   value:
                     success: false
-                    data:
+                    error:
                       message: "Unsupported extension or file greater than 20Mb."
                 Required field empty (e.g. name, email):
                   value:
                     success: false
-                    data:
+                    error:
                       message: "The {field_name} field is required."
                 Invalid custom attribute (custom attribute ID does not exist):
                   value:
                     success: false
-                    data:
+                    error:
                       message: "Parameter {parameter_name} does not exist."
                 Invalid job position:
                   value:
                     success: false
-                    data:
+                    error:
                       message: "Could not find the job position."
                 Applicant already applied:
                   value:
                     success: false
-                    data:
+                    error:
                       message: "Applicant already applied to this position."
         "422":
           description: Something went wrong and the attachments could not be processed at this moment. Please try again.
@@ -134,12 +134,12 @@ paths:
                 Unprocessable Entity 1:
                   value:
                     success: false
-                    data:
+                    error:
                       message: "There was a problem while processing attachments. Try again later"
                 Unprocessable Entity 2:
                   value:
                     success: false
-                    data:
+                    error:
                       message: "Job position not published"
         "403":
           description: Something went wrong and the application was not created in Personio. In this case, the API access token provided doesn't match the company ID.
@@ -149,7 +149,7 @@ paths:
                 Not Authorized:
                   value:
                     success: false
-                    data:
+                    error:
                       message: "This action is unauthorized."
         "500":
           description: Something went wrong and the application was not created in Personio. This particular case the transaction failed due to an issue on Personio's end, e.g. server error.
@@ -159,7 +159,7 @@ paths:
                 Internal Server Error:
                   value:
                     success: false
-                    data:
+                    error:
                       message: "Something went wrong, please try again later!"
         "503":
           description: The server is currently unable to handle the request due to a temporary overload or scheduled maintenance, which will likely be alleviated after some delay.
@@ -169,8 +169,8 @@ paths:
                 Service Unavailable:
                   value:
                     success: false
-                    data:
-                      message: ""
+                    error:
+                      message: "Service Unavailable"
 
 
 servers:
