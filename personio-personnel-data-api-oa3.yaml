@@ -43,6 +43,23 @@ paths:
         - BearerAuth: []
       tags:
         - Employees
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          description: Pagination attribute to limit how many employees are per page
+          schema:
+            type: integer
+            minimum: 1
+            default: 200
+        - name: offset
+          in: query
+          required: false
+          description: Pagination attribute to identify which page you are requesting, by the form of telling an offset from the first record that would be returned.
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
       description: List Company Employees
       responses:
         "200":
@@ -55,6 +72,12 @@ paths:
                 response:
                   value:
                     success: true
+                    metadata:
+                      total_elements: 2
+                      current_page: 0
+                      total_pages: 3
+                    offset: 0
+                    limit: 20
                     data:
                       - type: Employee
                         attributes:
@@ -1964,6 +1987,26 @@ components:
         - $ref: "#/components/schemas/Response"
         - type: object
           properties:
+            metadata:
+              type: object
+              required:
+                - total_elements
+                - current_page
+                - total_pages
+              properties:
+                total_elements:
+                  type: integer
+                  description: The total number of items matching the query filters.
+                total_pages:
+                  type: integer
+                  description: The total number of pages distributing sets of items matching the query filters.
+                current_page:
+                  type: integer
+                  description: Current page number containing the returned set of items matching with the query filters. The page number range is from 0 to total_pages - 1
+            offset:
+              type: integer
+            limit:
+              type: integer
             data:
               type: array
               items:
