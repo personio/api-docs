@@ -55,7 +55,7 @@ paths:
         - name: offset
           in: query
           required: false
-          description: Pagination attribute to identify the first item in the collection in combination with the limit attribute.
+          description: Pagination attribute to identify the first item in the collection to return.
           schema:
             type: integer
             minimum: 0
