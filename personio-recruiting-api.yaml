@@ -174,7 +174,7 @@ paths:
 
 
 servers:
-  - url: https://api.personio.de/v1
+  - url: https://api.personio.de
 components:
   securitySchemes:
     BearerAuth:
