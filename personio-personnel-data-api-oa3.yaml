@@ -693,11 +693,13 @@ paths:
                   value:
                     success: true
                     data:
-                      - id: 21799
+                      -
+                        id: 21799
                         name: "Paid Vacation"
                         category: null
                         balance: 14
-                      - id: 33523
+                      -
+                        id: 33523
                         name: "Sick Days"
                         category: null
                         balance: 0
@@ -2137,9 +2139,9 @@ components:
                 example: Paid Vacation
               category:
                 type: string
-                category: custom_absence
+                example: custom_absence
               balance:
-                type: float
+                type: number
                 example: 10.5
 
     Attendance:
