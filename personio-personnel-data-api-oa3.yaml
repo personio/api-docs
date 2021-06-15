@@ -225,9 +225,15 @@ paths:
                           dynamic_24407:
                             label: Titel
                             value: Dr
+                            type: standard
                           dynamic_21827:
                             label: IBAN
                             value: DE98 8989 9898 0000 8989 00
+                            type: standard
+                          dynamic_33400:
+                            label: Anniversary Date
+                            value: 2021-01-01
+                            type: date
     post:
       security:
         - BearerAuth: []
@@ -637,9 +643,15 @@ paths:
                         dynamic_24407:
                           label: Titel
                           value: Dr
+                          type: standard
                         dynamic_21827:
                           label: IBAN
                           value: DE98 8989 9898 0000 8989 00
+                          type: standard
+                        dynamic_23001:
+                          label: Number of pets
+                          value: 2
+                          type: integer
         "404":
           description: ""
           content:
@@ -653,6 +665,56 @@ paths:
                     error:
                       code: 404
                       message: 'Es ist ein Problem aufgetreten '
+
+  "/company/employees/{employee_id}/absences/balance":
+    get:
+      security:
+        - BearerAuth: []
+      tags:
+        - Employees
+      description: Retrieve the absence balance for a specific employee
+      parameters:
+        - name: employee_id
+          in: path
+          required: true
+          description: Numeric `id` of the employee
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeeAbsenceBalance"
+              examples:
+                response:
+                  value:
+                    success: true
+                    data:
+                      - id: 21799
+                        name: "Paid Vacation"
+                        category: null
+                        balance: 14
+                      - id: 33523
+                        name: "Sick Days"
+                        category: null
+                        balance: 0
+        "404":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee404ErrorResponse"
+              examples:
+                response:
+                  value:
+                    success: false
+                    error:
+                      code: 404
+                      message: 'Es ist ein Problem aufgetreten '
+
   "/company/employees/custom-attributes":
     get:
       security:
@@ -675,6 +737,7 @@ paths:
                       -
                         key: dynamic_1
                         label: IBAN
+                        type: standard
 
   "/company/employees/{employee_id}/profile-picture/{width}":
     get:
@@ -1050,12 +1113,22 @@ paths:
                           name: 'Paid vacation'
                           category: null
                           unit: 'day'
+                          half_day_requests_enabled: true
+                          certification_required: false
+                          substitute_option: disabled
+                          approval_required: true
+
                       - type: TimeOffType
                         attributes:
                           id: 1235
                           name: 'Home office'
                           category: 'offsite_work'
                           unit: 'hour'
+                          half_day_requests_enabled: true
+                          certification_required: true
+                          certification_submission_timeframe: 2
+                          substitute_option: optional
+                          approval_required: true
 
   /company/time-offs:
     get:
@@ -1981,6 +2054,18 @@ components:
               example: IBAN
             value:
               example: DE98 8989 9898 0000 8989 00
+            type:
+              description: The type of the field. It's only visible on custom attributes
+              example: standard
+              enum:
+                - standard
+                - date
+                - integer
+                - decimal
+                - list
+                - link
+                - tags
+                - multiline
     EmployeesResponse:
       title: List of Employees
       allOf:
@@ -2032,6 +2117,30 @@ components:
                     example: Employee
                   attributes:
                     $ref: "#/components/schemas/Employee"
+
+    EmployeeAbsenceBalance:
+      title: Employee Absence Balance
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1234
+              name:
+                type: string
+                example: Paid Vacation
+              category:
+                type: string
+                category: custom_absence
+              balance:
+                type: float
+                example: 10.5
 
     Attendance:
       type: object
@@ -2239,6 +2348,27 @@ components:
               - day
               - hour
               example: day
+            half_day_requests_enabled:
+              type: boolean
+              example: true
+            certification_required:
+              type: boolean
+              example: false
+            certification_submission_timeframe:
+              description: The timeframe in days under which the employee needs to submit the certification
+              type: integer
+              example: 2
+            substitute_option:
+              type: string
+              enum:
+                - disabled
+                - optional
+                - required
+              example: optional
+            approval_required:
+              type: boolean
+              example: true
+
     CreateTimeOffPeriodRequest:
       title: Create time-off periods
       type: object
