@@ -2137,9 +2137,9 @@ components:
                 example: Paid Vacation
               category:
                 type: string
-                category: custom_absence
+                example: custom_absence
               balance:
-                type: float
+                type: number
                 example: 10.5
 
     Attendance:
