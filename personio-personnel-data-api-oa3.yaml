@@ -63,7 +63,7 @@ paths:
         - name: email
           in: query
           required: false
-          description: Find an employee with the given email address.
+          description: Find an employee with the given email address. The response is still a list, containing only the filtered employee.
           schema:
             type: string
       description: List Company Employees
