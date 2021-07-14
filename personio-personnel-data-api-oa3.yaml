@@ -60,6 +60,12 @@ paths:
             type: integer
             minimum: 0
             default: 0
+        - name: email
+          in: query
+          required: false
+          description: Find an employee with the given email address. The response is still a list, containing only the filtered employee.
+          schema:
+            type: string
       description: List Company Employees
       responses:
         "200":
@@ -234,6 +240,16 @@ paths:
                             label: Anniversary Date
                             value: 2021-01-01
                             type: date
+        "404":
+          description: ""
+          content:
+            application/json:
+              example:
+                response:
+                  value:
+                    success: false
+                    error:
+                      message: "Employee [unknown@personio.de] not found"
     post:
       security:
         - BearerAuth: []
