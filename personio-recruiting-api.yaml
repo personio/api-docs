@@ -339,28 +339,28 @@ components:
           description: Date from which this applicant is available from
           type: string
           maxLength: 100
-        categorised_documents:
-          description: Array of files and category names. <br/>
-            Each file in the array should be an upload stream. <br/>
-            Each category in the array should be a category name. <br/>
+        categorised_documents[n][file]:
+          description: Nth file <br/>
+            The file should be an upload stream. <br/>
             You can check a request example in the "A note on categorised documents" section. <br/>
             [array of files] <br/>
             allowed extensions are 'pdf', 'docx', 'doc', 'jpg', 'png', 'txt', 'jpeg', 'odt', 'ods','xlsx', 'rtf', 'xls', 'pptx', 'ppt', 'gif', 'tif', 'tiff', 'bmp', 'csv', 'rar', 'gz', 'zip', '7z'; <br/>
             filesize per document < 20M; <br/>
             total post size < 64M; <br/>
-            [array of category names] <br/>
+          type: string
+          format: binary
+        categorised_documents[n][category]:
+          description: Nth file's category <br/>
+            Category of the Nth file. <br/>
+            You can check a request example in the "A note on categorised documents" section. <br/>
             allowed values are 'cv', 'cover-letter', 'employment-reference', 'certificate', 'work-sample' or 'other' <br/>
-          type: array
-          items:
-            $ref: "#/components/schemas/CategorizedDocument"
+          type: string
         documents:
           description: Array of documents that are attached to this application. <br/>
             [array of files] <br/>
             allowed extensions are 'pdf', 'docx', 'doc', 'jpg', 'png', 'txt', 'jpeg', 'odt', 'ods','xlsx', 'rtf', 'xls', 'pptx', 'ppt', 'gif', 'tif', 'tiff', 'bmp', 'csv', 'rar', 'gz', 'zip', '7z'; <br/>
             filesize per document < 20M; <br/>
             total post size < 64M; <br/>
-            [array of category names] <br/>
-            allowed values are 'cv', 'cover-letter', 'employment-reference', 'certificate', 'work-sample' or 'other' <br/>
           type: array
           items:
             $ref: "#/components/schemas/Document"
@@ -396,21 +396,6 @@ components:
         - first_name
         - last_name
         - email
-
-    CategorizedDocument:
-      title: Categorized document
-      type: object
-      properties:
-        file:
-          type: string
-          format: binary
-          description: "allowed extensions are 'pdf', 'docx', 'doc', 'jpg', 'png', 'txt', 'jpeg', 'odt', 'ods','xlsx', 'rtf', 'xls', 'pptx', 'ppt', 'gif', 'tif', 'tiff', 'bmp', 'csv', 'rar', 'gz', 'zip', '7z'
-            filesize per document < 20M
-            total post size < 64M"
-        category:
-          type: string
-          enum: ['cv', 'cover-letter', 'employment-reference', 'certificate', 'work-sample', 'other']
-          description: allowed values are 'cv', 'cover-letter', 'employment-reference', 'certificate', 'work-sample' or 'other'
 
     Document:
       title: Document
