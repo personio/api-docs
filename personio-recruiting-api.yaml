@@ -340,7 +340,7 @@ components:
           type: string
           maxLength: 100
         categorised_documents[n][file]:
-          description: Nth file <br/>
+          description: Nth document <br/>
             The file should be an upload stream. <br/>
             You can check a request example in the "A note on categorised documents" section. <br/>
             [array of files] <br/>
@@ -350,20 +350,19 @@ components:
           type: string
           format: binary
         categorised_documents[n][category]:
-          description: Nth file's category <br/>
+          description: Nth document's category <br/>
             Category of the Nth file. <br/>
             You can check a request example in the "A note on categorised documents" section. <br/>
             allowed values are 'cv', 'cover-letter', 'employment-reference', 'certificate', 'work-sample' or 'other' <br/>
           type: string
-        documents:
-          description: Array of documents that are attached to this application. <br/>
-            [array of files] <br/>
+        documents[n]:
+          description: Nth document <br/>
+            The file should be an upload stream. <br/>
             allowed extensions are 'pdf', 'docx', 'doc', 'jpg', 'png', 'txt', 'jpeg', 'odt', 'ods','xlsx', 'rtf', 'xls', 'pptx', 'ppt', 'gif', 'tif', 'tiff', 'bmp', 'csv', 'rar', 'gz', 'zip', '7z'; <br/>
             filesize per document < 20M; <br/>
             total post size < 64M; <br/>
-          type: array
-          items:
-            $ref: "#/components/schemas/Document"
+          type: string
+          format: binary
         document{n}:
           description: Alternatively to an array (see 'documents'), documents can also be transferred individually numbered document1, document2, etc (the numbering starts at 1) with the absolute path to the document in an upload stream. <br/>
             [file] <br/>
