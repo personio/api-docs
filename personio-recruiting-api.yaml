@@ -323,6 +323,9 @@ components:
         recruiting_channel_id:
           description: ID of the recruiting channel that this applicant applied through recruiting_channel_id has to match the id of a channel you created in Personio
           type: integer
+        external_posting_id:
+          description: When using multiposting, this is the `pid` forwarded (usually as a query param) by the external job board site
+          type: integer
         phone:
           description: Phone number of the applicant
           type: string
