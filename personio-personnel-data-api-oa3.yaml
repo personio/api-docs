@@ -43,6 +43,29 @@ paths:
         - BearerAuth: []
       tags:
         - Employees
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          description: Pagination attribute to limit the number of employees returned per page.
+          schema:
+            type: integer
+            minimum: 1
+            default: 200
+        - name: offset
+          in: query
+          required: false
+          description: Pagination attribute to identify the first item in the collection to return.
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - name: email
+          in: query
+          required: false
+          description: Find an employee with the given email address. The response is still a list, containing only the filtered employee.
+          schema:
+            type: string
       description: List Company Employees
       responses:
         "200":
@@ -55,21 +78,27 @@ paths:
                 response:
                   value:
                     success: true
+                    metadata:
+                      total_elements: 2
+                      current_page: 0
+                      total_pages: 3
+                    offset: 0
+                    limit: 20
                     data:
                       - type: Employee
                         attributes:
                           id:
-                            label: id
-                            value: 83752
+                            label: ID
+                            value: 1132888
                           first_name:
                             label: First name
-                            value: Andreas
+                            value: Alexander
                           last_name:
                             label: Last name
-                            value: Anderson
+                            value: Bergmann
                           email:
                             label: Email
-                            value: andreas.anderson@demo.com
+                            value: alexander.bergmann@demo.com
                           gender:
                             label: Gender
                             value: male
@@ -78,33 +107,19 @@ paths:
                             value: active
                           position:
                             label: Position
-                            value: Online Marketing Specialist
+                            value: CTO
                           supervisor:
                             label: Supervisor
                             value:
-                              type: Employee
-                              attributes:
-                                id:
-                                  label: id
-                                  value: 423506
-                                first_name:
-                                  label: First name
-                                  value: Max
-                                last_name:
-                                  label: Last name
-                                  value: Mustermann
-                                email:
-                                  label: Email
-                                  value: max.mustermann@example.org
                           employment_type:
                             label: Employment type
-                            value: internal
+                            value: external
                           weekly_working_hours:
                             label: Weekly hours
                             value: '40'
                           hire_date:
                             label: Hire date
-                            value: '2012-02-01T00:00:00+0100'
+                            value: '2014-11-09T00:00:00+01:00'
                           contract_end_date:
                             label: Contract ends
                             value:
@@ -119,100 +134,122 @@ paths:
                             value: ''
                           probation_period_end:
                             label: Probation period end
-                            value: '2012-07-31T00:00:00+0200'
+                            value:
                           created_at:
                             label: created_at
-                            value: '2016-10-20T16:15:55+0200'
+                            value: '2017-05-23T09:49:03+02:00'
                           last_modified_at:
                             label: Last modified
-                            value: '2016-10-22T16:15:55+0200'
+                            value: '2020-11-18T17:33:55+01:00'
+                          subcompany:
+                            label: Subcompany
+                            value:
+                              type: Subcompany
+                              attributes:
+                                id: 7033
+                                name: CS Demo GmbH
                           office:
                             label: Office
                             value:
                               type: Office
                               attributes:
+                                id: 131014
                                 name: Munich
                           department:
                             label: Department
                             value:
                               type: Department
                               attributes:
-                                name: Marketing
+                                id: 281521
+                                name: Customer Support
                           cost_centers:
                             label: Cost center
                             value:
                               - type: CostCenter
                                 attributes:
-                                  name: Cost Center One
-                                  id: 320
-                                  percentage: 50
-                              - type: CostCenter
-                                attributes:
-                                  name: Cost Center Two
-                                  id: 321
-                                  percentage: 50
-                          fix_salary:
-                            label: Fix salary
-                            value: 4000
-                          hourly_salary:
-                            label: Hourly salary
-                            value: 0
-                          vacation_day_balance:
-                            label: Vacation day balance
-                            value: 28.5
-                          last_working_day:
-                            label: Last working day
-                            value: '2017-02-28T00:00:00+0200'
-                          dynamic_24407:
-                            label: Titel
-                            value: Dr
-                          dynamic_21827:
-                            label: IBAN
-                            value: DE98 8989 9898 0000 8989 00
+                                  id: 82957
+                                  name: Cost center 1
+                                  percentage: 100
                           holiday_calendar:
-                            label: 'Holiday Calendar'
+                            label: Public holidays
                             value:
                               type: HolidayCalendar
                               attributes:
-                                id: 931
-                                name: 'DE (Hamburg) Feiertage'
+                                id: 2
+                                name: Deutschland (Bayern) Feiertage
                                 country: DE
-                                state: Hamburg
-                          work_schedule:
-                            label: 'Work Schedule'
-                            value:
-                              type: WorkSchedule
-                              attributes:
-                                id: 123
-                                name: 'Standard Hours'
-                                monday: '08:30'
-                                tuesday: '08:30'
-                                wednesday: '08:30'
-                                thursday: '08:30'
-                                friday: '06:00'
-                                saturday: '00:00'
-                                sunday: '00:00'
+                                state: Bayern
                           absence_entitlement:
                             label: Absence entitlement
                             value:
                               - type: TimeOffType
                                 attributes:
-                                  id: 12345
-                                  name: "Paid Vacation"
-                                  entitlement: 30
-                              - type: TimeOffType
-                                attributes:
-                                  id: 12346
-                                  name: "Parental leave"
-                                  entitlement: 0
-                              - type: TimeOffType
-                                attributes:
-                                  id: 12347
-                                  name: "Sick days"
-                                  entitlement: 0
+                                  id: 113437
+                                  name: Paid vacation
+                                  category: paid_vacation
+                                  entitlement: 24
+                          work_schedule:
+                            label: Work schedule
+                            value:
+                              type: WorkSchedule
+                              attributes:
+                                id: 97188
+                                name: Full-time, 40 hours without time tracking, (mon,tue,wed,thu,fri)
+                                valid_from:
+                                monday: '08:00'
+                                tuesday: '08:00'
+                                wednesday: '08:00'
+                                thursday: '08:00'
+                                friday: '08:00'
+                                saturday: '00:00'
+                                sunday: '00:00'
+                          fix_salary:
+                            label: Fix salary
+                            value: 3000
+                          fix_salary_interval:
+                            label: Salary interval
+                            value: monthly
+                          hourly_salary:
+                            label: Hourly salary
+                            value: 0
+                          vacation_day_balance:
+                            label: Vacation day balance
+                            value: 2
+                          last_working_day:
+                            label: Last day of work
+                            value:
                           profile_picture:
                             label: Profile Picture
-                            value: 'http://api.dev.personio.de/v1/company/employees/2/profile-picture'
+                            value: https://api.personio.de/v1/company/employees/1132888/profile-picture
+                          team:
+                            label: Team
+                            value:
+                              type: Team
+                              attributes:
+                                id: 59026
+                                name: T_X
+                          dynamic_24407:
+                            label: Titel
+                            value: Dr
+                            type: standard
+                          dynamic_21827:
+                            label: IBAN
+                            value: DE98 8989 9898 0000 8989 00
+                            type: standard
+                          dynamic_33400:
+                            label: Anniversary Date
+                            value: 2021-01-01
+                            type: date
+        "404":
+          description: ""
+          content:
+            application/json:
+              example:
+                response:
+                  value:
+                    success: false
+                    error:
+                      message: "Employee [unknown@personio.de] not found"
     post:
       security:
         - BearerAuth: []
@@ -223,6 +260,61 @@ paths:
         Creates new employee. Status of the employee will be set to `active` if `hire_date` provided is in the past. Otherwise status will be set to `onboarding`. This endpoint responds with `id` of created employee in case of success.
       requestBody:
         content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                employee:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      example: "john.dou@demo.com"
+                      description: The email field is required for the employee creation. Updating of this field is not currently supported.
+                    first_name:
+                      type: string
+                      example: "John"
+                    last_name:
+                      type: string
+                      example: "Dou"
+                    gender:
+                      type: string
+                      example: male
+                    position:
+                      type: string
+                      example: developer
+                    subcompany:
+                      type: string
+                      description: The subcompany employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
+                      example: ACME
+                    department:
+                      type: string
+                      description: The department employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
+                      example: IT
+                    office:
+                      type: string
+                      description: The office employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
+                      example: Madrid
+                    hire_date:
+                      type: string
+                      example: '2020-01-31'
+                      format: date
+                      description: "Employee hire date. Format: yyyy-mm-dd"
+                      pattern: ^\d{4}-\d{2}-\d{2}$
+                    weekly_hours:
+                      type: number
+                      example: 40
+                    custom_attributes:
+                      type: object
+                      properties:
+                        dynamic_{{ field uid }}:
+                          type: string
+                          description: Dynamic field, represented by unique id.
+                          example: "German"
+                  required:
+                    - email
+                    - first_name
+                    - last_name
           application/x-www-form-urlencoded:
             schema:
               type: object
@@ -250,9 +342,11 @@ paths:
                   description: Employee department
                   type: string
                 "employee[hire_date]":
-                  description: Employee hire date
                   type: string
+                  example: '2020-01-31'
                   format: date
+                  description: "Employee hire date. Format: yyyy-mm-dd"
+                  pattern: ^\d{4}-\d{2}-\d{2}$
                 "employee[weekly_hours]":
                   description: Employee weekly working hours
                   type: number
@@ -260,54 +354,6 @@ paths:
                 - employee[email]
                 - employee[first_name]
                 - employee[last_name]
-          application/json:
-            schema:
-              type: object
-              properties:
-                employee:
-                  type: object
-                  properties:
-                    email:
-                      type: string
-                      example: "john.dou@demo.com"
-                    first_name:
-                      type: string
-                      example: "John"
-                    last_name:
-                      type: string
-                      example: "Dou"
-                    custom_attributes:
-                      type: object
-                      properties:
-                        gender:
-                          type: string
-                          example: male
-                        position:
-                          type: string
-                          example: developer
-                        subcompany:
-                          type: string
-                          description: The subcompany employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
-                          example: ACME
-                        department:
-                          type: string
-                          description: The department employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
-                          example: IT
-                        office:
-                          type: string
-                          description: The office employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
-                          example: Madrid
-                        hire_date:
-                          type: string
-                          example: '2020-01-31'
-                          format: yyyy-mm-dd
-                        weekly_hours:
-                          type: number
-                          example: 40
-                        dynamic_{{ field uid }}:
-                          type: string
-                          description: Dynamic field, represented by unique id.
-                          example: "German"
       responses:
         "200":
           description: Successful creation of a employee
@@ -323,8 +369,6 @@ paths:
                     data:
                       id: 81723
                       message: "success"
-
-
   "/company/employees/{employee_id}":
     patch:
       security:
@@ -333,7 +377,7 @@ paths:
         - Employees
       summary: Update an employee
       description: >
-        Update existing employee.
+        Update existing employee. Note: Updating of Email field is not currently supported.
       parameters:
         - name: employee_id
           in: path
@@ -344,6 +388,57 @@ paths:
             format: int32
       requestBody:
         content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                employee:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                      example: "John"
+                    last_name:
+                      type: string
+                      example: "Dou"
+                    gender:
+                      type: string
+                      example: male
+                    position:
+                      type: string
+                      example: developer
+                    subcompany:
+                      type: string
+                      description: The subcompany employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
+                      example: ACME
+                    department:
+                      type: string
+                      description: The department employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
+                      example: IT
+                    office:
+                      type: string
+                      description: The office employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
+                      example: Madrid
+                    hire_date:
+                      type: string
+                      example: '2020-01-31'
+                      format: date
+                      description: "Employee hire date. Format: yyyy-mm-dd"
+                      pattern: ^\d{4}-\d{2}-\d{2}$
+                    weekly_hours:
+                      type: number
+                      example: 40
+                    custom_attributes:
+                      type: object
+                      properties:
+                        dynamic_{{ field uid }}:
+                          type: string
+                          description: Dynamic field, represented by unique id.
+                          example: "German"
+                  required:
+                    - email
+                    - first_name
+                    - last_name
           application/x-www-form-urlencoded:
             schema:
               type: object
@@ -368,57 +463,14 @@ paths:
                   description: Employee department
                   type: string
                 "employee[hire_date]":
-                  description: Employee hire date
                   type: string
+                  example: '2020-01-31'
                   format: date
+                  description: "Employee hire date. Format: yyyy-mm-dd"
+                  pattern: ^\d{4}-\d{2}-\d{2}$
                 "employee[weekly_hours]":
                   description: Employee weekly working hours
                   type: number
-          application/json:
-            schema:
-              type: object
-              properties:
-                employee:
-                  type: object
-                  properties:
-                    first_name:
-                      type: string
-                      example: "John"
-                    last_name:
-                      type: string
-                      example: "Dou"
-                    custom_attributes:
-                      type: object
-                      properties:
-                        gender:
-                          type: string
-                          example: male
-                        position:
-                          type: string
-                          example: developer
-                        subcompany:
-                          type: string
-                          description: The subcompany employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
-                          example: ACME
-                        department:
-                          type: string
-                          description: The department employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
-                          example: IT
-                        office:
-                          type: string
-                          description: The office employee belongs to. Should be predefined in Personio. Otherwise will be ignored with showing meta error in the response.
-                          example: Madrid
-                        hire_date:
-                          type: string
-                          example: '2020-01-31'
-                          format: yyyy-mm-dd
-                        weekly_hours:
-                          type: number
-                          example: 40
-                        dynamic_{{ field uid }}:
-                          type: string
-                          description: Dynamic field, represented by unique id.
-                          example: "German"
       responses:
         "200":
           description: Employee is updated
@@ -464,17 +516,17 @@ paths:
                       type: Employee
                       attributes:
                         id:
-                          label: id
-                          value: 83752
+                          label: ID
+                          value: 1132888
                         first_name:
                           label: First name
-                          value: Andreas
+                          value: Alexander
                         last_name:
                           label: Last name
-                          value: Anderson
+                          value: Bergmann
                         email:
                           label: Email
-                          value: andreas.anderson@demo.com
+                          value: alexander.bergmann@demo.com
                         gender:
                           label: Gender
                           value: male
@@ -483,33 +535,19 @@ paths:
                           value: active
                         position:
                           label: Position
-                          value: Online Marketing Specialist
+                          value: CTO
                         supervisor:
                           label: Supervisor
                           value:
-                            type: Employee
-                            attributes:
-                              id:
-                                label: id
-                                value: 423506
-                              first_name:
-                                label: First name
-                                value: Max
-                              last_name:
-                                label: Last name
-                                value: Mustermann
-                              email:
-                                label: Email
-                                value: max.mustermann@example.org
                         employment_type:
                           label: Employment type
-                          value: internal
+                          value: external
                         weekly_working_hours:
                           label: Weekly hours
                           value: '40'
                         hire_date:
                           label: Hire date
-                          value: '2012-02-01T00:00:00+0100'
+                          value: '2014-11-09T00:00:00+01:00'
                         contract_end_date:
                           label: Contract ends
                           value:
@@ -524,97 +562,112 @@ paths:
                           value: ''
                         probation_period_end:
                           label: Probation period end
-                          value: '2012-07-31T00:00:00+0200'
+                          value:
                         created_at:
                           label: created_at
-                          value: '2016-10-20T16:15:55+0200'
+                          value: '2017-05-23T09:49:03+02:00'
                         last_modified_at:
                           label: Last modified
-                          value: '2016-10-22T16:15:55+0200'
+                          value: '2020-11-18T17:33:55+01:00'
+                        subcompany:
+                          label: Subcompany
+                          value:
+                            type: Subcompany
+                            attributes:
+                              id: 7033
+                              name: CS Demo GmbH
                         office:
                           label: Office
                           value:
                             type: Office
                             attributes:
+                              id: 131014
                               name: Munich
                         department:
                           label: Department
                           value:
                             type: Department
                             attributes:
-                              name: Marketing
+                              id: 281521
+                              name: Customer Support
                         cost_centers:
                           label: Cost center
                           value:
                             - type: CostCenter
                               attributes:
-                                name: Cost Center One
-                                id: 320
-                                percentage: 50
-                            - type: CostCenter
-                              attributes:
-                                name: Cost Center Two
-                                id: 321
-                                percentage: 50
-                        fix_salary:
-                          label: Fix salary
-                          value: 4000
-                        hourly_salary:
-                          label: Hourly salary
-                          value: 0
-                        vacation_day_balance:
-                          label: Vacation day balance
-                          value: 28.5
-                        last_working_day:
-                          label: Last working day
-                          value: '2017-02-28T00:00:00+0200'
-                        dynamic_24407:
-                          label: Titel
-                          value: Dr
-                        dynamic_21827:
-                          label: IBAN
-                          value: DE98 8989 9898 0000 8989 00
+                                id: 82957
+                                name: Cost center 1
+                                percentage: 100
                         holiday_calendar:
-                          label: 'Holiday Calendar'
+                          label: Public holidays
                           value:
                             type: HolidayCalendar
                             attributes:
-                              id: 931
-                              name: 'DE (Hamburg) Feiertage'
+                              id: 2
+                              name: Deutschland (Bayern) Feiertage
                               country: DE
-                              state: Hamburg
-                        work_schedule:
-                          label: 'Work Schedule'
-                          value:
-                            type: WorkSchedule
-                            attributes:
-                              id: 123
-                              name: 'Standard Hours'
-                              monday: '08:30'
-                              tuesday: '08:30'
-                              wednesday: '08:30'
-                              thursday: '08:30'
-                              friday: '06:00'
-                              saturday: '00:00'
-                              sunday: '00:00'
+                              state: Bayern
                         absence_entitlement:
                           label: Absence entitlement
                           value:
                             - type: TimeOffType
                               attributes:
-                                id: 12345
-                                name: "Paid Vacation"
-                                entitlement: 30
-                            - type: TimeOffType
-                              attributes:
-                                id: 12346
-                                name: "Parental leave"
-                                entitlement: 0
-                            - type: TimeOffType
-                              attributes:
-                                id: 12347
-                                name: "Sick days"
-                                entitlement: 0
+                                id: 113437
+                                name: Paid vacation
+                                category: paid_vacation
+                                entitlement: 24
+                        work_schedule:
+                          label: Work schedule
+                          value:
+                            type: WorkSchedule
+                            attributes:
+                              id: 97188
+                              name: Full-time, 40 hours without time tracking, (mon,tue,wed,thu,fri)
+                              valid_from:
+                              monday: '08:00'
+                              tuesday: '08:00'
+                              wednesday: '08:00'
+                              thursday: '08:00'
+                              friday: '08:00'
+                              saturday: '00:00'
+                              sunday: '00:00'
+                        fix_salary:
+                          label: Fix salary
+                          value: 3000
+                        fix_salary_interval:
+                          label: Salary interval
+                          value: monthly
+                        hourly_salary:
+                          label: Hourly salary
+                          value: 0
+                        vacation_day_balance:
+                          label: Vacation day balance
+                          value: 2
+                        last_working_day:
+                          label: Last day of work
+                          value:
+                        profile_picture:
+                          label: Profile Picture
+                          value: https://api.personio.de/v1/company/employees/1132888/profile-picture
+                        team:
+                          label: Team
+                          value:
+                            type: Team
+                            attributes:
+                              id: 59026
+                              name: T_X
+                        dynamic_24407:
+                          label: Titel
+                          value: Dr
+                          type: standard
+                        dynamic_21827:
+                          label: IBAN
+                          value: DE98 8989 9898 0000 8989 00
+                          type: standard
+                        dynamic_23001:
+                          label: Number of pets
+                          value: 2
+                          type: integer
         "404":
           description: ""
           content:
@@ -628,6 +681,56 @@ paths:
                     error:
                       code: 404
                       message: 'Es ist ein Problem aufgetreten '
+
+  "/company/employees/{employee_id}/absences/balance":
+    get:
+      security:
+        - BearerAuth: []
+      tags:
+        - Employees
+      description: Retrieve the absence balance for a specific employee
+      parameters:
+        - name: employee_id
+          in: path
+          required: true
+          description: Numeric `id` of the employee
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeeAbsenceBalance"
+              examples:
+                response:
+                  value:
+                    success: true
+                    data:
+                      - id: 21799
+                        name: "Paid Vacation"
+                        category: null
+                        balance: 14
+                      - id: 33523
+                        name: "Sick Days"
+                        category: null
+                        balance: 0
+        "404":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee404ErrorResponse"
+              examples:
+                response:
+                  value:
+                    success: false
+                    error:
+                      code: 404
+                      message: 'Es ist ein Problem aufgetreten '
+
   "/company/employees/custom-attributes":
     get:
       security:
@@ -650,7 +753,7 @@ paths:
                       -
                         key: dynamic_1
                         label: IBAN
-
+                        type: standard
 
   "/company/employees/{employee_id}/profile-picture/{width}":
     get:
@@ -658,7 +761,7 @@ paths:
         - BearerAuth: []
       tags:
         - Employees
-      description: Show employee profile picture
+      description: "Show employee's profile picture. If profile picture is missing, the 404 error will be thrown. The `Profile Picture` attribute has to be whitelisted."
       parameters:
         - name: employee_id
           in: path
@@ -683,7 +786,7 @@ paths:
                 type: string
                 format: binary
         "404":
-          description: ""
+          description: "When the employee doesn't exist or employee doesn't have profile picture set or Profile Picture attribute is not whitelisted, this error occurs."
           content:
             application/json:
               schema:
@@ -694,7 +797,7 @@ paths:
                     success: false
                     error:
                       code: 404
-                      message: 'Es ist ein Problem aufgetreten '
+                      message: 'Etwas ist schiefgelaufen ...'
 
   /company/attendances:
     get:
@@ -702,7 +805,7 @@ paths:
         - BearerAuth: []
       tags:
         - Attendances
-      description: Fetch attendance data for the company employees. The result can be `paginated` and `filtered` by period and/or specific employee/employees. The result contains a list of attendances.
+      description: Fetch attendance data for the company employees. The result can be `paginated` and `filtered` by period, the date and/or time they were updated, and/or specific employee/employees. The result contains a list of attendances.
       parameters:
         - name: start_date
           in: query
@@ -718,7 +821,31 @@ paths:
           schema:
             type: string
             format: date
-        - name: employees
+        - name: updated_from
+          in: query
+          required: false
+          description: Datetime from when the queried periods have been updated. Same format as updated_at.
+            It is inclusive, so the day specified as updated_from will also be considered on the results.
+            Can be just the date, or the date and the time, with or without the timezone.
+          schema:
+            type: string
+            format: datetime
+        - name: updated_to
+          in: query
+          required: false
+          schema:
+            type: string
+            format: datetime
+          description: Datetime until when the queried periods have been updated. Same format as updated_at.
+            It is inclusive, so the day specified as updated_to will also be considered on the results.
+            Can be just the date, or the date and the time, with or without the timezone.
+        - name: includePending
+          in: query
+          required: false
+          description: Returns AttendancePeriods with a status of pending as well as confirmed. In this case, the end_date attribute is nullable. The status of each period is included in the response.
+          schema:
+            type: boolean
+        - name: employees[]
           in: query
           required: false
           description: A list of Personio employee ID's to filter the results. The result filters including only absences of provided employees
@@ -727,6 +854,7 @@ paths:
             type: array
             items:
               type: integer
+          allowReserved: true
         - name: limit
           in: query
           required: false
@@ -766,8 +894,10 @@ paths:
                         attributes:
                           employee: 325659
                           date: '2017-01-17'
-                          start_time: '9:00'
+                          start_time: '09:00'
                           end_time: '18:00'
+                          updated_at: '2017-01-17T16:41:08+00:00'
+                          status: 'confirmed'
                           break: 50
                           comment: I was productive as hell
                           is_holiday: false
@@ -777,8 +907,10 @@ paths:
                         attributes:
                           employee: 325660
                           date: '2017-01-18'
-                          start_time: '9:30'
+                          start_time: '09:30'
                           end_time: '18:30'
+                          updated_at: '2017-01-18T16:41:08+01:00'
+                          status: ['confirmed', 'pending']
                           break: 60
                           comment: I wasn't productive
                           is_holiday: false
@@ -798,8 +930,6 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: "#/components/schemas/NewAttendancePeriodParametersRequest"
-
-
         description: List of attendance periods to create
         required: true
       responses:
@@ -828,10 +958,34 @@ paths:
               examples:
                 response:
                   value:
-                    success: true
+                    success: false
                     error:
                       code: 400
                       message: 'Error when trying to insert Attendances periods rows'
+                      detailed_message: [
+                        {
+                          success: true,
+                          error_msg: null,
+                          id: 1,
+                          employee: 1234,
+                          date: "2017-01-01",
+                          start_time: "09:00",
+                          end_time: "18:00",
+                          break: 60,
+                          comment: ""
+                        },
+                        {
+                          success: false,
+                          error_msg: "Existing overlapping attendances periods",
+                          id: null,
+                          employee: 1234,
+                          date: "2017-01-01",
+                          start_time: "09:00",
+                          end_time: "18:00",
+                          break: 60,
+                          comment: ""
+                        }
+                      ]
 
   "/company/attendances/{id}":
     delete:
@@ -980,11 +1134,23 @@ paths:
                           id: 1234
                           name: 'Paid vacation'
                           category: null
+                          unit: 'day'
+                          half_day_requests_enabled: true
+                          certification_required: false
+                          substitute_option: disabled
+                          approval_required: true
+
                       - type: TimeOffType
                         attributes:
                           id: 1235
                           name: 'Home office'
-                          category: offsite_work
+                          category: 'offsite_work'
+                          unit: 'hour'
+                          half_day_requests_enabled: true
+                          certification_required: true
+                          certification_submission_timeframe: 2
+                          substitute_option: optional
+                          approval_required: true
 
   /company/time-offs:
     get:
@@ -1008,7 +1174,21 @@ paths:
           schema:
             type: string
             format: date
-        - name: employees
+        - name: updated_from
+          in: query
+          required: false
+          description: Query the periods that created or modified from the date `updated_from`. It is inclusive, so all the periods created or modified from the beginning of the `updated_from` will be included in the results
+          schema:
+            type: string
+            format: date
+        - name: updated_to
+          in: query
+          required: false
+          description: Query the periods that created or modified until the date `updated_to`. It is inclusive, so all the periods created or modified until the end of the `updated_to` will be included in the results
+          schema:
+            type: string
+            format: date
+        - name: employees[]
           in: query
           required: false
           description: A list of Personio employee ID's to filter the results. The result filters including only absences of provided employees
@@ -1017,6 +1197,7 @@ paths:
             type: array
             items:
               type: integer
+          allowReserved: true
         - name: limit
           in: query
           required: false
@@ -1044,6 +1225,10 @@ paths:
                 response:
                   value:
                     success: true
+                    metadata:
+                      total_elements: 1
+                      current_page: 1
+                      total_pages: 1
                     data:
                       - type: TimeOffPeriod
                         attributes:
@@ -1078,6 +1263,9 @@ paths:
                           certificate:
                             status: not-required
                           created_at: '2017-01-17T10:32:18+0100'
+                          updated_at: '2017-01-17T10:32:18+0100'
+                    offset: 0,
+                    limit: 200,
     post:
       security:
         - BearerAuth: []
@@ -1139,6 +1327,7 @@ paths:
                         certificate:
                           status: not-required
                         created_at: '2017-01-17T10:32:18+0100'
+                        updated_at: '2017-01-17T10:32:18+0100'
         "400":
           description: Invalid request
           content:
@@ -1282,6 +1471,7 @@ paths:
                         certificate:
                           status: not-required
                         created_at: '2017-01-17T10:32:18+0100'
+                        updated_at: '2017-01-17T10:32:18+0100'
 
         "404":
           description: Not found response
@@ -1418,7 +1608,7 @@ components:
               example: Error when trying to insert absence period
 
     ErrorCreateAttendanceResponse:
-      title: 400 absense error
+      title: 400 attendances error
       type: object
       properties:
         success:
@@ -1431,7 +1621,41 @@ components:
               type: integer
               example: 400
             message:
+              type: string
               example: Error when trying to insert Attendances periods rows
+            detailed_message:
+              type: array
+              items:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_msg:
+                    type: string
+                    example: Existing overlapping attendances periods
+                  'id':
+                    type: integer
+                    nullable: true
+                    example: null
+                  employee:
+                    type: integer
+                    example: 1234
+                  date:
+                    type: string
+                    example: 2017-01-01
+                  start_time:
+                    type: string
+                    example: 09:00
+                  end_time:
+                    type: string
+                    example: 18:00
+                  break:
+                    type: integer
+                    example: 60
+                  comment:
+                    type: string
+                    example:
 
     ErrorAttendanceResponse:
       title: 404 absense error
@@ -1599,6 +1823,33 @@ components:
                 sunday:
                   example: 00:00
                   pattern: ^\d\d:\d\d$
+    Team:
+      type: object
+      properties:
+        label:
+          example: Absence entitlement
+        value:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                enum:
+                  - TimeOffType
+              attributes:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    example: Paid Vacation
+                  entitlement:
+                    example: 30
+      required:
+        - label
+        - value
 
     AbsenceEntitlement:
       type: object
@@ -1643,7 +1894,7 @@ components:
           type: object
           properties:
             label:
-              example: id
+              example: ID
             value:
               example: 1
         first_name:
@@ -1753,6 +2004,29 @@ components:
               example: Created at
             value:
               example: 2018-02-01T00:00:00+0100
+        last_modified_at:
+          type: object
+          properties:
+            label:
+              example: Last modified
+            value:
+              example: '2020-11-18T17:33:55+01:00'
+        subcompany:
+          $ref: "#/components/schemas/Office"
+        office:
+          $ref: "#/components/schemas/Office"
+        department:
+          $ref: "#/components/schemas/Department"
+        cost_centers:
+          $ref: "#/components/schemas/CostCenters"
+        holiday_calendar:
+          $ref: "#/components/schemas/HolidayCalendar"
+        work_schedule:
+          $ref: "#/components/schemas/WorkSchedule"
+        absence_entitlement:
+          $ref: "#/components/schemas/AbsenceEntitlement"
+        team:
+          $ref: "#/components/schemas/Team"
         fix_salary:
           type: object
           properties:
@@ -1760,6 +2034,13 @@ components:
               example: Fix salary
             value:
               example: 4000
+        fix_salary_interval:
+          type: object
+          properties:
+            label:
+              example: Salary interval
+            value:
+              example: monthly
         hourly_salary:
           type: object
           properties:
@@ -1774,6 +2055,13 @@ components:
               example: Vacation day balance
             value:
               example: 20.5
+        last_working_day:
+          type: object
+          properties:
+            label:
+              example: Last day of work
+            value:
+              example:
         profile_picture:
           type: object
           properties:
@@ -1781,26 +2069,51 @@ components:
               example: Profile Picture
             value:
               example: http://api.dev.personio.de/v1/company/employees/1/profile-picture
-
-        office:
-          $ref: "#/components/schemas/Office"
-        department:
-          $ref: "#/components/schemas/Department"
-        cost_centers:
-          $ref: "#/components/schemas/CostCenters"
-        holiday_calendar:
-          $ref: "#/components/schemas/HolidayCalendar"
-        work_schedule:
-          $ref: "#/components/schemas/WorkSchedule"
-        absence_entitlement:
-          $ref: "#/components/schemas/AbsenceEntitlement"
-
+        dynamic_21827:
+          type: object
+          properties:
+            label:
+              example: IBAN
+            value:
+              example: DE98 8989 9898 0000 8989 00
+            type:
+              description: The type of the field. It's only visible on custom attributes
+              example: standard
+              enum:
+                - standard
+                - date
+                - integer
+                - decimal
+                - list
+                - link
+                - tags
+                - multiline
     EmployeesResponse:
       title: List of Employees
       allOf:
         - $ref: "#/components/schemas/Response"
         - type: object
           properties:
+            metadata:
+              type: object
+              required:
+                - total_elements
+                - current_page
+                - total_pages
+              properties:
+                total_elements:
+                  type: integer
+                  description: The total number of items matching the query filters.
+                total_pages:
+                  type: integer
+                  description: The total number of pages distributing sets of items matching the query filters.
+                current_page:
+                  type: integer
+                  description: Current page number containing the returned set of items matching with the query filters. The page number range is from 0 to total_pages - 1
+            offset:
+              type: integer
+            limit:
+              type: integer
             data:
               type: array
               items:
@@ -1826,6 +2139,30 @@ components:
                     example: Employee
                   attributes:
                     $ref: "#/components/schemas/Employee"
+
+    EmployeeAbsenceBalance:
+      title: Employee Absence Balance
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1234
+              name:
+                type: string
+                example: Paid Vacation
+              category:
+                type: string
+                example: custom_absence
+              balance:
+                type: number
+                example: 10.5
 
     Attendance:
       type: object
@@ -1898,10 +2235,12 @@ components:
           type: string
           pattern: ^\d\d:\d\d$
           example: "08:00"
+          description: "Format: hh:mm"
         end_time:
           type: string
           pattern: ^\d\d:\d\d$
           example: "17:00"
+          description: "Format: hh:mm"
         break:
           type: integer
           example: 60
@@ -1966,15 +2305,18 @@ components:
         attendances[][date]:
           type: string
           format: date
-          description: Attendance date as YYYY-MM-DD
+          description: "Attendance date. Format: yyyy-mm-dd"
+          example: '2020-01-31'
         attendances[][start_time]:
           type: string
           pattern: ^\d\d:\d\d$
-          description: Start time as HH:MM
+          description: "Start time. Format: hh:mm"
+          example: '08:00'
         attendances[][end_time]:
           type: string
           pattern: ^\d\d:\d\d$
-          description: End time as HH:MM
+          description: "End time. Format: hh:mm"
+          example: '12:00'
         attendances[]break:
           type: integer
           format: int32
@@ -2034,6 +2376,33 @@ components:
               type: string
               nullable: true
               example: offsite_work
+            unit:
+              type: string
+              enum:
+              - day
+              - hour
+              example: day
+            half_day_requests_enabled:
+              type: boolean
+              example: true
+            certification_required:
+              type: boolean
+              example: false
+            certification_submission_timeframe:
+              description: The timeframe in days under which the employee needs to submit the certification
+              type: integer
+              example: 2
+            substitute_option:
+              type: string
+              enum:
+                - disabled
+                - optional
+                - required
+              example: optional
+            approval_required:
+              type: boolean
+              example: true
+
     CreateTimeOffPeriodRequest:
       title: Create time-off periods
       type: object
@@ -2047,11 +2416,13 @@ components:
         start_date:
           type: string
           format: date
-          description: Absence start date as YYYY-MM-DD
+          description: "Absence start date. Format: yyyy-mm-dd"
+          example: '2020-01-31'
         end_date:
           type: string
           format: date
-          description: Absence end date as YYYY-MM-DD
+          description: "Absence end date. Format: yyyy-mm-dd"
+          example: '2020-01-31'
         half_day_start:
           type: boolean
           example: 0
@@ -2064,6 +2435,10 @@ components:
           type: string
           example: Some Comment
           description: Optional comment
+        skip_approval:
+          type: boolean
+          example: 0
+          description: Optional, default value is true. If set to false, the approval status of the absence request will be "pending" if an approval rule is set for the absence type in Personio. The respective approval flow will be triggered.
       required:
         - employee_id
         - time_off_type_id
@@ -2078,6 +2453,26 @@ components:
         - $ref: "#/components/schemas/Response"
         - type: object
           properties:
+            metadata:
+              type: object
+              required:
+                - total_elements
+                - current_page
+                - total_pages
+              properties:
+                total_elements:
+                  type: integer
+                  description: The total number of items matching the query filters.
+                total_pages:
+                  type: integer
+                  description: The total number of pages distributing sets of items matching the query filters.
+                current_page:
+                  type: integer
+                  description: Current page number containing the returned set of items matching with the query filters. The page number range is from 0 to total_pages - 1
+            offset:
+              type: integer
+            limit:
+              type: integer
             data:
               type: array
               items:
@@ -2140,17 +2535,17 @@ components:
               type: string
               example: TimeOffType
             attributes:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    example: 1
-                  name:
-                    type: string
-                    example: Vacation
-                  category:
-                    type: string
-                    example: offsite_work
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                name:
+                  type: string
+                  example: Vacation
+                category:
+                  type: string
+                  example: offsite_work
         employee:
           $ref: "#/components/schemas/ShortEmployee"
         certificate:
@@ -2162,8 +2557,9 @@ components:
         created_at:
           type: string
           example: 2017-01-17T10:32:18+0100
-
-
+        updated_at:
+          type: string
+          example: 2017-01-17T10:32:18+0100
     ShortEmployee:
       type: object
       properties:
