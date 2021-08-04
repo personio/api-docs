@@ -325,7 +325,8 @@ components:
           type: integer
         external_posting_id:
           description: When using multiposting, this is the `pid` forwarded (usually as a query param) by the external job board site
-          type: integer
+          type: string
+          maxLength: 255
         phone:
           description: Phone number of the applicant
           type: string
