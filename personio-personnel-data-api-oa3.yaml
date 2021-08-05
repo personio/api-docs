@@ -2198,29 +2198,32 @@ components:
       type: object
       properties:
         attendances:
-          type: array
-          properties:
-            employee:
-              example: 1
-            date:
-              type: string
-              format: date
-            start_time:
-              type: string
-              pattern: ^\d\d:\d\d$
-              example: "08:00"
-              description: "Format: hh:mm"
-            end_time:
-              type: string
-              pattern: ^\d\d:\d\d$
-              example: "17:00"
-              description: "Format: hh:mm"
-            break:
-              type: integer
-              example: 60
-            comment:
-              type: string
-              example: "I was productive as hell"
+            type: array
+            items:
+              type: object
+              properties:
+                employee:
+                  type: integer
+                  example: 1
+                date:
+                  type: string
+                  format: date
+                start_time:
+                  type: string
+                  pattern: ^\d\d:\d\d$
+                  example: "08:00"
+                  description: "Format: hh:mm"
+                end_time:
+                  type: string
+                  pattern: ^\d\d:\d\d$
+                  example: "17:00"
+                  description: "Format: hh:mm"
+                break:
+                  type: integer
+                  example: 60
+                comment:
+                  type: string
+                  example: "I was productive as hell"
         skip_approval:
           type: boolean
           description: "Optional, default value is true. If set to false, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered."
