@@ -925,10 +925,8 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                allOf:
-                  - $ref: "#/components/schemas/AttendanceCreateRequest"
+              allOf:
+                - $ref: "#/components/schemas/AttendanceCreateRequest"
           application/x-www-form-urlencoded:
             schema:
               $ref: "#/components/schemas/NewAttendancePeriodParametersRequest"
@@ -1005,6 +1003,14 @@ paths:
           schema:
             type: integer
             format: int32
+        - name: skip_approval
+          in: query
+          required: false
+          description: "Optional, default value is true. If set to false, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered."
+          schema:
+            type: boolean
+            enum: [0, 1]
+            default: 1
       responses:
         "200":
           description: Success response
@@ -1059,7 +1065,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UpdatedAtendanceResponse"
+                $ref: "#/components/schemas/UpdatedAttendanceResponse"
               examples:
                 response:
                   value:
@@ -1525,7 +1531,7 @@ components:
             message:
               example: The attendance period was deleted
 
-    UpdatedAtendanceResponse:
+    UpdatedAttendanceResponse:
       title: Default response object
       type: object
       properties:
@@ -2191,27 +2197,36 @@ components:
     AttendanceCreateRequest:
       type: object
       properties:
-        employee:
-          example: 1
-        date:
-          type: string
-          format: date
-        start_time:
-          type: string
-          pattern: ^\d\d:\d\d$
-          example: "08:00"
-          description: "Format: hh:mm"
-        end_time:
-          type: string
-          pattern: ^\d\d:\d\d$
-          example: "17:00"
-          description: "Format: hh:mm"
-        break:
-          type: integer
-          example: 60
-        comment:
-          type: string
-          example: "I was productive as hell"
+        attendances:
+            type: array
+            items:
+              type: object
+              properties:
+                employee:
+                  type: integer
+                  example: 1
+                date:
+                  type: string
+                  format: date
+                start_time:
+                  type: string
+                  pattern: ^\d\d:\d\d$
+                  example: "08:00"
+                  description: "Format: hh:mm"
+                end_time:
+                  type: string
+                  pattern: ^\d\d:\d\d$
+                  example: "17:00"
+                  description: "Format: hh:mm"
+                break:
+                  type: integer
+                  example: 60
+                comment:
+                  type: string
+                  example: "I was productive as hell"
+        skip_approval:
+          type: boolean
+          description: "Optional, default value is true. If set to false, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered."
 
     AttendanceUpdateRequest:
       type: object
@@ -2235,6 +2250,9 @@ components:
         comment:
           type: string
           example: "I was productive as hell"
+        skip_approval:
+          type: boolean
+          description: "Optional, default value is true. If set to false, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered."
 
     AttendancePeriodsResponse:
       title: List All Attenance Periods response
@@ -2309,6 +2327,9 @@ components:
         attendances[][comment]:
           type: string
           description: Optional comment
+        skip_approval:
+          type: boolean
+          description: "Optional, default value is true. If set to false, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered."
       required:
         - attendances[][employee]
         - attendances[][date]
