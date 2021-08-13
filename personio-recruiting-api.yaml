@@ -25,7 +25,23 @@ paths:
         <p>
         Custom applicant attributes that were created individually can also be passed. <br/>
         You can find the unique parameter names of these attributes in your Personio account under <pre>https://mycompany.personio.de/configuration/recruiting/applicants</pre>
-        </p>
+        </p>"
+      responses:
+        "200":
+          description: "An example response looks like this:"
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/XmlResponse"
+  /recruiting/applicant:
+    post:
+      security:
+        - BearerAuth: [ ]
+      tags:
+        - Applicant
+      summary: Passing applications to Personio
+      description: "<p>Description of the applicant endpoint of the Personio Recruiting API <p/>
+        <p>The API access token as well as the company ID can be found in your Personio account under Settings > API.</p>
         <p>
         <strong>A note on categorised documents</strong><br/>
         Categorised documents are represented as a multidimensional array. <br/>
@@ -57,22 +73,6 @@ paths:
         <strong>Rate limiting</strong><br/>
         Our applicant API is a rate limit of 100 applications in 60 seconds per IP address. After submitting this amount of applications, you will need to wait 60 seconds before you can submit more applications.
         </p>"
-      responses:
-        "200":
-          description: "An example response looks like this:"
-          content:
-            application/xml:
-              schema:
-                $ref: "#/components/schemas/XmlResponse"
-  /recruiting/applicant:
-    post:
-      security:
-        - BearerAuth: [ ]
-      tags:
-        - Applicant
-      summary: Passing applications to Personio
-      description: <p>Description of the applicant endpoint of the Personio Recruiting API <p/>
-        <p>The API access token as well as the company ID can be found in your Personio account under Settings > API.</p>
       requestBody:
         content:
           multipart/form-data:
