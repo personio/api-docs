@@ -16,16 +16,37 @@ info:
 paths:
   /xml:
     get:
-      security:
-        - BearerAuth: [ ]
+      servers:
+        - url: https://{hostname}.jobs.personio.de
+          description: Career Site URL
+          variables:
+            hostname:
+              default: personio
+              description: Company hostname.
       tags:
         - XML
-      summary: Retrieving open positions
-      description: "<p>Description of the positions xml feed of the Personio Recruiting API</p>
-        <p>
-        Custom applicant attributes that were created individually can also be passed. <br/>
-        You can find the unique parameter names of these attributes in your Personio account under <pre>https://mycompany.personio.de/configuration/recruiting/applicants</pre>
-        </p>"
+      summary: Retrieve open positions
+      parameters:
+        - in: query
+          name: language
+          schema:
+            type: string
+          required: true
+          description: "Language code. One of: de, en, fr, es, nl, it, pt."
+      description: "<p>This is the job positions XML feed from the Company Career Site.</p>
+        <p>The XML feed can be accessed in multiple languages, depending on the
+        languages available for the Career Site. To URL of the XML feed in
+        English is: https://mycompany.jobs.personio.de/xml?language=en</p>
+        <p>This is the complete list of available languages and URLs:</p>
+            <ul>
+                <li>https://mycompany.jobs.personio.de/xml?language=de - German</li>
+                <li>https://mycompany.jobs.personio.de/xml?language=en - English</li>
+                <li>https://mycompany.jobs.personio.de/xml?language=fr - French</li>
+                <li>https://mycompany.jobs.personio.de/xml?language=es - Spanish</li>
+                <li>https://mycompany.jobs.personio.de/xml?language=nl - Dutch</li>
+                <li>https://mycompany.jobs.personio.de/xml?language=it - Italian</li>
+                <li>https://mycompany.jobs.personio.de/xml?language=pt - Portuguese</li>
+            </ul>"
       responses:
         "200":
           description: "An example response looks like this:"
