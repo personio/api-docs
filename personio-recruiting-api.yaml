@@ -33,20 +33,26 @@ paths:
         <pre>
         val request = HttpRequest()<br/><br/>
         // Example of a CV file <br/>
-        request.body[\"categorised_documents[0]['file']\"] = UploadFile('path-to-cv-file') <br/>
-        request.body[\"categorised_documents[0]['category']\"] = 'cv' <br/><br/>
+        $data['categorised_documents[0][file]'] = new CURLFile('/path/to/cv.pdf','application/pdf'); <br/>
+        $data['categorised_documents[0][category]'] = 'cv'; <br/><br/>
         // Example of a cover letter file <br/>
-        request.body[\"categorised_documents[1]['file']\"] = UploadFile('path-to-cover-letter') <br/>
-        request.body[\"categorised_documents[1]['category']\"] = 'cover-letter'
+        $data['categorised_documents[0][file]'] = new CURLFile('/path/to/cover-letter.pdf','application/pdf'); <br/>
+        $data['categorised_documents[0][category]'] = 'cover-letter'; <br/><br/>
+        // ... fill in all the required params ... <br/><br/>
+        // configure the CURL request <br/>
+        $request = curl_init('https://api.personio.de/recruiting/applicant'); <br/>
+        curl_setopt($request, CURLOPT_POST, 1); <br/>
+        curl_setopt($request, CURLOPT_POSTFIELDS, $data); <br/><br/>
+        // Execute it <br/>
+        curl_exec($request);
         </pre>
         </p>
         <p>
         <strong>A note on documents</strong><br/>
-        Documents need to be submitted as an upload stream not just with a plain file path. An example in pseudo code would be: <br/>
+        Documents need to be submitted as an upload stream not just with a plain file path. An example in PHP code would be: <br/>
         <pre>
-        val request = HttpRequest() <br/>
-        request.body['document1'] = 'path-to-file' ----> WRONG <br/>
-        request.body['document1'] = UploadFile('path-to-file') ----> CORRECT
+        $data['document1'] = 'path-to-file' // this will not work! <br/>
+        $data['document1'] = new CURLFile('path-to-file') // Correct
         </pre>
         </p>
         <p>
