@@ -1,23 +1,13 @@
 openapi: 3.0.0
 info:
-  version: "1.0"
+  version: '1.0'
   title: Recruiting
-  description: "<p>The Recruiting API allows you to GET open job positions (<i>XML</i> endpoint) and POST applications to Personio (<i>Applicant</i> endpoint). Other methods are currently not supported.</p>
-    <p>For the Recruiting API endpoint, please use the separate access token provided under Settings > API > Access Data > Recruiting API Access Tokens as described above.</p>
-    <p><b>POST</b><p/>
-    <ul>
-    <li>Applicants can only be transferred via the API for assigned job postings that are published at that time</li>
-    <li>Size per documentation is a maximum of 20 MB</li>
-    <li>General transmission size is a maximum of 64 MB</li>
-    <li>The following document types are allowed: 'pdf', 'docx', 'doc', 'jpg', 'png', 'txt', 'jpeg', 'odt', 'ods', 'xlsx', 'rtf', 'xls', 'pptx', 'ppt', 'gif', 'tif', 'tiff', 'bmp', 'csv', 'rar', 'gz', 'zip', '7z'.</li>
-    <li>System attributes are described in this documentation. You can also transfer user-defined applicant attributes using the applicant API. To do this, check the dynamic name of the respective attribute in Personio under Settings > Recruiting > Applicant > Edit Attribute > API Attribute Name</li>
-    <li>You can transfer job postings from Personio to your career site via xml feed. You can find further information here.</li>
-    </ul>"
+  description: '<p>The Recruiting API allows you to GET open job positions, and POST applications to Personio. Other methods are currently not supported.</p><p><strong>Note:</strong> Some URLs in this document depend on your personio hostname. They are represented via the placeholder "mycompany".</p>'
 paths:
   /xml:
     get:
       servers:
-        - url: https://{hostname}.jobs.personio.de
+        - url: 'https://{hostname}.jobs.personio.de'
           description: Career Site URL
           variables:
             hostname:
@@ -31,85 +21,163 @@ paths:
           name: language
           schema:
             type: string
+            enum:
+              - de
+              - en
+              - fr
+              - es
+              - nl
+              - it
+              - pt
           required: true
-          description: "Language code. One of: de, en, fr, es, nl, it, pt."
-      description: "<p>This is the job positions XML feed from the Company Career Site.</p>
-        <p>The XML feed can be accessed in multiple languages, depending on the
-        languages available for the Career Site. To URL of the XML feed in
-        English is: https://mycompany.jobs.personio.de/xml?language=en</p>
-        <p>This is the complete list of available languages and URLs:</p>
-            <ul>
-                <li>https://mycompany.jobs.personio.de/xml?language=de - German</li>
-                <li>https://mycompany.jobs.personio.de/xml?language=en - English</li>
-                <li>https://mycompany.jobs.personio.de/xml?language=fr - French</li>
-                <li>https://mycompany.jobs.personio.de/xml?language=es - Spanish</li>
-                <li>https://mycompany.jobs.personio.de/xml?language=nl - Dutch</li>
-                <li>https://mycompany.jobs.personio.de/xml?language=it - Italian</li>
-                <li>https://mycompany.jobs.personio.de/xml?language=pt - Portuguese</li>
-            </ul>"
+          description: 'Language code. One of: de, en, fr, es, nl, it, pt.'
+      description: '<p>This is the job positions XML feed from the Company Career Site.</p> <p>The XML feed can be accessed in multiple languages, depending on the languages available for the Career Site. To URL of the XML feed in English is: https://mycompany.jobs.personio.de/xml?language=en</p> <p>This is the complete list of available languages and URLs:</p> <ul> <li>https://mycompany.jobs.personio.de/xml?language=de - German</li> <li>https://mycompany.jobs.personio.de/xml?language=en - English</li> <li>https://mycompany.jobs.personio.de/xml?language=fr - French</li> <li>https://mycompany.jobs.personio.de/xml?language=es - Spanish</li> <li>https://mycompany.jobs.personio.de/xml?language=nl - Dutch</li> <li>https://mycompany.jobs.personio.de/xml?language=it - Italian</li> <li>https://mycompany.jobs.personio.de/xml?language=pt - Portuguese</li> </ul>'
       responses:
-        "200":
-          description: "An example response looks like this:"
+        '200':
+          description: 'An example response looks like this:'
           content:
             application/xml:
               schema:
-                $ref: "#/components/schemas/XmlResponse"
-  /recruiting/applicant:
+                $ref: '#/components/schemas/XmlResponse'
+  /v1/recruiting/applications:
     post:
-      security:
-        - BearerAuth: [ ]
-      tags:
-        - Applicant
-      summary: Passing applications to Personio
-      description: "<p>Description of the applicant endpoint of the Personio Recruiting API <p/>
-        <p>The API access token as well as the company ID can be found in your Personio account under Settings > API.</p>
-        <p>
-        <strong>A note on categorised documents</strong><br/>
-        Categorised documents are represented as a multidimensional array. <br/>
-        Each object has two fields: 'file' and 'category'. The 'file' field contains an upload stream. The 'category field' contains the category name, the allowed category names are listed in the table above. An example in pseudo code would be: <br/>
-        <pre>
-        val request = HttpRequest()<br/><br/>
-        // Example of a CV file <br/>
-        $data['categorised_documents[0][file]'] = new CURLFile('/path/to/cv.pdf','application/pdf'); <br/>
-        $data['categorised_documents[0][category]'] = 'cv'; <br/><br/>
-        // Example of a cover letter file <br/>
-        $data['categorised_documents[0][file]'] = new CURLFile('/path/to/cover-letter.pdf','application/pdf'); <br/>
-        $data['categorised_documents[0][category]'] = 'cover-letter'; <br/><br/>
-        // ... fill in all the required params ... <br/><br/>
-        // configure the CURL request <br/>
-        $request = curl_init('https://api.personio.de/recruiting/applicant'); <br/>
-        curl_setopt($request, CURLOPT_POST, 1); <br/>
-        curl_setopt($request, CURLOPT_POSTFIELDS, $data); <br/><br/>
-        // Execute it <br/>
-        curl_exec($request);
-        </pre>
-        </p>
-        <p>
-        <strong>A note on documents</strong><br/>
-        Documents need to be submitted as an upload stream not just with a plain file path. An example in PHP code would be: <br/>
-        <pre>
-        $data['document1'] = 'path-to-file' // this will not work! <br/>
-        $data['document1'] = new CURLFile('path-to-file') // Correct
-        </pre>
-        </p>
-        <p>
-        <strong>A note on spamming</strong><br/>
-        Please be aware that the access_token in company with your company_id allows the creation of applications in your account. When building your own career page, we would recommend that you call our endpoints from a backend service, rather than from your frontend directly, in order to avoid making the token publicly accessible. In addition to this, we recommend the inclusion of a captcha or similar into your own career page to avoid bot applications.
-        </p>
-        <p>
-        <strong>Rate limiting</strong><br/>
-        Our applicant API is a rate limit of 100 applications in 60 seconds per IP address. After submitting this amount of applications, you will need to wait 60 seconds before you can submit more applications.
-        </p>"
+      summary: Creating applications in Personio
+      description: Allows you to create applications in Personio.
+      responses:
+        '201':
+          description: OK - Application was created successfully.
+        '400':
+          description: Bad Request - The application could not be created because some properties of the request did notch match their expectation. Check body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '401':
+          description: 'Unauthorized - The API token was not recognized. Please provide a valid API token in as value of an `Authorization` header, like `Bearer api-token-value`.'
+        '403':
+          description: Forbidden - Your company does not have access to one of the features used in this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '429':
+          description: Too Many Requests - You have exceeded the rate-limit for your API call.
+        '500':
+          description: Internal Server Error - An unexpected error occurred. Check body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-company-id
+          description: Your company's Personio Id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/submit_application'
+  /v1/recruiting/applications/documents:
+    post:
+      summary: Upload documents to be attached  to applications
+      description: Uploading files to this endpoint enables you to attach them to an application later.
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-company-id
+          description: Your company's Personio Id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/uploaded_document'
+        '401':
+          description: 'Unauthorized - The API token was not recognized. Please provide a valid API token in as value of an `Authorization` header, like `Bearer api-token-value`.'
+        '403':
+          description: Forbidden - Your company does not have access to one of the features used in this request.
+        '413':
+          description: Payload Too Large - Your document exceeded the size limit. Check body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '422':
+          description: Unprocessable Entity - The document you provided could not be processed. Check body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '429':
+          description: Too Many Requests - You have exceeded the rate-limit for your API call.
+        '500':
+          description: Internal Server Error - An unexpected error occurred. Check body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
       requestBody:
         content:
           multipart/form-data:
             schema:
-              $ref: "#/components/schemas/Applicant"
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+                - file
+        description: |
+          The file to be uploaded.
+
+          Maximum file size: 20MB
+
+          Must be one of the supported types:
+          - pdf
+          - pptx
+          - xlsx
+          - docx
+          - doc
+          - xls
+          - ppt
+          - ods
+          - odt
+          - 7z
+          - gz
+          - rar
+          - zip
+          - bmp
+          - gif
+          - jpg
+          - png
+          - tif
+          - csv
+          - txt
+          - rtf
+  /recruiting/applicant:
+    post:
+      tags:
+        - Applicant
+      summary: Passing applications to Personio
+      description: |-
+        <p><strong> DEPRECATED: This method of passing application to Personio is deprecated and will only receive bugfixes. New implementations should interact with the /v1/recruiting/applications endpoints above, existing implementators are advised to migrate to them. </p> </strong>
+
+        ---
+        <p> <strong>A note on categorised documents</strong><br/> Categorised documents are represented as a multidimensional array. <br/> Each object has two fields: 'file' and 'category'. The 'file' field contains an upload stream. The 'category field' contains the category name, the allowed category names are listed in the table above. An example in pseudo code would be: <br/> <pre> val request = HttpRequest()<br/><br/> // Example of a CV file <br/> $data['categorised_documents[0][file]'] = new CURLFile('/path/to/cv.pdf','application/pdf'); <br/> $data['categorised_documents[0][category]'] = 'cv'; <br/><br/> // Example of a cover letter file <br/> $data['categorised_documents[0][file]'] = new CURLFile('/path/to/cover-letter.pdf','application/pdf'); <br/> $data['categorised_documents[0][category]'] = 'cover-letter'; <br/><br/> // ... fill in all the required params ... <br/><br/> // configure the CURL request <br/> $request = curl_init('https://api.personio.de/recruiting/applicant'); <br/> curl_setopt($request, CURLOPT_POST, 1); <br/> curl_setopt($request, CURLOPT_POSTFIELDS, $data); <br/><br/> // Execute it <br/> curl_exec($request); </pre> </p> <p> <strong>A note on documents</strong><br/> Documents need to be submitted as an upload stream not just with a plain file path. An example in PHP code would be: <br/> <pre> $data['document1'] = 'path-to-file' // this will not work! <br/> $data['document1'] = new CURLFile('path-to-file') // Correct </pre> </p> <p> <strong>A note on spamming</strong><br/> Please be aware that the access_token in company with your company_id allows the creation of applications in your account. When building your own career page, we would recommend that you call our endpoints from a backend service, rather than from your frontend directly, in order to avoid making the token publicly accessible. In addition to this, we recommend the inclusion of a captcha or similar into your own career page to avoid bot applications. </p> <p> <strong>Rate limiting</strong><br/> Our applicant API is a rate limit of 100 applications in 60 seconds per IP address. After submitting this amount of applications, you will need to wait 60 seconds before you can submit more applications. </p>
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Applicant'
         description: Applicant data
         required: true
       responses:
-        "200":
-          description: "Everything went well and the application was created in Personio."
+        '200':
+          description: Everything went well and the application was created in Personio.
           content:
             application/json:
               examples:
@@ -117,9 +185,9 @@ paths:
                   value:
                     success: true
                     data:
-                      message: "Applicant successfully applied to the job position."
-        "400":
-          description: "Something went wrong and the application was not created in Personio. Specifically, the following cases can lead to an error 400:"
+                      message: Applicant successfully applied to the job position.
+        '400':
+          description: 'Something went wrong and the application was not created in Personio. Specifically, the following cases can lead to an error 400:'
           content:
             application/json:
               examples:
@@ -127,33 +195,43 @@ paths:
                   value:
                     success: false
                     error:
-                      message: "Unsupported extension or file greater than 20Mb."
+                      message: Unsupported extension or file greater than 20Mb.
                 Unsupported file extension:
                   value:
                     success: false
                     error:
-                      message: "Unsupported extension or file greater than 20Mb."
-                Required field empty (e.g. name, email):
+                      message: Unsupported extension or file greater than 20Mb.
+                'Required field empty (e.g. name, email)':
                   value:
                     success: false
                     error:
-                      message: "The {field_name} field is required."
+                      message: 'The {field_name} field is required.'
                 Invalid custom attribute (custom attribute ID does not exist):
                   value:
                     success: false
                     error:
-                      message: "Parameter {parameter_name} does not exist."
+                      message: 'Parameter {parameter_name} does not exist.'
                 Invalid job position:
                   value:
                     success: false
                     error:
-                      message: "Could not find the job position."
+                      message: Could not find the job position.
                 Applicant already applied:
                   value:
                     success: false
                     error:
-                      message: "Applicant already applied to this position."
-        "422":
+                      message: Applicant already applied to this position.
+        '403':
+          description: 'Something went wrong and the application was not created in Personio. In this case, the API access token provided doesn''t match the company ID.'
+          content:
+            application/json:
+              examples:
+                Not Authorized:
+                  value:
+                    success: false
+                    error:
+                      message: This action is unauthorized.
+        '422':
           description: Something went wrong and the attachments could not be processed at this moment. Please try again.
           content:
             application/json:
@@ -162,24 +240,14 @@ paths:
                   value:
                     success: false
                     error:
-                      message: "There was a problem while processing attachments. Try again later"
+                      message: There was a problem while processing attachments. Try again later
                 Unprocessable Entity 2:
                   value:
                     success: false
                     error:
-                      message: "Job position not published"
-        "403":
-          description: Something went wrong and the application was not created in Personio. In this case, the API access token provided doesn't match the company ID.
-          content:
-            application/json:
-              examples:
-                Not Authorized:
-                  value:
-                    success: false
-                    error:
-                      message: "This action is unauthorized."
-        "500":
-          description: Something went wrong and the application was not created in Personio. This particular case the transaction failed due to an issue on Personio's end, e.g. server error.
+                      message: Job position not published
+        '500':
+          description: 'Something went wrong and the application was not created in Personio. This particular case the transaction failed due to an issue on Personio''s end, e.g. server error.'
           content:
             application/json:
               examples:
@@ -187,9 +255,9 @@ paths:
                   value:
                     success: false
                     error:
-                      message: "Something went wrong, please try again later!"
-        "503":
-          description: The server is currently unable to handle the request due to a temporary overload or scheduled maintenance, which will likely be alleviated after some delay.
+                      message: 'Something went wrong, please try again later!'
+        '503':
+          description: 'The server is currently unable to handle the request due to a temporary overload or scheduled maintenance, which will likely be alleviated after some delay.'
           content:
             application/json:
               examples:
@@ -197,17 +265,228 @@ paths:
                   value:
                     success: false
                     error:
-                      message: "Service Unavailable"
-
-
+                      message: Service Unavailable
+      deprecated: true
 servers:
-  - url: https://api.personio.de
+  - url: 'https://api.personio.de'
 components:
   securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
+    Bearer:
+      name: Bearer
+      type: apiKey
+      in: header
+      description: |-
+        Found under `Settings > API > Access Data > Recruiting API Access Token`
+        This token allows creation of applications in your account. When building your own career page, we recommend that you call our endpoints from a backend service, rather than from your frontend directly to not expose this token.
+
+        Example Header: `Authorization: Bearer our-token`
   schemas:
+    submit_application:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: First name(s) of the applicant. Must not be empty or only whitespaces
+          minLength: 1
+        last_name:
+          type: string
+          description: Last name(s) of the applicant. Must not be empty or only whitespaces.
+          minLength: 1
+        email:
+          type: string
+          description: Email address of the applicant.
+          format: email
+        job_position_id:
+          type: integer
+          description: The personio internal id of the job this application should belong to.
+        recruiting_channel_id:
+          type: integer
+          description: |-
+            The recruiting channel this application was sourced from.
+
+            See https://mycompany.personio.de/configuration/recruiting/channels
+        external_posting_id:
+          type: string
+          description: |-
+            The external id of this job posting.
+
+            See https://mycompany.personio.de/configuration/recruiting/channels
+        message:
+          type: string
+          description: The applicant supplied free-text message.
+        tags:
+          type: array
+          description: |-
+            Tags to be associated with this application. Non-existing tags will be created.
+
+            See https://mycompany.personio.de/configuration/recruiting/tags
+          items:
+            type: string
+        files:
+          description: |-
+            References to previously uploaded files. Required categories depend on your personio settings.
+
+            See also 'uploaded_document' model.
+          type: array
+          items:
+            type: object
+            properties:
+              uuid:
+                type: string
+                format: uuid
+                description: Reference to a previously uploaded file. Use the `uuid` value returned from the documents endpoint here.
+              original_filename:
+                type: string
+              category:
+                type: string
+                description: Possible and required values depend on your personio settings.
+            required:
+              - uuid
+              - original_filename
+              - category
+        attributes:
+          type: array
+          description: |-
+            Attributes of this applications.
+            Required attributes depend on your personio settings, so do the format or possible values.
+
+            See https://mycompany.personio.de/configuration/recruiting/attributes
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: 'id of the attribute, found in your personio settings.'
+              value:
+                type: string
+                description: |-
+                  Value of the attribute.
+                  For OPTION attributes, this must be one of the predefined options.
+                  For DATE attributes, this needs to follow ISO 8601 Local date, i.e. `2021-04-30`
+            required:
+              - id
+              - value
+      required:
+        - first_name
+        - last_name
+        - email
+        - job_position_id
+        - tags
+        - files
+        - attributes
+    uploaded_document:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          description: The UUID of this file. Can be attached to an application by including this uuid in that request.
+        size:
+          type: integer
+          description: Uploaded file size in bytes.
+        mimetype:
+          type: string
+          description: Detected Mime Type of this file.
+        original_filename:
+          type: string
+        extension:
+          type: string
+          enum:
+            - pdf
+            - pptx
+            - xlsx
+            - docx
+            - doc
+            - xls
+            - ptt
+            - ods
+            - odt
+            - 7z
+            - gz
+            - rar
+            - zip
+            - bmp
+            - gif
+            - jpg
+            - png
+            - tif
+            - csv
+            - txt
+            - rtf
+      required:
+        - uuid
+        - size
+        - mimetype
+        - original_filename
+        - extension
+    error_response:
+      title: Error Response
+      type: object
+      description: |-
+        Includes details about errors when submitting an application.
+        Possible Error codes:
+
+        |                       code                       |                                   Meaning                                   |
+        |:------------------------------------------------:|:---------------------------------------------------------------------------:|
+        |                                                  | The supplied attribute was not found in our system.                         |
+        | errors.attribute-validation.required-attribute   | A required attribute was missing, null or blank.                            |
+        | errors.attribute-validation.invalid-date-format  | The supplied date attribute did not match the "ISO-8601 Local Date" format. |
+        | errors.attribute-validation.invalid-email-format | The supplied email seems not to be valid.                                   |
+        | errors.file-validation.file-not-exists           | The supplied reference could not be resolved.                               |
+        | errors.invalid-file-type                         | The supplied file is of an unsupported format.                              |
+        | errors.file-too-big                              | The file size exceeded the configured limit                                 |
+        | errors.applicant-exists                          | We could not verify that this email has not yet applied to this position.   |
+        | errors.posting-validation.posting-not-found      | The job posting could not be found or did not match the supplied channel.   |
+        | errors.posting-validation.channel-not-found      | The recruiting channel could not be found.                                  |
+        | feature.recruiting.disabled                      | Your company does not have access to Personio's recruiting features.        |
+        | feature.public-api.disabled                      | Your company does not have access to Personio's recruiting API.             |
+      properties:
+        errors:
+          type: array
+          description: ''
+          items:
+            oneOf:
+              - properties:
+                  field:
+                    type: string
+                    description: Indicates location of the error. Values are guaranteed to be unique in the `errors` array.
+                  errors:
+                    type: array
+                    description: All errors of this field.
+                    items:
+                      type: object
+                      properties:
+                        reason:
+                          type: string
+                          description: An error code. See description.
+                        context:
+                          type: object
+                          description: Optional context on the error code.
+                      required:
+                        - reason
+                required:
+                  - field
+                  - errors
+              - properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: Internal error reference.
+                  status:
+                    type: string
+                    description: HTTP status code
+                  title:
+                    type: string
+                    description: HTTP Status reason
+                  detail:
+                    type: string
+                required:
+                  - id
+                  - status
+                  - title
+            type: object
+      required:
+        - errors
     Response:
       title: Default response object
       type: object
@@ -219,7 +498,6 @@ components:
       required:
         - success
         - data
-
     XmlResponse:
       title: XmlResponse
       type: object
@@ -227,10 +505,9 @@ components:
         posting:
           type: array
           items:
-            $ref: "#/components/schemas/JobPosting"
+            $ref: '#/components/schemas/JobPosting'
       xml:
         name: workzag-jobs
-
     JobPosting:
       title: Job Posting
       type: object
@@ -258,54 +535,63 @@ components:
             jobDescription:
               type: array
               items:
-                $ref: "#/components/schemas/jobDescriptionItem"
+                $ref: '#/components/schemas/jobDescriptionItem'
         employmentType:
           type: string
-          enum: ['permanent', 'intern', 'trainee', 'freelance']
+          enum:
+            - permanent
+            - intern
+            - trainee
+            - freelance
           example: permanent
         seniority:
           type: string
-          enum: ['entry-level', 'experienced', 'executive', 'student']
+          enum:
+            - entry-level
+            - experienced
+            - executive
+            - student
           example: entry-level
         schedule:
           type: string
-          enum: ['full-time', 'part-time']
+          enum:
+            - full-time
+            - part-time
           example: full-time
         yearsOfExperience:
           type: string
-          enum: ['lt-1', '1-2', '2-5', '5-7', '7-10', '10-15', 'gt-15']
+          enum:
+            - lt-1
+            - 1-2
+            - 2-5
+            - 5-7
+            - 7-10
+            - 10-15
+            - gt-15
           example: lt-1
         keywords:
           type: string
-          example: office manager,project management,büro,assistenz,organisation,part time,Teilzeit
+          example: 'office manager,project management,büro,assistenz,organisation,part time,Teilzeit'
         occupation:
           example: office_management
         occupationCategory:
           example: administrative_and_clerical
         createdAt:
-          example: 2016-05-31T12:14:07+0200
+          example: '2016-05-31T12:14:07+0200'
       xml:
         name: position
-
     jobDescriptionItem:
       type: array
       items:
         allOf:
-          - $ref: "#/components/schemas/JobDescription"
+          - $ref: '#/components/schemas/JobDescription'
       example:
         - name: Beschreibung
-          value: <![CDATA[
-            Für unser Büro mitten im Münchner Glockenbachviertel suchen wir zum nächstmöglichen Zeitpunkt einen Office Manager (m/w) in Teilzeit, der/ die sich um alle Themen rund ums Office zuverlässig kümmert.<br><br><strong>Deine Aufgaben:</strong><br><br><ul><li>Ansprechpartner in Sachen Büro, Ausstattung und anderer “Wohlfühl”-Themen, die unseren Mitarbeiter/innen auf dem Herzen liegen</li><li>Bearbeitung von generellen Anfragen, Post und Eingangsrechnungen</li><li>Kommunikation und Organisation unserer Servicedienstleister und Zulieferer</li><li>Selbstständige Entwicklung &amp; Umsetzung neuer Ideen, Aktionen und Events für unsere Mitarbeiter</li><li>Unterstützung unseres Management-Teams bei organisatorischen Aufgaben</li><li>Management unserer <strong><a href="http://www.unumotors.com">Unu-Elektroroller</a></strong>-Flotte (ja, du bekommst auch einen, wenn du möchtest)</li></ul>
-            ]]>
+          value: '<![CDATA[ Für unser Büro mitten im Münchner Glockenbachviertel suchen wir zum nächstmöglichen Zeitpunkt einen Office Manager (m/w) in Teilzeit, der/ die sich um alle Themen rund ums Office zuverlässig kümmert.<br><br><strong>Deine Aufgaben:</strong><br><br><ul><li>Ansprechpartner in Sachen Büro, Ausstattung und anderer “Wohlfühl”-Themen, die unseren Mitarbeiter/innen auf dem Herzen liegen</li><li>Bearbeitung von generellen Anfragen, Post und Eingangsrechnungen</li><li>Kommunikation und Organisation unserer Servicedienstleister und Zulieferer</li><li>Selbstständige Entwicklung &amp; Umsetzung neuer Ideen, Aktionen und Events für unsere Mitarbeiter</li><li>Unterstützung unseres Management-Teams bei organisatorischen Aufgaben</li><li>Management unserer <strong><a href="http://www.unumotors.com">Unu-Elektroroller</a></strong>-Flotte (ja, du bekommst auch einen, wenn du möchtest)</li></ul> ]]>'
         - name: Dein Profil
-          value: <![CDATA[
-            <ul><li>Du bist herzlich, offen und kommunikativ</li><li>Du bist ein Organisationstalent und magst den Umgang mit Zahlen</li><li>Du bist gewissenhaft, sorgfältig und strukturiert</li><li>Du zeigst Eigeninitiative und Kreativität bei der Planung neuer Aktionen</li><li>Du sprichst Deutsch auf muttersprachlichem Niveau und hast gute Englischkenntnisse</li><li>Du hast Spaß an vielfältigen Aufgaben und unterstützt gerne dort, wo Hilfe gebraucht wird</li></ul>
-            ]]>
+          value: '<![CDATA[ <ul><li>Du bist herzlich, offen und kommunikativ</li><li>Du bist ein Organisationstalent und magst den Umgang mit Zahlen</li><li>Du bist gewissenhaft, sorgfältig und strukturiert</li><li>Du zeigst Eigeninitiative und Kreativität bei der Planung neuer Aktionen</li><li>Du sprichst Deutsch auf muttersprachlichem Niveau und hast gute Englischkenntnisse</li><li>Du hast Spaß an vielfältigen Aufgaben und unterstützt gerne dort, wo Hilfe gebraucht wird</li></ul> ]]>'
         - name: Warum Personio
-          value: <![CDATA[
-            <ul><li>Chance in einem schnell wachsenden Unternehmen an vielfältigen Aufgaben zu wachsen und zu lernen</li><li>Kreatives Arbeitsumfeld und kurze Entscheidungswege</li><li>Von Anfang an volle Verantwortung in Deinem Bereich</li><li>Regelmäßige Team-Events, Tischtennis und Ausflüge ins Münchner Nachtleben</li><li>Büro im Herzen von München (nahe Gärtnerplatz)</li><li>Blitzschneller Elektroroller deiner Wahl als “Geschäftswagen”</li></ul>
-            ]]>
-
+          value: '<![CDATA[ <ul><li>Chance in einem schnell wachsenden Unternehmen an vielfältigen Aufgaben zu wachsen und zu lernen</li><li>Kreatives Arbeitsumfeld und kurze Entscheidungswege</li><li>Von Anfang an volle Verantwortung in Deinem Bereich</li><li>Regelmäßige Team-Events, Tischtennis und Ausflüge ins Münchner Nachtleben</li><li>Büro im Herzen von München (nahe Gärtnerplatz)</li><li>Blitzschneller Elektroroller deiner Wahl als “Geschäftswagen”</li></ul> ]]>'
     JobDescription:
       title: Job Description
       type: object
@@ -317,7 +603,6 @@ components:
               type: string
             value:
               type: string
-
     Applicant:
       title: Applicant
       type: object
@@ -346,12 +631,15 @@ components:
         gender:
           description: Gender of the applicant
           type: string
-          enum: [ male, female, diverse ]
+          enum:
+            - male
+            - female
+            - diverse
         recruiting_channel_id:
           description: ID of the recruiting channel that this applicant applied through recruiting_channel_id has to match the id of a channel you created in Personio
           type: integer
         external_posting_id:
-          description: When using multiposting, this is the `pid` forwarded (usually as a query param) by the external job board site
+          description: 'When using multiposting, this is the `pid` forwarded (usually as a query param) by the external job board site'
           type: string
           maxLength: 255
         phone:
@@ -363,61 +651,40 @@ components:
           type: string
           maxLength: 255
         salary_expectations:
-          description: Salary expectations of the applicant (Will not be parsed, so you can transfer values like "minimum 50k")
+          description: 'Salary expectations of the applicant (Will not be parsed, so you can transfer values like "minimum 50k")'
           type: string
           maxLength: 255
         available_from:
           description: Date from which this applicant is available from
           type: string
           maxLength: 100
-        categorised_documents[n][file]:
-          description: Nth document <br/>
-            The file should be an upload stream. <br/>
-            You can check a request example in the "A note on categorised documents" section. <br/>
-            [array of files] <br/>
-            allowed extensions are 'pdf', 'docx', 'doc', 'jpg', 'png', 'txt', 'jpeg', 'odt', 'ods','xlsx', 'rtf', 'xls', 'pptx', 'ppt', 'gif', 'tif', 'tiff', 'bmp', 'csv', 'rar', 'gz', 'zip', '7z'; <br/>
-            filesize per document < 20M; <br/>
-            total post size < 64M; <br/>
+        'categorised_documents[n][file]':
+          description: 'Nth document <br/> The file should be an upload stream. <br/> You can check a request example in the "A note on categorised documents" section. <br/> [array of files] <br/> allowed extensions are ''pdf'', ''docx'', ''doc'', ''jpg'', ''png'', ''txt'', ''jpeg'', ''odt'', ''ods'',''xlsx'', ''rtf'', ''xls'', ''pptx'', ''ppt'', ''gif'', ''tif'', ''tiff'', ''bmp'', ''csv'', ''rar'', ''gz'', ''zip'', ''7z''; <br/> filesize per document < 20M; <br/> total post size < 64M; <br/>'
           type: string
           format: binary
-        categorised_documents[n][category]:
-          description: Nth document's category <br/>
-            Category of the Nth file. <br/>
-            You can check a request example in the "A note on categorised documents" section. <br/>
-            allowed values are 'cv', 'cover-letter', 'employment-reference', 'certificate', 'work-sample' or 'other' <br/>
+        'categorised_documents[n][category]':
+          description: 'Nth document''s category <br/> Category of the Nth file. <br/> You can check a request example in the "A note on categorised documents" section. <br/> allowed values are ''cv'', ''cover-letter'', ''employment-reference'', ''certificate'', ''work-sample'' or ''other'' <br/>'
           type: string
-        documents[n]:
-          description: Nth document <br/>
-            The file should be an upload stream. <br/>
-            allowed extensions are 'pdf', 'docx', 'doc', 'jpg', 'png', 'txt', 'jpeg', 'odt', 'ods','xlsx', 'rtf', 'xls', 'pptx', 'ppt', 'gif', 'tif', 'tiff', 'bmp', 'csv', 'rar', 'gz', 'zip', '7z'; <br/>
-            filesize per document < 20M; <br/>
-            total post size < 64M; <br/>
+        'documents[n]':
+          description: 'Nth document <br/> The file should be an upload stream. <br/> allowed extensions are ''pdf'', ''docx'', ''doc'', ''jpg'', ''png'', ''txt'', ''jpeg'', ''odt'', ''ods'',''xlsx'', ''rtf'', ''xls'', ''pptx'', ''ppt'', ''gif'', ''tif'', ''tiff'', ''bmp'', ''csv'', ''rar'', ''gz'', ''zip'', ''7z''; <br/> filesize per document < 20M; <br/> total post size < 64M; <br/>'
           type: string
           format: binary
-        document{n}:
-          description: Alternatively to an array (see 'documents'), documents can also be transferred individually numbered document1, document2, etc (the numbering starts at 1) with the absolute path to the document in an upload stream. <br/>
-            [file] <br/>
-            allowed extensions are 'pdf', 'docx', 'doc', 'jpg', 'png', 'txt', 'jpeg', 'odt', 'ods','xlsx', 'rtf', 'xls', 'pptx', 'ppt', 'gif', 'tif', 'tiff', 'bmp', 'csv', 'rar', 'gz', 'zip', '7z'; <br/>
-            filesize per document < 20M; <br/>
-            total post size < 64M <br/>
+        'document{n}':
+          description: 'Alternatively to an array (see ''documents''), documents can also be transferred individually numbered document1, document2, etc (the numbering starts at 1) with the absolute path to the document in an upload stream. <br/> [file] <br/> allowed extensions are ''pdf'', ''docx'', ''doc'', ''jpg'', ''png'', ''txt'', ''jpeg'', ''odt'', ''ods'',''xlsx'', ''rtf'', ''xls'', ''pptx'', ''ppt'', ''gif'', ''tif'', ''tiff'', ''bmp'', ''csv'', ''rar'', ''gz'', ''zip'', ''7z''; <br/> filesize per document < 20M; <br/> total post size < 64M <br/>'
           type: object
           allOf:
-            - $ref: "#/components/schemas/Document"
+            - $ref: '#/components/schemas/Document'
         message:
           description: Initial message from the applicant
           type: string
         tags:
-          description: Existing tags (new ones cannot be created via API) <br/>
-            [array of strings], e.g. [ “tag_1”, “tag_2" ]
+          description: 'Existing tags (new ones cannot be created via API) <br/> [array of strings], e.g. [ “tag_1”, “tag_2" ]'
         birthday:
-          description: Birthday of the applicant. <br/>
-            Date according to ISO 8601 format (YYYY-MM-DD)
+          description: Birthday of the applicant. <br/> Date according to ISO 8601 format (YYYY-MM-DD)
           type: string
           format: date
-        custom_attribute_{id}:
-          description: "Custom applicant attribute. <br/>
-            Custom applicant attributes that were created individually can also be passed. <br/>
-            You can find the unique parameter names of these attributes in your Personio account under: <pre>https://mycompany.personio.de/configuration/recruiting/applicants</pre>"
+        'custom_attribute_{id}':
+          description: 'Custom applicant attribute. <br/> Custom applicant attributes that were created individually can also be passed. <br/> You can find the unique parameter names of these attributes in your Personio account under: <pre>https://mycompany.personio.de/configuration/recruiting/applicants</pre>'
           type: integer
       required:
         - company_id
@@ -426,7 +693,6 @@ components:
         - first_name
         - last_name
         - email
-
     Document:
       title: Document
       type: object
@@ -434,6 +700,4 @@ components:
         file:
           type: string
           format: binary
-          description: "allowed extensions are 'pdf', 'docx', 'doc', 'jpg', 'png', 'txt', 'jpeg', 'odt', 'ods','xlsx', 'rtf', 'xls', 'pptx', 'ppt', 'gif', 'tif', 'tiff', 'bmp', 'csv', 'rar', 'gz', 'zip', '7z'
-            filesize per document < 20M
-            total post size < 64M"
+          description: 'allowed extensions are ''pdf'', ''docx'', ''doc'', ''jpg'', ''png'', ''txt'', ''jpeg'', ''odt'', ''ods'',''xlsx'', ''rtf'', ''xls'', ''pptx'', ''ppt'', ''gif'', ''tif'', ''tiff'', ''bmp'', ''csv'', ''rar'', ''gz'', ''zip'', ''7z'' filesize per document < 20M total post size < 64M'
