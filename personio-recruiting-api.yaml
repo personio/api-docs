@@ -45,7 +45,7 @@ paths:
       description: Allows you to create applications in Personio.
       responses:
         '201':
-          description: OK - Application was created successfully.
+          description: Created - Application was created successfully.
         '400':
           description: Bad Request - The application could not be created because some properties of the request did notch match their expectation. Check body for details.
           content:
@@ -232,7 +232,7 @@ paths:
                     error:
                       message: This action is unauthorized.
         '422':
-          description: Something went wrong and the attachments could not be processed at this moment. Please try again.
+          description: Something is wrong with the request body or the attachments.
           content:
             application/json:
               examples:
