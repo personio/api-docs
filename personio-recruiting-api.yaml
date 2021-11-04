@@ -387,7 +387,7 @@ components:
         mimetype:
           type: string
           description: Detected Mime Type of this file.
-        original_filename:
+        originalFilename:
           type: string
         extension:
           type: string
