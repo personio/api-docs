@@ -2433,13 +2433,13 @@ components:
           description: "Absence end date. Format: yyyy-mm-dd"
           example: '2020-01-31'
         half_day_start:
-          type: boolean
+          type: integer
           example: 0
-          description: Weather the start date is a half-day off
+          description: Weather the start date is a half-day off. 1 for true, 0 for false
         half_day_end:
-          type: boolean
+          type: integer
           example: 0
-          description: Weather the end date is a half-day off
+          description: Weather the end date is a half-day off. 1 for true, 0 for false
         comment:
           type: string
           example: Some Comment
