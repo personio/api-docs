@@ -41,6 +41,8 @@ paths:
                 $ref: '#/components/schemas/XmlResponse'
   /v1/recruiting/applications:
     post:
+      tags: 
+        - Application
       summary: Creating applications in Personio
       description: Allows you to create applications in Personio.
       responses:
@@ -81,6 +83,8 @@ paths:
               $ref: '#/components/schemas/submit_application'
   /v1/recruiting/applications/documents:
     post:
+      tags:
+        - Application Documents
       summary: Upload documents to be attached  to applications
       description: Uploading files to this endpoint enables you to attach them to an application later.
       parameters:
@@ -161,7 +165,7 @@ paths:
   /recruiting/applicant:
     post:
       tags:
-        - Applicant
+        - "[DEPRECATED] Applicant"
       summary: Passing applications to Personio
       description: |-
         <p><strong> DEPRECATED: This method of passing application to Personio is deprecated and will only receive bugfixes. New implementations should interact with the /v1/recruiting/applications endpoints above, existing implementators are advised to migrate to them. </p> </strong>
