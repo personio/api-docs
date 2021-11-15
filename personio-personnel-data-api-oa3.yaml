@@ -104,9 +104,9 @@ paths:
                             universal_id: last_name
                           email:
                             label: Email
-                            value: alexa
+                            value: alexander.bergmann@demo.email
                             type: standard
-                            universal_id: nullnder.bergmann@demo.email
+                            universal_id: email
                           gender:
                             label: Gender
                             value: male
@@ -128,10 +128,10 @@ paths:
                               type: Employee
                               attributes:
                                 id:
-                                label: ID
-                                value: 2
-                                type: integer
-                                universal_id: id
+                                  label: ID
+                                  value: 2
+                                  type: integer
+                                  universal_id: id
                             type: standard
                             universal_id: supervisor
                           employment_type:
@@ -147,7 +147,7 @@ paths:
                           hire_date:
                             label: Hire date
                             value: 2014-11-09T00:00:00+01:00
-                            type: standard
+                            type: date
                             universal_id: hire_date
                           contract_end_date:
                             label: Contract ends
@@ -596,9 +596,9 @@ paths:
                           universal_id: last_name
                         email:
                           label: Email
-                          value: alexa
+                          value: alexander.bergmann@demo.email
                           type: standard
-                          universal_id: nullnder.bergmann@demo.email
+                          universal_id: email
                         gender:
                           label: Gender
                           value: male
@@ -620,10 +620,10 @@ paths:
                             type: Employee
                             attributes:
                               id:
-                              label: ID
-                              value: 2
-                              type: integer
-                              universal_id: id
+                                label: ID
+                                value: 2
+                                type: integer
+                                universal_id: id
                           type: standard
                           universal_id: supervisor
                         employment_type:
@@ -639,7 +639,7 @@ paths:
                         hire_date:
                           label: Hire date
                           value: 2014-11-09T00:00:00+01:00
-                          type: standard
+                          type: date
                           universal_id: hire_date
                         contract_end_date:
                           label: Contract ends
