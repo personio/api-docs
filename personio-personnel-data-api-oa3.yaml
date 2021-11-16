@@ -89,58 +89,101 @@ paths:
                         attributes:
                           id:
                             label: ID
-                            value: 1132888
+                            value: 1
+                            type: integer
+                            universal_id: id
                           first_name:
                             label: First name
                             value: Alexander
+                            type: standard
+                            universal_id: first_name
                           last_name:
                             label: Last name
                             value: Bergmann
+                            type: standard
+                            universal_id: last_name
                           email:
                             label: Email
-                            value: alexander.bergmann@demo.com
+                            value: alexander.bergmann@demo.email
+                            type: standard
+                            universal_id: email
                           gender:
                             label: Gender
                             value: male
+                            type: standard
+                            universal_id: gender
                           status:
                             label: Status
                             value: active
+                            type: standard
+                            universal_id: status
                           position:
                             label: Position
                             value: CTO
+                            type: standard
+                            universal_id: position
                           supervisor:
                             label: Supervisor
                             value:
+                              type: Employee
+                              attributes:
+                                id:
+                                  label: ID
+                                  value: 2
+                                  type: integer
+                                  universal_id: id
+                            type: standard
+                            universal_id: supervisor
                           employment_type:
                             label: Employment type
                             value: external
+                            type: standard
+                            universal_id: employment_type
                           weekly_working_hours:
                             label: Weekly hours
                             value: '40'
+                            type: standard
+                            universal_id: weekly_working_hours
                           hire_date:
                             label: Hire date
-                            value: '2014-11-09T00:00:00+01:00'
+                            value: 2014-11-09T00:00:00+01:00
+                            type: date
+                            universal_id: hire_date
                           contract_end_date:
                             label: Contract ends
-                            value:
+                            value: null
+                            type: date
+                            universal_id: contract_end_date
                           termination_date:
                             label: Termination date
-                            value:
+                            value: null
+                            type: date
+                            universal_id: termination_date
                           termination_type:
                             label: Termination type
-                            value: ''
+                            value: null
+                            type: standard
+                            universal_id: termination_type
                           termination_reason:
                             label: Termination reason
-                            value: ''
+                            value: null
+                            type: standard
+                            universal_id: termination_reason
                           probation_period_end:
                             label: Probation period end
-                            value:
+                            value: null
+                            type: date
+                            universal_id: probation_period_end
                           created_at:
                             label: created_at
                             value: '2017-05-23T09:49:03+02:00'
+                            type: date
+                            universal_id: created_at
                           last_modified_at:
                             label: Last modified
                             value: '2020-11-18T17:33:55+01:00'
+                            type: date
+                            universal_id: last_modified_at
                           subcompany:
                             label: Subcompany
                             value:
@@ -148,6 +191,8 @@ paths:
                               attributes:
                                 id: 7033
                                 name: CS Demo GmbH
+                            type: standard
+                            universal_id: subcompany
                           office:
                             label: Office
                             value:
@@ -155,6 +200,8 @@ paths:
                               attributes:
                                 id: 131014
                                 name: Munich
+                            type: standard
+                            universal_id: office
                           department:
                             label: Department
                             value:
@@ -162,6 +209,8 @@ paths:
                               attributes:
                                 id: 281521
                                 name: Customer Support
+                            type: standard
+                            universal_id: department
                           cost_centers:
                             label: Cost center
                             value:
@@ -170,6 +219,8 @@ paths:
                                   id: 82957
                                   name: Cost center 1
                                   percentage: 100
+                            type: standard
+                            universal_id: cost_centers
                           holiday_calendar:
                             label: Public holidays
                             value:
@@ -179,6 +230,8 @@ paths:
                                 name: Deutschland (Bayern) Feiertage
                                 country: DE
                                 state: Bayern
+                            type: standard
+                            universal_id: holiday_calendar
                           absence_entitlement:
                             label: Absence entitlement
                             value:
@@ -188,6 +241,8 @@ paths:
                                   name: Paid vacation
                                   category: paid_vacation
                                   entitlement: 24
+                            type: standard
+                            universal_id: absence_entitlement
                           work_schedule:
                             label: Work schedule
                             value:
@@ -203,24 +258,38 @@ paths:
                                 friday: '08:00'
                                 saturday: '00:00'
                                 sunday: '00:00'
+                            type: standard
+                            universal_id: work_schedule
                           fix_salary:
                             label: Fix salary
                             value: 3000
+                            type: decimal
+                            universal_id: fix_salary
                           fix_salary_interval:
                             label: Salary interval
                             value: monthly
+                            type: standard
+                            universal_id: fix_salary_interval
                           hourly_salary:
                             label: Hourly salary
                             value: 0
+                            type: decimal
+                            universal_id: hourly_salary
                           vacation_day_balance:
                             label: Vacation day balance
                             value: 2
+                            type: decimal
+                            universal_id: vacation_day_balance
                           last_working_day:
                             label: Last day of work
                             value:
+                            type: date
+                            universal_id: last_working_day
                           profile_picture:
                             label: Profile Picture
                             value: https://api.personio.de/v1/company/employees/1132888/profile-picture
+                            type: standard
+                            universal_id: profile_picture
                           team:
                             label: Team
                             value:
@@ -228,28 +297,23 @@ paths:
                               attributes:
                                 id: 59026
                                 name: T_X
+                            type: standard
+                            universal_id: team
                           dynamic_24407:
                             label: Titel
                             value: Dr
+                            universal_id: null
                             type: standard
                           dynamic_21827:
                             label: IBAN
                             value: DE98 8989 9898 0000 8989 00
+                            universal_id: iban
                             type: standard
                           dynamic_33400:
                             label: Anniversary Date
                             value: 2021-01-01
+                            universal_id: null
                             type: date
-        "404":
-          description: ""
-          content:
-            application/json:
-              example:
-                response:
-                  value:
-                    success: false
-                    error:
-                      message: "Employee [unknown@personio.de] not found"
     post:
       security:
         - BearerAuth: []
@@ -517,58 +581,101 @@ paths:
                       attributes:
                         id:
                           label: ID
-                          value: 1132888
+                          value: 1
+                          type: integer
+                          universal_id: id
                         first_name:
                           label: First name
                           value: Alexander
+                          type: standard
+                          universal_id: first_name
                         last_name:
                           label: Last name
                           value: Bergmann
+                          type: standard
+                          universal_id: last_name
                         email:
                           label: Email
-                          value: alexander.bergmann@demo.com
+                          value: alexander.bergmann@demo.email
+                          type: standard
+                          universal_id: email
                         gender:
                           label: Gender
                           value: male
+                          type: standard
+                          universal_id: gender
                         status:
                           label: Status
                           value: active
+                          type: standard
+                          universal_id: status
                         position:
                           label: Position
                           value: CTO
+                          type: standard
+                          universal_id: position
                         supervisor:
                           label: Supervisor
                           value:
+                            type: Employee
+                            attributes:
+                              id:
+                                label: ID
+                                value: 2
+                                type: integer
+                                universal_id: id
+                          type: standard
+                          universal_id: supervisor
                         employment_type:
                           label: Employment type
                           value: external
+                          type: standard
+                          universal_id: employment_type
                         weekly_working_hours:
                           label: Weekly hours
                           value: '40'
+                          type: standard
+                          universal_id: weekly_working_hours
                         hire_date:
                           label: Hire date
-                          value: '2014-11-09T00:00:00+01:00'
+                          value: 2014-11-09T00:00:00+01:00
+                          type: date
+                          universal_id: hire_date
                         contract_end_date:
                           label: Contract ends
-                          value:
+                          value: null
+                          type: date
+                          universal_id: contract_end_date
                         termination_date:
                           label: Termination date
-                          value:
+                          value: null
+                          type: date
+                          universal_id: termination_date
                         termination_type:
                           label: Termination type
-                          value: ''
+                          value: null
+                          type: standard
+                          universal_id: termination_type
                         termination_reason:
                           label: Termination reason
-                          value: ''
+                          value: null
+                          type: standard
+                          universal_id: termination_reason
                         probation_period_end:
                           label: Probation period end
-                          value:
+                          value: null
+                          type: date
+                          universal_id: probation_period_end
                         created_at:
                           label: created_at
                           value: '2017-05-23T09:49:03+02:00'
+                          type: date
+                          universal_id: created_at
                         last_modified_at:
                           label: Last modified
                           value: '2020-11-18T17:33:55+01:00'
+                          type: date
+                          universal_id: last_modified_at
                         subcompany:
                           label: Subcompany
                           value:
@@ -576,6 +683,8 @@ paths:
                             attributes:
                               id: 7033
                               name: CS Demo GmbH
+                          type: standard
+                          universal_id: subcompany
                         office:
                           label: Office
                           value:
@@ -583,6 +692,8 @@ paths:
                             attributes:
                               id: 131014
                               name: Munich
+                          type: standard
+                          universal_id: office
                         department:
                           label: Department
                           value:
@@ -590,6 +701,8 @@ paths:
                             attributes:
                               id: 281521
                               name: Customer Support
+                          type: standard
+                          universal_id: department
                         cost_centers:
                           label: Cost center
                           value:
@@ -598,6 +711,8 @@ paths:
                                 id: 82957
                                 name: Cost center 1
                                 percentage: 100
+                          type: standard
+                          universal_id: cost_centers
                         holiday_calendar:
                           label: Public holidays
                           value:
@@ -607,6 +722,8 @@ paths:
                               name: Deutschland (Bayern) Feiertage
                               country: DE
                               state: Bayern
+                          type: standard
+                          universal_id: holiday_calendar
                         absence_entitlement:
                           label: Absence entitlement
                           value:
@@ -616,6 +733,8 @@ paths:
                                 name: Paid vacation
                                 category: paid_vacation
                                 entitlement: 24
+                          type: standard
+                          universal_id: absence_entitlement
                         work_schedule:
                           label: Work schedule
                           value:
@@ -631,24 +750,38 @@ paths:
                               friday: '08:00'
                               saturday: '00:00'
                               sunday: '00:00'
+                          type: standard
+                          universal_id: work_schedule
                         fix_salary:
                           label: Fix salary
                           value: 3000
+                          type: decimal
+                          universal_id: fix_salary
                         fix_salary_interval:
                           label: Salary interval
                           value: monthly
+                          type: standard
+                          universal_id: fix_salary_interval
                         hourly_salary:
                           label: Hourly salary
                           value: 0
+                          type: decimal
+                          universal_id: hourly_salary
                         vacation_day_balance:
                           label: Vacation day balance
                           value: 2
+                          type: decimal
+                          universal_id: vacation_day_balance
                         last_working_day:
                           label: Last day of work
                           value:
+                          type: date
+                          universal_id: last_working_day
                         profile_picture:
                           label: Profile Picture
                           value: https://api.personio.de/v1/company/employees/1132888/profile-picture
+                          type: standard
+                          universal_id: profile_picture
                         team:
                           label: Team
                           value:
@@ -656,18 +789,23 @@ paths:
                             attributes:
                               id: 59026
                               name: T_X
+                          type: standard
+                          universal_id: team
                         dynamic_24407:
                           label: Titel
                           value: Dr
+                          universal_id: null
                           type: standard
                         dynamic_21827:
                           label: IBAN
                           value: DE98 8989 9898 0000 8989 00
+                          universal_id: iban
                           type: standard
-                        dynamic_23001:
-                          label: Number of pets
-                          value: 2
-                          type: integer
+                        dynamic_33400:
+                          label: Anniversary Date
+                          value: 2021-01-01
+                          universal_id: null
+                          type: date
         "404":
           description: ""
           content:
@@ -1251,15 +1389,23 @@ paths:
                               id:
                                 label: id
                                 value: 4567
+                                type: integer
+                                universal_id: id
                               first_name:
                                 label: First name
                                 value: Michael
+                                type: standard
+                                universal_id: first_name
                               last_name:
                                 label: Last name
                                 value: Miller
+                                type: standard
+                                universal_id: last_name
                               email:
                                 label: Email
                                 value: michael.miller@demo.com
+                                type: standard
+                                universal_id: email
                           certificate:
                             status: not-required
                           created_at: '2017-01-17T10:32:18+0100'
@@ -1315,15 +1461,23 @@ paths:
                             id:
                               label: id
                               value: 4567
+                              type: integer
+                              universal_id: id
                             first_name:
                               label: First name
                               value: Michael
+                              type: standard
+                              universal_id: first_name
                             last_name:
                               label: Last name
                               value: Miller
+                              type: standard
+                              universal_id: last_name
                             email:
                               label: Email
                               value: michael.miller@demo.com
+                              type: standard
+                              universal_id: email
                         certificate:
                           status: not-required
                         created_at: '2017-01-17T10:32:18+0100'
@@ -1459,15 +1613,23 @@ paths:
                             id:
                               label: id
                               value: 2367
+                              type: integer
+                              universal_id: id
                             first_name:
                               label: First name
                               value: Michael
+                              type: standard
+                              universal_id: first_name
                             last_name:
                               label: Last name
                               value: Miller
+                              type: standard
+                              universal_id: last_name
                             email:
                               label: Email
                               value: michael.miller@demo.com
+                              type: standard
+                              universal_id: email
                         certificate:
                           status: not-required
                         created_at: '2017-01-17T10:32:18+0100'
@@ -1517,7 +1679,6 @@ components:
           properties:
             message:
               example: The absence period was deleted.
-
 
     DeletedAtendanceResponse:
       title: Default response object
@@ -1673,8 +1834,6 @@ components:
             message:
               example: The attendance period was not found.
 
-
-
     Employee404ErrorResponse:
       title: 404 absense error
       type: object
@@ -1722,6 +1881,10 @@ components:
               properties:
                 name:
                   example: Munich
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        universal_id:
+          example: office
 
     Department:
       type: object
@@ -1739,6 +1902,10 @@ components:
               properties:
                 name:
                   example: Marketing
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        universal_id:
+          example: department
     CostCenters:
       type: object
       properties:
@@ -1762,6 +1929,10 @@ components:
                   percentage:
                     type: number
                     example: 50
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        universal_id:
+          example: cost_center
     HolidayCalendar:
       type: object
       properties:
@@ -1784,6 +1955,10 @@ components:
                   example: DE
                 state:
                   example: Hamburg
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        universal_id:
+          example: holiday_calendar
     WorkSchedule:
       type: object
       properties:
@@ -1823,6 +1998,10 @@ components:
                 sunday:
                   example: 00:00
                   pattern: ^\d\d:\d\d$
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        universal_id:
+          example: work_schedule
     Team:
       type: object
       properties:
@@ -1847,6 +2026,10 @@ components:
                     example: Paid Vacation
                   entitlement:
                     example: 30
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        universal_id:
+          example: team
       required:
         - label
         - value
@@ -1897,6 +2080,10 @@ components:
               example: ID
             value:
               example: 1
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: id
         first_name:
           type: object
           properties:
@@ -1904,6 +2091,10 @@ components:
               example: First name
             value:
               example: Michael
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: first_name
         last_name:
           type: object
           properties:
@@ -1911,6 +2102,10 @@ components:
               example: Last name
             value:
               example: Dou
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: last_name
         email:
           type: object
           properties:
@@ -1918,6 +2113,10 @@ components:
               example: Email
             value:
               example: michael.dou@personio.de
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: email
         gender:
           type: object
           properties:
@@ -1925,6 +2124,10 @@ components:
               example: Gender
             value:
               example: male
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: gender
         status:
           type: object
           properties:
@@ -1932,6 +2135,10 @@ components:
               example: Status
             value:
               example: active
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: status
         position:
           type: object
           properties:
@@ -1939,6 +2146,10 @@ components:
               example: Position
             value:
               example: Online Marketing Specialist
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: position
         supervisor:
           $ref: "#/components/schemas/Supervisor"
         employment_type:
@@ -1948,6 +2159,10 @@ components:
               example: Employment type
             value:
               example: internal
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: employment_type
         weekly_working_hours:
           type: object
           properties:
@@ -1955,6 +2170,10 @@ components:
               example: Weekly hours
             value:
               example: 40
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: weekly_working_hours
         hire_date:
           type: object
           properties:
@@ -1962,6 +2181,10 @@ components:
               example: Hire date
             value:
               example: 2012-02-01T00:00:00+0100
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: hire_date
         contract_end_date:
           type: object
           properties:
@@ -1969,6 +2192,10 @@ components:
               example: Contact end date
             value:
               example: 2020-02-01T00:00:00+0100
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: contract_end_date
         termination_date:
           type: object
           properties:
@@ -1976,6 +2203,10 @@ components:
               example: Termonation date
             value:
               example: 2020-02-01T00:00:00+0100
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: termination_date
         termination_type:
           type: object
           properties:
@@ -1983,6 +2214,10 @@ components:
               example: Termonation type
             value:
               example:
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: termination_type
         termination_reason:
           type: object
           properties:
@@ -1990,6 +2225,10 @@ components:
               example: Termonation reason
             value:
               example:
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: termination_reason
         probation_period_end:
           type: object
           properties:
@@ -1997,6 +2236,10 @@ components:
               example: Probation period end
             value:
               example: 2020-02-01T00:00:00+0100
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: probation_period_end
         created_at:
           type: object
           properties:
@@ -2004,6 +2247,10 @@ components:
               example: Created at
             value:
               example: 2018-02-01T00:00:00+0100
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: created_at
         last_modified_at:
           type: object
           properties:
@@ -2011,6 +2258,10 @@ components:
               example: Last modified
             value:
               example: '2020-11-18T17:33:55+01:00'
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: last_modified_at
         subcompany:
           $ref: "#/components/schemas/Office"
         office:
@@ -2034,6 +2285,10 @@ components:
               example: Fix salary
             value:
               example: 4000
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: fix_salary
         fix_salary_interval:
           type: object
           properties:
@@ -2041,6 +2296,10 @@ components:
               example: Salary interval
             value:
               example: monthly
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: fix_salary_interval
         hourly_salary:
           type: object
           properties:
@@ -2048,6 +2307,10 @@ components:
               example: Hourly salary
             value:
               example: 0
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: hourly_salary
         vacation_day_balance:
           type: object
           properties:
@@ -2055,6 +2318,10 @@ components:
               example: Vacation day balance
             value:
               example: 20.5
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: vacation_day_balance
         last_working_day:
           type: object
           properties:
@@ -2062,6 +2329,10 @@ components:
               example: Last day of work
             value:
               example:
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: last_working_day
         profile_picture:
           type: object
           properties:
@@ -2069,6 +2340,10 @@ components:
               example: Profile Picture
             value:
               example: http://api.dev.personio.de/v1/company/employees/1/profile-picture
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: profile_picture
         dynamic_21827:
           type: object
           properties:
@@ -2077,17 +2352,10 @@ components:
             value:
               example: DE98 8989 9898 0000 8989 00
             type:
-              description: The type of the field. It's only visible on custom attributes
-              example: standard
-              enum:
-                - standard
-                - date
-                - integer
-                - decimal
-                - list
-                - link
-                - tags
-                - multiline
+              description: The type of the field.
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: iban
     EmployeesResponse:
       title: List of Employees
       allOf:
@@ -2344,7 +2612,6 @@ components:
         - attendances[]break
         - attendances[][comment]
 
-
     NewAttendancePeriodResponse:
       type: object
       allOf:
@@ -2585,6 +2852,10 @@ components:
                   example: 1
                 value:
                   example: id
+                type:
+                  $ref: '#/components/schemas/TypeEnum'
+                universal_id:
+                  example: id
             first_name:
               type: object
               properties:
@@ -2592,6 +2863,10 @@ components:
                   example: First Name
                 value:
                   example: Michael
+                type:
+                  $ref: '#/components/schemas/TypeEnum'
+                universal_id:
+                  example: first_name
             last_name:
               type: object
               properties:
@@ -2599,6 +2874,10 @@ components:
                   example: Last Name
                 value:
                   example: Dou
+                type:
+                  $ref: '#/components/schemas/TypeEnum'
+                universal_id:
+                  example: last_name
             email:
               type: object
               properties:
@@ -2606,6 +2885,10 @@ components:
                   example: Email
                 value:
                   example: michael.dou@personio.de
+                type:
+                  $ref: '#/components/schemas/TypeEnum'
+                universal_id:
+                  example: email
 
     AuthenticationTokenResponse:
       title: Request Authentication Token response
@@ -2620,3 +2903,16 @@ components:
               properties:
                 token:
                   type: string
+
+    TypeEnum:
+      type: string
+      example: standard
+      enum:
+        - standard
+        - date
+        - integer
+        - decimal
+        - list
+        - link
+        - tags
+        - multiline
