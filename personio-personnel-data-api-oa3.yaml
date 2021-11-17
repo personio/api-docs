@@ -1144,9 +1144,9 @@ paths:
         - name: skip_approval
           in: query
           required: false
-          description: "Optional, default value is true. If set to false, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered."
+          description: "Optional, default value is 1. If set to 0, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered. 1 for true, 0 for false"
           schema:
-            type: boolean
+            type: integer
             enum: [0, 1]
             default: 1
       responses:
@@ -2500,7 +2500,7 @@ components:
                   example: "I was productive as hell"
         skip_approval:
           type: boolean
-          description: "Optional, default value is true. If set to false, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered."
+          description: "Optional, default value is 1. If set to 0, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered. 1 for true, 0 for false"
 
     AttendanceUpdateRequest:
       type: object
@@ -2526,7 +2526,7 @@ components:
           example: "I was productive as hell"
         skip_approval:
           type: boolean
-          description: "Optional, default value is true. If set to false, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered."
+          description: "Optional, default value is 1. If set to 0, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered. 1 for true, 0 for false"
 
     AttendancePeriodsResponse:
       title: List All Attenance Periods response
@@ -2603,7 +2603,7 @@ components:
           description: Optional comment
         skip_approval:
           type: boolean
-          description: "Optional, default value is true. If set to false, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered."
+          description: "Optional, default value is 1. If set to 0, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered. 1 for true, 0 for false"
       required:
         - attendances[][employee]
         - attendances[][date]
@@ -2712,9 +2712,9 @@ components:
           example: Some Comment
           description: Optional comment
         skip_approval:
-          type: boolean
+          type: integer
           example: 0
-          description: Optional, default value is true. If set to false, the approval status of the absence request will be "pending" if an approval rule is set for the absence type in Personio. The respective approval flow will be triggered.
+          description: Optional, default value is 1. If set to 0, the approval status of the absence request will be "pending" if an approval rule is set for the absence type in Personio. The respective approval flow will be triggered. 1 for true, 0 for false
       required:
         - employee_id
         - time_off_type_id
