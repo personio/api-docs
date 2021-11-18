@@ -1144,11 +1144,10 @@ paths:
         - name: skip_approval
           in: query
           required: false
-          description: "Optional, default value is 1. If set to 0, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered. 1 for true, 0 for false"
+          description: "Optional, default value is true. If set to false, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered."
           schema:
-            type: integer
-            enum: [0, 1]
-            default: 1
+            type: boolean
+            default: true
       responses:
         "200":
           description: Success response
@@ -1375,8 +1374,8 @@ paths:
                           start_date: '2017-12-27T00:00:00+0100'
                           end_date: '2017-12-29T00:00:00+0100'
                           days_count: 3
-                          half_day_start: 0
-                          half_day_end: 0
+                          half_day_start: false
+                          half_day_end: false
                           time_off_type:
                             type: TimeOffType
                             attributes:
@@ -1447,8 +1446,8 @@ paths:
                         start_date: '2017-12-27T00:00:00+0100'
                         end_date: '2017-12-29T00:00:00+0100'
                         days_count: 3
-                        half_day_start: 0
-                        half_day_end: 0
+                        half_day_start: false
+                        half_day_end: false
                         time_off_type:
                           type: TimeOffType
                           attributes:
@@ -1599,8 +1598,8 @@ paths:
                         start_date: '2017-12-27T00:00:00+0100'
                         end_date: '2017-12-29T00:00:00+0100'
                         days_count: 3
-                        half_day_start: 0
-                        half_day_end: 0
+                        half_day_start: false
+                        half_day_end: false
                         time_off_type:
                           type: TimeOffType
                           attributes:
@@ -2500,7 +2499,7 @@ components:
                   example: "I was productive as hell"
         skip_approval:
           type: boolean
-          description: "Optional, default value is 1. If set to 0, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered. 1 for true, 0 for false"
+          description: "Optional, default value is true. If set to false, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered."
 
     AttendanceUpdateRequest:
       type: object
@@ -2526,7 +2525,7 @@ components:
           example: "I was productive as hell"
         skip_approval:
           type: boolean
-          description: "Optional, default value is 1. If set to 0, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered. 1 for true, 0 for false"
+          description: "Optional, default value is true. If set to false, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered."
 
     AttendancePeriodsResponse:
       title: List All Attenance Periods response
@@ -2603,7 +2602,7 @@ components:
           description: Optional comment
         skip_approval:
           type: boolean
-          description: "Optional, default value is 1. If set to 0, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered. 1 for true, 0 for false"
+          description: "Optional, default value is true. If set to false, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered."
       required:
         - attendances[][employee]
         - attendances[][date]
@@ -2700,21 +2699,21 @@ components:
           description: "Absence end date. Format: yyyy-mm-dd"
           example: '2020-01-31'
         half_day_start:
-          type: integer
-          example: 0
-          description: Weather the start date is a half-day off. 1 for true, 0 for false
+          type: boolean
+          example: false
+          description: Weather the start date is a half-day off.
         half_day_end:
-          type: integer
-          example: 0
-          description: Weather the end date is a half-day off. 1 for true, 0 for false
+          type: boolean
+          example: false
+          description: Weather the end date is a half-day off.
         comment:
           type: string
           example: Some Comment
           description: Optional comment
         skip_approval:
-          type: integer
-          example: 0
-          description: Optional, default value is 1. If set to 0, the approval status of the absence request will be "pending" if an approval rule is set for the absence type in Personio. The respective approval flow will be triggered. 1 for true, 0 for false
+          type: boolean
+          example: false
+          description: Optional, default value is true. If set to false, the approval status of the absence request will be "pending" if an approval rule is set for the absence type in Personio. The respective approval flow will be triggered.
       required:
         - employee_id
         - time_off_type_id
@@ -2799,11 +2798,11 @@ components:
           type: number
           example: 3
         half_day_start:
-          type: number
-          example: 0
+          type: boolean
+          example: false
         half_day_end:
-          type: number
-          example: 0
+          type: boolean
+          example: false
         time_off_type:
           type: object
           properties:
