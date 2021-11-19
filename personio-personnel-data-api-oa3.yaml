@@ -875,23 +875,29 @@ paths:
         - BearerAuth: []
       tags:
         - Employees
-      description: Lists all the custom atrributes.
+      description: Lists all the allowed atrributes per API credentials including custom (dynamic) attributes.
       responses:
         "200":
           description: ""
           content:
             application/json:
-              schema:
-                $ref: "#/components/schemas/EmployeeResponse"
               examples:
                 response:
                   value:
                     success: true
                     data:
-                      -
-                        key: dynamic_1
+                      - key: first_name
+                        label: First Name
+                        type: standard
+                        universal_id: first_name
+                      - key: last_name
+                        label: Last Name
+                        type: standard
+                        universal_id: last_name
+                      - key: dynamic_1
                         label: IBAN
                         type: standard
+                        universal_id: iban
 
   "/company/employees/{employee_id}/profile-picture/{width}":
     get:
@@ -986,12 +992,14 @@ paths:
         - name: employees[]
           in: query
           required: false
-          description: A list of Personio employee ID's to filter the results. The result filters including only absences of provided employees
+          description: A list of Personio employee ID's to filter the results. The result filters including only absences of provided employees.
           explode: true
           schema:
             type: array
             items:
               type: integer
+            example: ?employees[]=1&employees[]=2
+            default: null
           allowReserved: true
         - name: limit
           in: query
