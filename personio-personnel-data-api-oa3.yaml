@@ -2013,33 +2013,22 @@ components:
       type: object
       properties:
         label:
-          example: Absence entitlement
+          example: Team
         value:
-          type: array
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-                enum:
-                  - TimeOffType
-              attributes:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    example: 1
-                  name:
-                    example: Paid Vacation
-                  entitlement:
-                    example: 30
+          type: object
+          properties:
+            type:
+              type: string
+              example: Team
+            attributes:
+              type: object
+              properties:
+                name:
+                  example: Management
         type:
           $ref: '#/components/schemas/TypeEnum'
         universal_id:
           example: team
-      required:
-        - label
-        - value
 
     AbsenceEntitlement:
       type: object
