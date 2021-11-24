@@ -55,7 +55,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/error_response'
         '401':
-          description: 'Unauthorized - The API token was not recognized. Please provide a valid API token in as value of an `Authorization` header, like `Bearer api-token-value`.'
+          description: 'Unauthorized - The API token and/or company id was not recognized. Please provide a valid API token in as value of an `Authorization` header, like `Bearer api-token-value`.'
         '403':
           description: Forbidden - Your company does not have access to one of the features used in this request.
           content:
@@ -76,6 +76,11 @@ paths:
           in: header
           name: x-company-id
           description: Your company's Personio Id
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Please check the Recruiting Introduction section for more information.
       requestBody:
         content:
           application/json:
@@ -93,6 +98,11 @@ paths:
           in: header
           name: x-company-id
           description: Your company's Personio Id
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Please check the Recruiting Introduction section for more information.
       responses:
         '200':
           description: OK
@@ -101,7 +111,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/uploaded_document'
         '401':
-          description: 'Unauthorized - The API token was not recognized. Please provide a valid API token in as value of an `Authorization` header, like `Bearer api-token-value`.'
+          description: 'Unauthorized - The API token and/or company id was not recognized. Please provide a valid API token in as value of an `Authorization` header, like `Bearer api-token-value`.'
         '403':
           description: Forbidden - Your company does not have access to one of the features used in this request.
         '413':
@@ -312,9 +322,7 @@ components:
         external_posting_id:
           type: string
           description: |-
-            The external id of this job posting.
-
-            See https://mycompany.personio.de/configuration/recruiting/channels
+            The external id of the job posting (E.g. the external id forwarded by Gohiring).
         message:
           type: string
           description: The applicant supplied free-text message.
@@ -328,9 +336,7 @@ components:
             type: string
         files:
           description: |-
-            References to previously uploaded files. Required categories depend on your personio settings.
-
-            See also 'uploaded_document' model.
+            References to previously uploaded files. These will be attached to the new application.
           type: array
           items:
             type: object
@@ -343,7 +349,14 @@ components:
                 type: string
               category:
                 type: string
-                description: Possible and required values depend on your personio settings.
+                enum:
+                  - cv
+                  - cover-letter
+                  - employment-reference
+                  - certificate
+                  - work-sample
+                  - other
+                description: Category of referenced document.
             required:
               - uuid
               - original_filename
@@ -351,8 +364,7 @@ components:
         attributes:
           type: array
           description: |-
-            Attributes of this applications.
-            Required attributes depend on your personio settings, so do the format or possible values.
+            Attributes for this application.
 
             See https://mycompany.personio.de/configuration/recruiting/attributes
           items:
@@ -384,7 +396,7 @@ components:
         uuid:
           type: string
           format: uuid
-          description: The UUID of this file. Can be attached to an application by including this uuid in that request.
+          description: The UUID of this file. Can be attached to an application by including this uuid in the application creation request.
         size:
           type: integer
           description: Uploaded file size in bytes.
