@@ -10,6 +10,8 @@ paths:
         - Auth
       description: 'Request Authentication Token'
       parameters:
+        - $ref: "#components/parameters/XPersonioPartnerID"
+        - $ref: "#components/parameters/XPersonioAppID"
         - name: client_id
           in: query
           required: true
@@ -38,6 +40,9 @@ paths:
                       token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLmRldi5wZXJzb25pby5kZTozMDAwMS92MS9hdXRoIiwiaWF0IjoxNDg5MDkxMzA2LCJleHAiOjE0ODkxNzc3MDYsIm5iZiI6MTQ4OTA5MTMwNiwianRpIjoiZmU1ZjkxOGY2MDZjOWI4OGMwMzM0ZmJkZjkyYzkwMzgiLCJzdWIiOiJPR014TVdRd1kySmxZbVF6Tm1RNVpqQmxOell6WmpsaSJ9.QZZCdlDjmL-LYdoDx2XLUfhwTdcjDgm9h4t-6JoACiM"
 
   /company/employees:
+    parameters:
+      - $ref: "#components/parameters/XPersonioPartnerID"
+      - $ref: "#components/parameters/XPersonioAppID"
     get:
       security:
         - BearerAuth: []
@@ -434,6 +439,9 @@ paths:
                       id: 81723
                       message: "success"
   "/company/employees/{employee_id}":
+    parameters:
+      - $ref: "#components/parameters/XPersonioPartnerID"
+      - $ref: "#components/parameters/XPersonioAppID"
     patch:
       security:
         - BearerAuth: []
@@ -821,6 +829,9 @@ paths:
                       message: 'Es ist ein Problem aufgetreten '
 
   "/company/employees/{employee_id}/absences/balance":
+    parameters:
+      - $ref: "#components/parameters/XPersonioPartnerID"
+      - $ref: "#components/parameters/XPersonioAppID"
     get:
       security:
         - BearerAuth: []
@@ -876,6 +887,9 @@ paths:
       tags:
         - Employees
       description: Lists all the allowed atrributes per API credentials including custom (dynamic) attributes.
+      parameters:
+        - $ref: "#components/parameters/XPersonioPartnerID"
+        - $ref: "#components/parameters/XPersonioAppID"
       responses:
         "200":
           description: ""
@@ -900,6 +914,9 @@ paths:
                         universal_id: iban
 
   "/company/employees/{employee_id}/profile-picture/{width}":
+    parameters:
+      - $ref: "#components/parameters/XPersonioPartnerID"
+      - $ref: "#components/parameters/XPersonioAppID"
     get:
       security:
         - BearerAuth: []
@@ -944,6 +961,9 @@ paths:
                       message: 'Etwas ist schiefgelaufen ...'
 
   /company/attendances:
+    parameters:
+      - $ref: "#components/parameters/XPersonioPartnerID"
+      - $ref: "#components/parameters/XPersonioAppID"
     get:
       security:
         - BearerAuth: []
@@ -1134,6 +1154,9 @@ paths:
                       ]
 
   "/company/attendances/{id}":
+    parameters:
+      - $ref: "#components/parameters/XPersonioPartnerID"
+      - $ref: "#components/parameters/XPersonioAppID"
     delete:
       security:
         - BearerAuth: []
@@ -1232,6 +1255,9 @@ paths:
                       message: 'The attendance period was not found.'
 
   /company/time-off-types:
+    parameters:
+      - $ref: "#components/parameters/XPersonioPartnerID"
+      - $ref: "#components/parameters/XPersonioAppID"
     get:
       security:
         - BearerAuth: []
@@ -1298,6 +1324,9 @@ paths:
                           approval_required: true
 
   /company/time-offs:
+    parameters:
+      - $ref: "#components/parameters/XPersonioPartnerID"
+      - $ref: "#components/parameters/XPersonioAppID"
     get:
       security:
         - BearerAuth: []
@@ -1533,6 +1562,9 @@ paths:
                       error_data: '{...}'
 
   "/company/time-offs/{id}":
+    parameters:
+      - $ref: "#components/parameters/XPersonioPartnerID"
+      - $ref: "#components/parameters/XPersonioAppID"
     delete:
       security:
         - BearerAuth: []
@@ -1655,6 +1687,8 @@ paths:
                     error:
                       code: 404
                       message: 'The absence period was not found.'
+
+
 servers:
   - url: https://api.personio.de/v1
 components:
@@ -1662,6 +1696,21 @@ components:
     BearerAuth:
       type: http
       scheme: bearer
+  parameters: 
+    XPersonioPartnerID:
+      name: X-Personio-Partner-ID
+      in: header
+      required: false
+      description: The partner identifier
+      schema:
+        type: string
+    XPersonioAppID:
+      name: X-Personio-App-ID
+      in: header
+      required: false
+      description: The application identifier
+      schema:
+        type: string
   schemas:
     Response:
       title: Default response object
