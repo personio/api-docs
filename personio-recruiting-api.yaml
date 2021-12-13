@@ -302,6 +302,7 @@ components:
           type: string
           description: First name(s) of the applicant. Must not be empty or only whitespaces
           minLength: 1
+          example: John
         last_name:
           type: string
           description: Last name(s) of the applicant. Must not be empty or only whitespaces.
@@ -326,7 +327,7 @@ components:
         message:
           type: string
           description: The applicant supplied free-text message.
-        tags:
+        tags1:
           type: array
           description: |-
             Tags to be associated with this application. Non-existing tags will be created.
