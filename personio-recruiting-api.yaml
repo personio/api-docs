@@ -334,7 +334,8 @@ components:
             See https://mycompany.personio.de/configuration/recruiting/tags
           items:
             type: string
-          example: []
+          example:
+            - test
         files:
           description: |-
             References to previously uploaded files. These will be attached to the new application.
