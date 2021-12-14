@@ -2,15 +2,15 @@ openapi: 3.0.0
 info:
   version: '1.0'
   title: Recruiting
-  description: '<p>The Recruiting API allows you to GET open job positions, and POST applications to Personio. Other methods are currently not supported.</p><p><strong>Note:</strong> Some URLs in this document depend on your personio hostname. They are represented via the placeholder "mycompany".</p>'
+  description: '<p>The Recruiting API allows you to GET open job positions, and POST applications to Personio. Other methods are currently not supported.</p><p><strong>Note:</strong> Some URLs in this document depend on your personio hostname. They are represented via the placeholder "{YOUR_COMPANY}".</p>'
 paths:
   /xml:
     get:
       servers:
-        - url: 'https://{hostname}.jobs.personio.de'
+        - url: 'https://{YOUR_COMPANY}.jobs.personio.de'
           description: Career Site URL
           variables:
-            hostname:
+            YOUR_COMPANY:
               default: personio
               description: Company hostname.
       tags:
@@ -31,7 +31,7 @@ paths:
               - pt
           required: true
           description: 'Language code. One of: de, en, fr, es, nl, it, pt.'
-      description: '<p>This is the job positions XML feed from the Company Career Site.</p> <p>The XML feed can be accessed in multiple languages, depending on the languages available for the Career Site. To URL of the XML feed in English is: https://mycompany.jobs.personio.de/xml?language=en</p> <p>This is the complete list of available languages and URLs:</p> <ul> <li>https://mycompany.jobs.personio.de/xml?language=de - German</li> <li>https://mycompany.jobs.personio.de/xml?language=en - English</li> <li>https://mycompany.jobs.personio.de/xml?language=fr - French</li> <li>https://mycompany.jobs.personio.de/xml?language=es - Spanish</li> <li>https://mycompany.jobs.personio.de/xml?language=nl - Dutch</li> <li>https://mycompany.jobs.personio.de/xml?language=it - Italian</li> <li>https://mycompany.jobs.personio.de/xml?language=pt - Portuguese</li> </ul>'
+      description: '<p>This is the job positions XML feed from the Company Career Site.</p> <p>The XML feed can be accessed in multiple languages, depending on the languages available for the Career Site. To URL of the XML feed in English is: https://{YOUR_COMPANY}.jobs.personio.de/xml?language=en</p> <p>This is the complete list of available languages and URLs:</p> <ul> <li>https://{YOUR_COMPANY}.jobs.personio.de/xml?language=de - German</li> <li>https://{YOUR_COMPANY}.jobs.personio.de/xml?language=en - English</li> <li>https://{YOUR_COMPANY}.jobs.personio.de/xml?language=fr - French</li> <li>https://{YOUR_COMPANY}.jobs.personio.de/xml?language=es - Spanish</li> <li>https://{YOUR_COMPANY}.jobs.personio.de/xml?language=nl - Dutch</li> <li>https://{YOUR_COMPANY}.jobs.personio.de/xml?language=it - Italian</li> <li>https://{YOUR_COMPANY}.jobs.personio.de/xml?language=pt - Portuguese</li> </ul>'
       responses:
         '200':
           description: 'An example response looks like this:'
@@ -318,7 +318,7 @@ components:
           description: |-
             The recruiting channel this application was sourced from.
 
-            See https://mycompany.personio.de/configuration/recruiting/channels
+            See https://{YOUR_COMPANY}.personio.de/configuration/recruiting/channels
         external_posting_id:
           type: string
           description: |-
@@ -331,7 +331,7 @@ components:
           description: |-
             Tags to be associated with this application. Non-existing tags will be created.
 
-            See https://mycompany.personio.de/configuration/recruiting/tags
+            See https://{YOUR_COMPANY}.personio.de/configuration/recruiting/tags
           items:
             type: string
         files:
@@ -366,7 +366,7 @@ components:
           description: |-
             Attributes for this application.
 
-            See https://mycompany.personio.de/configuration/recruiting/attributes
+            See https://{YOUR_COMPANY}.personio.de/configuration/recruiting/attributes
           items:
             type: object
             properties:
@@ -603,7 +603,7 @@ components:
           - $ref: '#/components/schemas/JobDescription'
       example:
         - name: Beschreibung
-          value: '<![CDATA[ Für unser Büro mitten im Münchner Glockenbachviertel suchen wir zum nächstmöglichen Zeitpunkt einen Office Manager (m/w) in Teilzeit, der/ die sich um alle Themen rund ums Office zuverlässig kümmert.<br><br><strong>Deine Aufgaben:</strong><br><br><ul><li>Ansprechpartner in Sachen Büro, Ausstattung und anderer “Wohlfühl”-Themen, die unseren Mitarbeiter/innen auf dem Herzen liegen</li><li>Bearbeitung von generellen Anfragen, Post und Eingangsrechnungen</li><li>Kommunikation und Organisation unserer Servicedienstleister und Zulieferer</li><li>Selbstständige Entwicklung &amp; Umsetzung neuer Ideen, Aktionen und Events für unsere Mitarbeiter</li><li>Unterstützung unseres Management-Teams bei organisatorischen Aufgaben</li><li>Management unserer <strong><a href="http://www.unumotors.com">Unu-Elektroroller</a></strong>-Flotte (ja, du bekommst auch einen, wenn du möchtest)</li></ul> ]]>'
+          value: '<![CDATA[ Für unser Büro mitten im Münchner Glockenbachviertel suchen wir zum nächstmöglichen Zeitpunkt einen Office Manager (m/w) in Teilzeit, der/ die sich um alle Themen rund ums Office zuverlässig kümmert.<br><br><strong>Deine Aufgaben:</strong><br><br><ul><li>Ansprechpartner in Sachen Büro, Ausstattung und anderer “Wohlfühl”-Themen, die unseren Mitarbeiter/innen auf dem Herzen liegen</li><li>Bearbeitung von generellen Anfragen, Post und Eingangsrechnungen</li><li>Kommunikation und Organisation unserer Servicedienstleister und Zulieferer</li><li>Selbstständige Entwicklung &amp; Umsetzung neuer Ideen, Aktionen und Events für unsere Mitarbeiter</li><li>Unterstützung unseres Management-Teams bei organisatorischen Aufgaben</li><li>Management unserer <strong><a href="https://www.unumotors.com">Unu-Elektroroller</a></strong>-Flotte (ja, du bekommst auch einen, wenn du möchtest)</li></ul> ]]>'
         - name: Dein Profil
           value: '<![CDATA[ <ul><li>Du bist herzlich, offen und kommunikativ</li><li>Du bist ein Organisationstalent und magst den Umgang mit Zahlen</li><li>Du bist gewissenhaft, sorgfältig und strukturiert</li><li>Du zeigst Eigeninitiative und Kreativität bei der Planung neuer Aktionen</li><li>Du sprichst Deutsch auf muttersprachlichem Niveau und hast gute Englischkenntnisse</li><li>Du hast Spaß an vielfältigen Aufgaben und unterstützt gerne dort, wo Hilfe gebraucht wird</li></ul> ]]>'
         - name: Warum Personio
@@ -700,7 +700,7 @@ components:
           type: string
           format: date
         'custom_attribute_{id}':
-          description: 'Custom applicant attribute. <br/> Custom applicant attributes that were created individually can also be passed. <br/> You can find the unique parameter names of these attributes in your Personio account under: <pre>https://mycompany.personio.de/configuration/recruiting/applicants</pre>'
+          description: 'Custom applicant attribute. <br/> Custom applicant attributes that were created individually can also be passed. <br/> You can find the unique parameter names of these attributes in your Personio account under: <pre>https://{YOUR_COMPANY}.personio.de/configuration/recruiting/applicants</pre>'
           type: integer
       required:
         - company_id
