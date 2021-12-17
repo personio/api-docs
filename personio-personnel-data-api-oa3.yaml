@@ -10,8 +10,8 @@ paths:
         - Auth
       description: 'Request Authentication Token'
       parameters:
-        - $ref: "#components/parameters/XPersonioPartnerID"
-        - $ref: "#components/parameters/XPersonioAppID"
+        - $ref: "#/components/parameters/XPersonioPartnerID"
+        - $ref: "#/components/parameters/XPersonioAppID"
         - name: client_id
           in: query
           required: true
@@ -41,8 +41,8 @@ paths:
 
   /company/employees:
     parameters:
-      - $ref: "#components/parameters/XPersonioPartnerID"
-      - $ref: "#components/parameters/XPersonioAppID"
+      - $ref: "#/components/parameters/XPersonioPartnerID"
+      - $ref: "#/components/parameters/XPersonioAppID"
     get:
       security:
         - BearerAuth: []
@@ -440,8 +440,8 @@ paths:
                       message: "success"
   "/company/employees/{employee_id}":
     parameters:
-      - $ref: "#components/parameters/XPersonioPartnerID"
-      - $ref: "#components/parameters/XPersonioAppID"
+      - $ref: "#/components/parameters/XPersonioPartnerID"
+      - $ref: "#/components/parameters/XPersonioAppID"
     patch:
       security:
         - BearerAuth: []
@@ -830,8 +830,8 @@ paths:
 
   "/company/employees/{employee_id}/absences/balance":
     parameters:
-      - $ref: "#components/parameters/XPersonioPartnerID"
-      - $ref: "#components/parameters/XPersonioAppID"
+      - $ref: "#/components/parameters/XPersonioPartnerID"
+      - $ref: "#/components/parameters/XPersonioAppID"
     get:
       security:
         - BearerAuth: []
@@ -888,8 +888,8 @@ paths:
         - Employees
       description: Lists all the allowed atrributes per API credentials including custom (dynamic) attributes.
       parameters:
-        - $ref: "#components/parameters/XPersonioPartnerID"
-        - $ref: "#components/parameters/XPersonioAppID"
+        - $ref: "#/components/parameters/XPersonioPartnerID"
+        - $ref: "#/components/parameters/XPersonioAppID"
       responses:
         "200":
           description: ""
@@ -915,8 +915,8 @@ paths:
 
   "/company/employees/{employee_id}/profile-picture/{width}":
     parameters:
-      - $ref: "#components/parameters/XPersonioPartnerID"
-      - $ref: "#components/parameters/XPersonioAppID"
+      - $ref: "#/components/parameters/XPersonioPartnerID"
+      - $ref: "#/components/parameters/XPersonioAppID"
     get:
       security:
         - BearerAuth: []
@@ -962,8 +962,8 @@ paths:
 
   /company/attendances:
     parameters:
-      - $ref: "#components/parameters/XPersonioPartnerID"
-      - $ref: "#components/parameters/XPersonioAppID"
+      - $ref: "#/components/parameters/XPersonioPartnerID"
+      - $ref: "#/components/parameters/XPersonioAppID"
     get:
       security:
         - BearerAuth: []
@@ -1019,7 +1019,6 @@ paths:
             items:
               type: integer
             example: ?employees[]=1&employees[]=2
-            default: null
           allowReserved: true
         - name: limit
           in: query
@@ -1111,8 +1110,8 @@ paths:
                     success: true
                     data:
                       id: [
-                        1,
-                        2,
+                          1,
+                          2,
                       ]
                       message: 'success'
         "400":
@@ -1155,8 +1154,8 @@ paths:
 
   "/company/attendances/{id}":
     parameters:
-      - $ref: "#components/parameters/XPersonioPartnerID"
-      - $ref: "#components/parameters/XPersonioAppID"
+      - $ref: "#/components/parameters/XPersonioPartnerID"
+      - $ref: "#/components/parameters/XPersonioAppID"
     delete:
       security:
         - BearerAuth: []
@@ -1256,8 +1255,8 @@ paths:
 
   /company/time-off-types:
     parameters:
-      - $ref: "#components/parameters/XPersonioPartnerID"
-      - $ref: "#components/parameters/XPersonioAppID"
+      - $ref: "#/components/parameters/XPersonioPartnerID"
+      - $ref: "#/components/parameters/XPersonioAppID"
     get:
       security:
         - BearerAuth: []
@@ -1325,8 +1324,8 @@ paths:
 
   /company/time-offs:
     parameters:
-      - $ref: "#components/parameters/XPersonioPartnerID"
-      - $ref: "#components/parameters/XPersonioAppID"
+      - $ref: "#/components/parameters/XPersonioPartnerID"
+      - $ref: "#/components/parameters/XPersonioAppID"
     get:
       security:
         - BearerAuth: []
@@ -1563,8 +1562,8 @@ paths:
 
   "/company/time-offs/{id}":
     parameters:
-      - $ref: "#components/parameters/XPersonioPartnerID"
-      - $ref: "#components/parameters/XPersonioAppID"
+      - $ref: "#/components/parameters/XPersonioPartnerID"
+      - $ref: "#/components/parameters/XPersonioAppID"
     delete:
       security:
         - BearerAuth: []
@@ -1696,7 +1695,7 @@ components:
     BearerAuth:
       type: http
       scheme: bearer
-  parameters: 
+  parameters:
     XPersonioPartnerID:
       name: X-Personio-Partner-ID
       in: header
@@ -2506,9 +2505,9 @@ components:
         is_on_time_off:
           type: boolean
           example: false
-        status: 
+        status:
           type: string
-          enum: 
+          enum:
             - confirmed
             - pending
             - rejected
@@ -2517,32 +2516,32 @@ components:
       type: object
       properties:
         attendances:
-            type: array
-            items:
-              type: object
-              properties:
-                employee:
-                  type: integer
-                  example: 1
-                date:
-                  type: string
-                  format: date
-                start_time:
-                  type: string
-                  pattern: ^\d\d:\d\d$
-                  example: "08:00"
-                  description: "Format: hh:mm"
-                end_time:
-                  type: string
-                  pattern: ^\d\d:\d\d$
-                  example: "17:00"
-                  description: "Format: hh:mm"
-                break:
-                  type: integer
-                  example: 60
-                comment:
-                  type: string
-                  example: "I was productive as hell"
+          type: array
+          items:
+            type: object
+            properties:
+              employee:
+                type: integer
+                example: 1
+              date:
+                type: string
+                format: date
+              start_time:
+                type: string
+                pattern: ^\d\d:\d\d$
+                example: "08:00"
+                description: "Format: hh:mm"
+              end_time:
+                type: string
+                pattern: ^\d\d:\d\d$
+                example: "17:00"
+                description: "Format: hh:mm"
+              break:
+                type: integer
+                example: 60
+              comment:
+                type: string
+                example: "I was productive as hell"
         skip_approval:
           type: boolean
           description: "Optional, default value is true. If set to false, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered."
@@ -2700,8 +2699,8 @@ components:
             unit:
               type: string
               enum:
-              - day
-              - hour
+                - day
+                - hour
               example: day
             half_day_requests_enabled:
               type: boolean
