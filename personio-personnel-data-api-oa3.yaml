@@ -882,6 +882,10 @@ paths:
 
   "/company/employees/custom-attributes":
     get:
+      description: This endpoint is an alias for `/company/employees/attributes`.
+
+  "/company/employees/attributes":
+    get:
       security:
         - BearerAuth: []
       tags:
