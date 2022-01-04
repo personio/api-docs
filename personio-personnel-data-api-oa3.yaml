@@ -886,6 +886,20 @@ paths:
         - BearerAuth: []
       tags:
         - Employees
+      description: "This endpoint is an alias for `/company/employees/attributes`."
+      parameters:
+        - $ref: "#/components/parameters/XPersonioPartnerID"
+        - $ref: "#/components/parameters/XPersonioAppID"
+      responses:
+        "200":
+          description: "Please refer to `/company/employees/attributes`"
+
+  "/company/employees/attributes":
+    get:
+      security:
+        - BearerAuth: []
+      tags:
+        - Employees
       description: Lists all the allowed atrributes per API credentials including custom (dynamic) attributes.
       parameters:
         - $ref: "#/components/parameters/XPersonioPartnerID"
