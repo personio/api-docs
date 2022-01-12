@@ -181,6 +181,11 @@ paths:
           - csv
           - txt
           - rtf
+          - mp4
+          - 3gp
+          - mov
+          - avi
+          - wmv
   /recruiting/applicant:
     parameters:
       - $ref: "#components/parameters/XPersonioPartnerID"
@@ -456,6 +461,11 @@ components:
             - csv
             - txt
             - rtf
+            - mp4
+            - 3gp
+            - mov
+            - avi
+            - wmv
       required:
         - uuid
         - size
