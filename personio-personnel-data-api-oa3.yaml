@@ -2494,14 +2494,20 @@ components:
       type: object
       properties:
         id:
-          example: 1
           type: integer
-        name:
-          example: "Project name"
+          example: 1
+        type:
           type: string
-        active:
-          example: true
-          type: boolean
+          example: "Project"
+        attributes:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "Project name"
+            active:
+              example: true
+              type: boolean
 
     Attendance:
       type: object
@@ -2542,8 +2548,10 @@ components:
           $ref: "#/components/schemas/Project"
           example:
             id: 1
-            name: "Some project"
-            active: true
+            type: Project
+            attributes:
+              name: "Some project"
+              active: true
 
     AttendanceCreateRequest:
       type: object
