@@ -2489,6 +2489,19 @@ components:
               balance:
                 type: number
                 example: 10.5
+              
+    Project:
+      type: object
+      properties:
+        id:
+          example: 1
+          type: integer
+        name:
+          example: "Project name"
+          type: string
+        active:
+          example: true
+          type: boolean
 
     Attendance:
       type: object
@@ -2525,6 +2538,12 @@ components:
             - confirmed
             - pending
             - rejected
+        project:
+          $ref: "#/components/schemas/Project"
+          example:
+            id: 1
+            name: "Some project"
+            active: true
 
     AttendanceCreateRequest:
       type: object
