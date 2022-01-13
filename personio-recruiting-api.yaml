@@ -329,6 +329,7 @@ components:
           type: string
           description: First name(s) of the applicant. Must not be empty or only whitespaces
           minLength: 1
+          example: John
         last_name:
           type: string
           description: Last name(s) of the applicant. Must not be empty or only whitespaces.
@@ -353,7 +354,7 @@ components:
         message:
           type: string
           description: The applicant supplied free-text message.
-        tags:
+        tags1:
           type: array
           description: |-
             Tags to be associated with this application. Non-existing tags will be created.
@@ -361,6 +362,8 @@ components:
             See https://{YOUR_COMPANY}.personio.de/configuration/recruiting/tags
           items:
             type: string
+          example:
+            - test
         files:
           description: |-
             References to previously uploaded files. These will be attached to the new application.
