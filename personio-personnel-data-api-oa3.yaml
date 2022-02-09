@@ -1867,17 +1867,21 @@ components:
           description: Title of the document. Maximum length is 255 characters.
         comment:
           type: string
+          description: Optional comment that can be added to the uploaded document.
         employee_id:
           type: integer
+          description: Employee identifier
         category_id:
           type: integer
+          description: Document Category identifier
         date:
           type: string
           format: date
-          description: "Format: Y-m-d"
+          description: "Optional date can be added to the uploaded document. Must follow the format: Y-m-d"
         file:
           type: string
           format: binary
+          description: The document that shall be uploaded to an employees profile
 
     DocumentUploadFailedWithBadDocumentCategoryResponse:
       type: object
