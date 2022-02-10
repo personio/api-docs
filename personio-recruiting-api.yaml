@@ -6,8 +6,8 @@ info:
 paths:
   /xml:
     parameters:
-      - $ref: "#components/parameters/XPersonioPartnerID"
-      - $ref: "#components/parameters/XPersonioAppID"
+      - $ref: "#/components/parameters/XPersonioPartnerID"
+      - $ref: "#/components/parameters/XPersonioAppID"
     get:
       servers:
         - url: 'https://{YOUR_COMPANY}.jobs.personio.de'
@@ -44,8 +44,8 @@ paths:
                 $ref: '#/components/schemas/XmlResponse'
   /v1/recruiting/applications:
     parameters:
-      - $ref: "#components/parameters/XPersonioPartnerID"
-      - $ref: "#components/parameters/XPersonioAppID"
+      - $ref: "#/components/parameters/XPersonioPartnerID"
+      - $ref: "#/components/parameters/XPersonioAppID"
     post:
       tags: 
         - Application
@@ -94,8 +94,8 @@ paths:
               $ref: '#/components/schemas/submit_application'
   /v1/recruiting/applications/documents:
     parameters:
-      - $ref: "#components/parameters/XPersonioPartnerID"
-      - $ref: "#components/parameters/XPersonioAppID"
+      - $ref: "#/components/parameters/XPersonioPartnerID"
+      - $ref: "#/components/parameters/XPersonioAppID"
     post:
       tags:
         - Application Documents
@@ -188,8 +188,8 @@ paths:
           - wmv
   /recruiting/applicant:
     parameters:
-      - $ref: "#components/parameters/XPersonioPartnerID"
-      - $ref: "#components/parameters/XPersonioAppID"
+      - $ref: "#/components/parameters/XPersonioPartnerID"
+      - $ref: "#/components/parameters/XPersonioAppID"
     post:
       tags:
         - "[DEPRECATED] Applicant"
