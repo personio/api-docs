@@ -1701,6 +1701,128 @@ paths:
                       code: 404
                       message: 'The absence period was not found.'
 
+  "/company/document-categories":
+    parameters:
+      - $ref: "#/components/parameters/XPersonioPartnerID"
+      - $ref: "#/components/parameters/XPersonioAppID"
+    get:
+      security:
+        - BearerAuth: []
+      tags:
+        - Documents
+      description: This endpoint is responsible for fetching all document categories of the company. The result contains a list of document categories.
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DocumentCategoriesResponse"
+              examples:
+                response:
+                  value:
+                    success: true
+                    data:
+                      - id: 1
+                        type: "DocumentCategory"
+                        attributes:
+                          name: "Certificates of employment"
+                      - id: 2
+                        type: "DocumentCategory"
+                        attributes:
+                          name: "Other documents"
+  "/company/documents":
+    parameters:
+      - $ref: "#/components/parameters/XPersonioPartnerID"
+      - $ref: "#/components/parameters/XPersonioAppID"
+    post:
+      security:
+        - BearerAuth: []
+      tags:
+        - Documents
+      description: This endpoint is responsible for uploading documents for the company employees.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/DocumentUploadRequest"
+        description: Needed data to upload a document
+      responses:
+        "201":
+          description: "The document was successfully uploaded to the employees profile"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DocumentUploadSuccessResponse"
+              examples:
+                response:
+                  value:
+                    success: true
+                    data:
+                      id: 1
+                      type: "Document"
+                      attributes:
+                        title: "Personio"
+                        date: "2022-02-02"
+                        comment: "Enable better organisations"
+                        employee:
+                          type: "Employee"
+                          attributes:
+                            id:
+                              label: "ID"
+                              value: 1
+                              type: integer
+                              universal_id: "id"
+                            first_name:
+                              label: "First name"
+                              value: "Demo"
+                              type: standard
+                              universal_id: "first_name"
+                            last_name:
+                              label: "Last name"
+                              value: "Account"
+                              type: standard
+                              universal_id: "last_name"
+                            email:
+                              label: "Email"
+                              value: "demo.account@demo.de"
+                              type: standard
+                              universal_id: "email"
+                        category:
+                          id: 1
+                          type: "DocumentCategory"
+                          attributes:
+                            name: "Other documents"
+        "404":
+          description: "This status code is returned if the provided employee_id or category_id are not found within the company."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DocumentUploadFailedWithBadDocumentCategoryResponse"
+              examples:
+                response:
+                  value:
+                    success: false
+                    error:
+                      message: "No query results for model [DocumentCategory] 1"
+                      code: 0 
+        "422":
+          description: "This status code is returned if the provided request parameters cannot be processed or if the parameters are invalid."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DocumentUploadFailedWithUnsupportedFileTypeResponse"
+              examples:
+                response:
+                  value:
+                    success: false
+                    error:
+                      message: "The given data was invalid."
+                      code: 0
+                      error_data: 
+                        file: [
+                          "The file must be a file of type: pdf, docx, doc, jpg, zip, png, txt, jpeg, odt, xlsx, rtf, htm, xls, p7s, pptx, pages, rar, ppt, gif, tif, html, msg, asc, tiff, wps, bmp, 7z, csv, ics, vcf, dotx, numbers, eps, gz, ods, otf, odp, odg, rtfd, txz, webarchive, xml, xps, md, fax."
+                        ]
 
 servers:
   - url: https://api.personio.de/v1
@@ -1736,6 +1858,201 @@ components:
       required:
         - success
         - data
+
+    DocumentUploadRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title of the document. Maximum length is 255 characters.
+        comment:
+          type: string
+          description: Optional comment that can be added to the uploaded document.
+        employee_id:
+          type: integer
+          description: Employee identifier
+        category_id:
+          type: integer
+          description: Document Category identifier
+        date:
+          type: string
+          format: date
+          description: "Optional date can be added to the uploaded document. Must follow the format: Y-m-d"
+        file:
+          type: string
+          format: binary
+          description: The document that shall be uploaded to an employees profile
+
+    DocumentUploadFailedWithBadDocumentCategoryResponse:
+      type: object
+      allOf:
+        - type: object
+          properties:
+            success:
+              type: boolean
+              example: false
+            error:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: "No query results for model [DocumentCategory] 1"
+                code:
+                  type: integer
+                  example: 0
+
+    DocumentUploadFailedWithUnsupportedFileTypeResponse:
+      type: object
+      allOf:
+        - type: object
+          properties:
+            success:
+              type: boolean
+              example: false
+            error:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: "The given data was invalid."
+                code:
+                  type: integer
+                  example: 0
+                error_data:
+                  type: object
+                  properties:
+                    file:
+                      type: array
+                      items:
+                        type: string 
+                        example: "The file must be a file of type: pdf, docx, doc, jpg, zip, png, txt, jpeg, odt, xlsx, rtf, htm, xls, p7s, pptx, pages, rar, ppt, gif, tif, html, msg, asc, tiff, wps, bmp, 7z, csv, ics, vcf, dotx, numbers, eps, gz, ods, otf, odp, odg, rtfd, txz, webarchive, xml, xps, md, fax."
+
+    DocumentUploadSuccessResponse:
+      type: object
+      allOf:
+        - type: object
+          properties:
+            success:
+              type: boolean
+              example: true
+            data:
+              type: object
+              properties:
+                id: 
+                  type: integer
+                  example: 1
+                type:
+                  type: string
+                  example: "Document"
+                attributes:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      example: "Document Title"
+                    date:
+                      type: string
+                      example: "2022-01-01"
+                    comment:
+                      type: string
+                      example: "Optional Test Comment"
+                    employee:
+                      $ref: "#/components/schemas/DocumentEmployeeResponseObject"
+                    category_id:
+                      $ref: "#/components/schemas/DocumentCategory"
+
+    DocumentEmployeeResponseObject:
+      type: object
+      properties:
+        id:
+          type: object
+          properties:
+            label:
+              type: string
+              example: "ID"
+            value:
+              type: integer
+              example: 1
+            type:
+              type: string
+              example: "standard"
+            universal_id:
+              type: string
+              example: "id"
+        first_name:
+          type: object
+          properties:
+            label:
+              type: string
+              example: "First name"
+            value:
+              type: string
+              example: "Michael"
+            type:
+              type: string
+              example: "standard"
+            universal_id:
+              type: string
+              example: "first_name"
+        last_name:
+          type: object
+          properties:
+            label:
+              type: string
+              example: "Last name"
+            value:
+              type: string
+              example: "Dou"
+            type:
+              type: string
+              example: "standard"
+            universal_id:
+              type: string
+              example: "last_name"
+        email:
+          type: object
+          properties:
+            label:
+              type: string
+              example: "Email"
+            value:
+              type: string
+              example: "michaeldou@demo.de"
+            type:
+              type: string
+              example: "standard"
+            universal_id:
+              type: string
+              example: "email"
+
+    DocumentCategoriesResponse:
+      type: object
+      allOf:
+        - type: object
+          properties:
+            success:
+              type: boolean
+              example: true
+            data:
+              type: array
+              items:
+                $ref: "#/components/schemas/DocumentCategory"
+
+    DocumentCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        type:
+          type: string
+          example: "DocumentCategory"
+        attributes:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "Certificates of employment"
 
     DeletedAbsenceResponse:
       title: Default response object
