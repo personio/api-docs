@@ -1289,7 +1289,7 @@ paths:
       description: Provides a list of all company projects.
       responses:
         "200":
-          description: "List of projects returned"
+          description: List of projects returned
           content:
             application/json:
               schema:
@@ -1306,7 +1306,7 @@ paths:
         - BearerAuth: []
       tags:
         - Projects
-      description: "Creates a project into the company account"
+      description: Creates a project into the company account
       requestBody:
         content:
           application/json:
@@ -1318,7 +1318,7 @@ paths:
                   example: "A project name"
       responses:
         "200":
-          description: "Project created successfully"
+          description: Project created successfully
           content:
             application/json:
               schema:
@@ -1329,7 +1329,7 @@ paths:
                   data:
                     $ref: "#/components/schemas/Project"
         "400":
-          description: "Invalid data was sent"
+          description: Invalid data was sent
           content:
             application/json:
               schema:
@@ -1364,9 +1364,9 @@ paths:
             format: int32
       responses:
         "204":
-          description: "Project was successfully deleted"
+          description: Project was successfully deleted
         "404":
-          description: "Project does not exist"
+          description: Project does not exist
           content:
             application/json:
               schema:
@@ -1384,7 +1384,7 @@ paths:
         - BearerAuth: []
       tags:
         - Projects
-      description: "Updates a project with the given data"
+      description: Updates a project with the given data
       parameters:
         - name: id
           in: path
@@ -1407,7 +1407,7 @@ paths:
                   example: true
       responses:
         "200":
-          description: "Project updated successfully"
+          description: Project updated successfully
           content:
             application/json:
               schema:
@@ -1418,7 +1418,7 @@ paths:
                   data:
                     $ref: "#/components/schemas/Project"
         "400":
-          description: "Invalid data was sent"
+          description: Invalid data was sent
           content:
             application/json:
               schema:
@@ -1436,7 +1436,7 @@ paths:
                           type: string
                           example: "Active field needs to be of type boolean"
         "404":
-          description: "Project not found"
+          description: Project not found
           content:
             application/json:
               schema:
