@@ -1307,6 +1307,15 @@ paths:
       tags:
         - Projects
       description: Creates projects into the company account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "A project name"
       responses:
         "200":
           description: ""
@@ -1338,13 +1347,21 @@ paths:
                           type: string
                           example: "Please introduce a name to continue"
 
-
+  /company/attendances/projects/{id}:
     delete:
       security:
         - BearerAuth: []
       tags:
         - Projects
       description: Creates projects into the company account
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Numeric `id` of the project
+          schema:
+            type: integer
+            format: int32
       responses:
         "204":
           description: "Project was succesfully deleted"
@@ -1368,6 +1385,26 @@ paths:
       tags:
         - Projects
       description: Creates projects into the company account
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Numeric `id` of the project
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "A project name"
+                active:
+                  type: boolean
+                  example: true
       responses:
         "200":
           description: ""
