@@ -357,6 +357,43 @@ components:
           type: string
           description: The applicant supplied free-text message.
           example: "new applicant message"
+        application_date:
+          type: string
+          description: The application date. It cannot be a date in the future.
+          format: date
+          example: "2022-02-17"
+        phase:
+          type: object
+          description: |-
+            This can be a system or a custom application phase. When not provided, the application will be created with the initial phase according to the configuration for this job position's category (https://{YOUR_COMPANY}.personio.de/configuration/recruiting/categories).
+            
+            When an invalid phase is provided (e.g. a non-existent custom phase or one that is not configured for this job position's category), the application will be created with the phase `unassigned`.
+          properties:
+            type:
+              type: string
+              enum:
+              - system
+              - custom
+              description: The type of application phase.
+            id:
+              oneOf:
+                - type: string
+                - type: integer
+              description: |-
+                For custom phases this is an integer. The IDs for your custom phases can be found under your personio settings (https://{YOUR_COMPANY}.personio.de/configuration/recruiting/phases).
+                
+                For system phases this is a string and must be one of:
+                - unassigned
+                - rejected
+                - withdrawn
+                - offer
+                - accepted
+          required:
+            - type
+            - id
+          example:
+            type: "system"
+            id: "offer"
         tags:
           type: array
           description: |-
