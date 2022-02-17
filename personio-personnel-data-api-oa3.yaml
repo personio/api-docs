@@ -1882,6 +1882,11 @@ components:
           type: string
           format: binary
           description: The document that shall be uploaded to an employees profile
+      required:
+        - title
+        - employee_id
+        - category_id
+        - file
 
     DocumentUploadFailedWithBadDocumentCategoryResponse:
       type: object
