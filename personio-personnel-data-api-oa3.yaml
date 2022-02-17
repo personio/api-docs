@@ -1404,7 +1404,7 @@ paths:
                   example: "A project name"
                 active:
                   type: boolean
-                  description: "Marks if the project is available for time tracking"
+                  description: "Marks the availability of the project"
                   example: true
       responses:
         "200":
@@ -2695,7 +2695,7 @@ components:
               example: "Project name"
             active:
               example: true
-              description: "Marks if the project is available for time tracking. When a new project is created, it's set by default to false."
+              description: "Marks the availability of the project. When a new project is created, it's set by default to false."
               type: boolean
             created_at:
               example: "2022-02-01T12:00:00+0100"
@@ -2723,7 +2723,7 @@ components:
               example: "Project name"
             active:
               example: true
-              description: "Marks if the project is available for time tracking. When a new project is created, it's set by default to false."
+              description: "Marks the availability of the project. When a new project is created, it's set by default to false."
               type: boolean
 
     Attendance:
@@ -2762,13 +2762,23 @@ components:
             - pending
             - rejected
         project:
-          $ref: "#/components/schemas/AttendanceProject"
-          example:
-            id: 1
-            type: Project
-            attributes:
-              name: "Some project"
-              active: true
+          type: object
+          properties:
+              id:
+                type: integer
+                example: 5
+              type:
+                type: string
+                example: "Project"
+              attributes:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: "A project name"
+                    active:
+                      type: boolean
+                      example: true
 
     AttendanceCreateRequest:
       type: object
