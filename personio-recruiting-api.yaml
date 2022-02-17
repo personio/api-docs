@@ -8,6 +8,7 @@ paths:
     parameters:
       - $ref: "#/components/parameters/XPersonioPartnerID"
       - $ref: "#/components/parameters/XPersonioAppID"
+      - $ref: "#/components/parameters/XCompanyID"
     get:
       servers:
         - url: 'https://{YOUR_COMPANY}.jobs.personio.de'
@@ -46,11 +47,14 @@ paths:
     parameters:
       - $ref: "#/components/parameters/XPersonioPartnerID"
       - $ref: "#/components/parameters/XPersonioAppID"
+      - $ref: "#/components/parameters/XCompanyID"
     post:
       tags: 
         - Application
+      security:
+        - bearerAuth: []
       summary: Creating applications in Personio
-      description: Allows you to create applications in Personio.
+      description: Allows you to create applications in Personio. Parameters marked with a red star (*) are mandatory.
       responses:
         '201':
           description: Created - Application was created successfully.
@@ -76,17 +80,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-company-id
-          description: Your company's Personio Id
-        - schema:
-            type: string
-          in: header
-          name: Authorization
-          description: Please check the Recruiting Introduction section for more information.
       requestBody:
         content:
           application/json:
@@ -96,22 +89,14 @@ paths:
     parameters:
       - $ref: "#/components/parameters/XPersonioPartnerID"
       - $ref: "#/components/parameters/XPersonioAppID"
+      - $ref: "#/components/parameters/XCompanyID"
     post:
       tags:
         - Application Documents
-      summary: Upload documents to be attached  to applications
+      security:
+        - bearerAuth: []
+      summary: Upload documents to be attached to applications
       description: Uploading files to this endpoint enables you to attach them to an application later.
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-company-id
-          description: Your company's Personio Id
-        - schema:
-            type: string
-          in: header
-          name: Authorization
-          description: Please check the Recruiting Introduction section for more information.
       responses:
         '200':
           description: OK
@@ -152,44 +137,45 @@ paths:
                 file:
                   type: string
                   format: binary
+                  description: |
+                    The file to be uploaded.
+        
+                    Maximum file size: 20MB
+          
+                    Must be one of the supported types:
+                    - pdf
+                    - pptx
+                    - xlsx
+                    - docx
+                    - doc
+                    - xls
+                    - ppt
+                    - ods
+                    - odt
+                    - 7z
+                    - gz
+                    - rar
+                    - zip
+                    - bmp
+                    - gif
+                    - jpg
+                    - png
+                    - tif
+                    - csv
+                    - txt
+                    - rtf
+                    - mp4
+                    - 3gp
+                    - mov
+                    - avi
+                    - wmv
               required:
                 - file
-        description: |
-          The file to be uploaded.
-
-          Maximum file size: 20MB
-
-          Must be one of the supported types:
-          - pdf
-          - pptx
-          - xlsx
-          - docx
-          - doc
-          - xls
-          - ppt
-          - ods
-          - odt
-          - 7z
-          - gz
-          - rar
-          - zip
-          - bmp
-          - gif
-          - jpg
-          - png
-          - tif
-          - csv
-          - txt
-          - rtf
-          - mp4
-          - 3gp
-          - mov
-          - avi
-          - wmv
   /recruiting/applicant:
     parameters:
       - $ref: "#/components/parameters/XPersonioPartnerID"
       - $ref: "#/components/parameters/XPersonioAppID"
+      - $ref: "#/components/parameters/XCompanyID"
     post:
       tags:
         - "[DEPRECATED] Applicant"
@@ -302,16 +288,22 @@ servers:
   - url: 'https://api.personio.de'
 components:
   securitySchemes:
-    Bearer:
-      name: Bearer
-      type: apiKey
-      in: header
+    bearerAuth:
+      type: http
+      scheme: bearer
       description: |-
         Found under `Settings > API > Access Data > Recruiting API Access Token`
         This token allows creation of applications in your account. When building your own career page, we recommend that you call our endpoints from a backend service, rather than from your frontend directly to not expose this token.
 
         Example Header: `Authorization: Bearer our-token`
-  parameters: 
+  parameters:
+    XCompanyID:
+      name: X-Company-ID
+      in: header
+      required: true
+      description: Your company's Personio Id
+      schema:
+        type: string
     XPersonioPartnerID:
       name: X-Personio-Partner-ID
       in: header
@@ -334,41 +326,90 @@ components:
           type: string
           description: First name(s) of the applicant. Must not be empty or only whitespaces
           minLength: 1
+          example: "John"
         last_name:
           type: string
           description: Last name(s) of the applicant. Must not be empty or only whitespaces.
           minLength: 1
+          example: "Doe"
         email:
           type: string
           description: Email address of the applicant.
           format: email
+          example: "john.doe@email.com"
         job_position_id:
           type: integer
           description: The personio internal id of the job this application should belong to.
+          example: 123
         recruiting_channel_id:
           type: integer
           description: |-
             The recruiting channel this application was sourced from.
 
             See https://{YOUR_COMPANY}.personio.de/configuration/recruiting/channels
+          example: 456
         external_posting_id:
           type: string
           description: |-
             The external id of the job posting (E.g. the external id forwarded by Gohiring).
+          example: "4821b24c-8d85-11ec-b909-0242ac120002"
         message:
           type: string
           description: The applicant supplied free-text message.
+          example: "new applicant message"
+        application_date:
+          type: string
+          description: The application date. It cannot be a date in the future.
+          format: date
+          example: "2022-02-17"
+        phase:
+          type: object
+          description: |-
+            This can be a system or a custom application phase. When not provided, the application will be created with the initial phase according to the configuration for this job position's category (https://{YOUR_COMPANY}.personio.de/configuration/recruiting/categories).
+            
+            When an invalid phase is provided (e.g. a non-existent custom phase or one that is not configured for this job position's category), the application will be created with the phase `unassigned`.
+          properties:
+            type:
+              type: string
+              enum:
+              - system
+              - custom
+              description: The type of application phase.
+            id:
+              oneOf:
+                - type: string
+                - type: integer
+              description: |-
+                For custom phases this is an integer. The IDs for your custom phases can be found under your personio settings (https://{YOUR_COMPANY}.personio.de/configuration/recruiting/phases).
+                
+                For system phases this is a string and must be one of:
+                - unassigned
+                - rejected
+                - withdrawn
+                - offer
+                - accepted
+          required:
+            - type
+            - id
+          example:
+            type: "system"
+            id: "offer"
         tags:
           type: array
           description: |-
             Tags to be associated with this application. Non-existing tags will be created.
 
             See https://{YOUR_COMPANY}.personio.de/configuration/recruiting/tags
+            
+            Click on +Add to see the type definition for each tag item.
           items:
             type: string
+          example: ["tag1", "tag2", "tag3"]
         files:
           description: |-
             References to previously uploaded files. These will be attached to the new application.
+            
+            Each file item consists of a `uuid`, an `original_filename` and a `category` (To see exact description, click on +Add).
           type: array
           items:
             type: object
@@ -393,35 +434,69 @@ components:
               - uuid
               - original_filename
               - category
+          example:
+            - uuid: "7d0f360a-8da3-11ec-b909-0242ac120002"
+              original_filename: "My CV.pdf"
+              category: "cv"
+            - uuid: "f4cc2da0-8da4-11ec-b909-0242ac120002"
+              original_filename: "code challenge.zip"
+              category: "work-sample"
         attributes:
           type: array
           description: |-
-            Attributes for this application.
-
-            See https://{YOUR_COMPANY}.personio.de/configuration/recruiting/attributes
+            Attributes for this applicant.
+            
+            Each attribute item consists of an `id` and a `value` (To see exact description, click on +Add).
           items:
             type: object
             properties:
               id:
                 type: string
-                description: 'id of the attribute, found in your personio settings.'
+                description: |-
+                  Ids for custom attributes can be found in your personio settings (https://{YOUR_COMPANY}.personio.de/configuration/recruiting/attributes).
+                  
+                  Supported system attributes are:
+                  - birthday
+                  - gender
+                  - location
+                  - phone
+                  - available_from
+                  - salary_expectations
               value:
                 type: string
                 description: |-
                   Value of the attribute.
+                  
                   For OPTION attributes, this must be one of the predefined options.
+                  
                   For DATE attributes, this needs to follow ISO 8601 Local date, i.e. `2021-04-30`
             required:
               - id
               - value
+          example:
+            - id: "birthday"
+              value: "1989-12-17"
+            - id: "gender"
+              value: "male"
+            - id: "location"
+              value: "Munich"
+            - id: "phone"
+              value: "000111222333"
+            - id: "available_from"
+              value: "As soon as possible"
+            - id: "salary_expectations"
+              value: "40k"
+            - id: "custom_attribute_1"
+              value: "attribute value"
+            - id: "custom_attribute_2"
+              value: "custom_option_7"
+            - id: "custom_attribute_3"
+              value: "2017-12-07"
       required:
         - first_name
         - last_name
         - email
         - job_position_id
-        - tags
-        - files
-        - attributes
     uploaded_document:
       type: object
       properties:
