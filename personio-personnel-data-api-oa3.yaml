@@ -1080,7 +1080,13 @@ paths:
                           break: 50
                           comment: I was super productive
                           is_holiday: false
-                          is_on_time_off: false
+                          is_on_time_off: false,
+                          project:
+                            - id: 567
+                              type: "Project"
+                              attributes:
+                                name: "A project name"
+                                active: true
                       - id: 1235
                         type: AttendancePeriod
                         attributes:
@@ -1094,6 +1100,8 @@ paths:
                           comment: I wasn't productive
                           is_holiday: false
                           is_on_time_off: true
+                          project: null
+
     post:
       security:
         - BearerAuth: []
@@ -1151,7 +1159,8 @@ paths:
                           start_time: "09:00",
                           end_time: "18:00",
                           break: 60,
-                          comment: ""
+                          comment: "",
+                          project_id: 5
                         },
                         {
                           success: false,
@@ -1162,7 +1171,8 @@ paths:
                           start_time: "09:00",
                           end_time: "18:00",
                           break: 60,
-                          comment: ""
+                          comment: "",
+                          project_id: null
                         }
                       ]
 
@@ -1266,6 +1276,180 @@ paths:
                     error:
                       code: 404
                       message: 'The attendance period was not found.'
+
+  /company/attendances/projects:
+    parameters:
+      - $ref: "#/components/parameters/XPersonioPartnerID"
+      - $ref: "#/components/parameters/XPersonioAppID"
+    get:
+      security:
+        - BearerAuth: []
+      tags:
+        - Projects
+      description: Provides a list of all company projects.
+      responses:
+        "200":
+          description: List of projects returned
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Project"
+    post:
+      security:
+        - BearerAuth: []
+      tags:
+        - Projects
+      description: Creates a project into the company account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "A project name"
+      responses:
+        "200":
+          description: Project created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/Project"
+        "400":
+          description: Invalid data was sent
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error:
+                    type: object
+                    properties:
+                      name:
+                        type: array
+                        items:
+                          type: string
+                          example: "Please introduce a name to continue"
+
+  /company/attendances/projects/{id}:
+    delete:
+      security:
+        - BearerAuth: []
+      tags:
+        - Projects
+      description: Creates projects into the company account
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Numeric `id` of the project
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "204":
+          description: Project was successfully deleted
+        "404":
+          description: Project does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Project 5 not found"
+
+    patch:
+      security:
+        - BearerAuth: []
+      tags:
+        - Projects
+      description: Updates a project with the given data
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Numeric `id` of the project
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "A project name"
+                active:
+                  type: boolean
+                  description: "Marks the availability of the project"
+                  example: true
+      responses:
+        "200":
+          description: Project updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/Project"
+        "400":
+          description: Invalid data was sent
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error:
+                    type: object
+                    properties:
+                      active:
+                        type: array
+                        items:
+                          type: string
+                          example: "Active field needs to be of type boolean"
+        "404":
+          description: Project not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Project 5 not found"
+
 
   /company/time-off-types:
     parameters:
@@ -2207,7 +2391,11 @@ components:
                     example: 60
                   comment:
                     type: string
-                    example:
+                    example: ""
+                  project_id:
+                    type: integer
+                    nullable: true
+                    example: null
 
     ErrorAttendanceResponse:
       title: 404 absense error
@@ -2811,7 +2999,7 @@ components:
               balance:
                 type: number
                 example: 10.5
-              
+
     Project:
       type: object
       properties:
@@ -2829,6 +3017,35 @@ components:
               example: "Project name"
             active:
               example: true
+              description: "Marks the availability of the project. When a new project is created, it's set by default to false."
+              type: boolean
+            created_at:
+              example: "2022-02-01T12:00:00+0100"
+              type: string
+              format: datetime
+            updated_at:
+              example: "2022-02-01T12:00:00+0100"
+              type: string
+              format: datetime
+
+    AttendanceProject:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        type:
+          type: string
+          example: "Project"
+        attributes:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "Project name"
+            active:
+              example: true
+              description: "Marks the availability of the project. When a new project is created, it's set by default to false."
               type: boolean
 
     Attendance:
@@ -2867,13 +3084,23 @@ components:
             - pending
             - rejected
         project:
-          $ref: "#/components/schemas/Project"
-          example:
-            id: 1
-            type: Project
-            attributes:
-              name: "Some project"
-              active: true
+          type: object
+          properties:
+              id:
+                type: integer
+                example: 5
+              type:
+                type: string
+                example: "Project"
+              attributes:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: "A project name"
+                    active:
+                      type: boolean
+                      example: true
 
     AttendanceCreateRequest:
       type: object
@@ -2905,6 +3132,9 @@ components:
               comment:
                 type: string
                 example: "I was productive as hell"
+              project_id:
+                type: integer
+                example: null
         skip_approval:
           type: boolean
           description: "Optional, default value is true. If set to false, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered."
@@ -2931,6 +3161,10 @@ components:
         comment:
           type: string
           example: "I was productive as hell"
+        project_id:
+          type: integer
+          nullable: true
+          example: 5
         skip_approval:
           type: boolean
           description: "Optional, default value is true. If set to false, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered."
