@@ -1082,11 +1082,11 @@ paths:
                           is_holiday: false
                           is_on_time_off: false,
                           project:
-                            - id: 567
-                              type: "Project"
-                              attributes:
-                                name: "A project name"
-                                active: true
+                            id: 567
+                            type: "Project"
+                            attributes:
+                              name: "A project name"
+                              active: true
                       - id: 1235
                         type: AttendancePeriod
                         attributes:
