@@ -3255,7 +3255,7 @@ components:
         project_id:
           type: integer
           format: int32
-          description: ID of a Project
+          description: The ID of the project
           example: 5
       required:
         - attendances[][employee]
