@@ -1,4 +1,4 @@
-name: ReadMe
+name: readme.io sync pipeline
 
 on:
   pull_request:
@@ -19,3 +19,6 @@ jobs:
 
       - name: Validate API Definitions
         run: rdme validate personio-personnel-data-api-oa3.yaml
+
+      - name: Validate Recruiting API Definitions
+        run: rdme validate personio-recruiting-api.yaml
