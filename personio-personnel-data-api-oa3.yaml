@@ -1351,7 +1351,7 @@ paths:
                         type: array
                         items:
                           type: string
-                          example: "Please introduce a name to continue"
+                          example: "Project name cannot be empty"
 
   /company/attendances/projects/{id}:
     delete:
@@ -2392,7 +2392,7 @@ components:
                     example: 60
                   comment:
                     type: string
-                    example: ""
+                    example: "Optional Test Comment"
                   project_id:
                     type: integer
                     nullable: true
@@ -3018,7 +3018,7 @@ components:
               example: "Project name"
             active:
               example: true
-              description: "Marks the availability of the project. When a new project is created, it's set by default to false."
+              description: "Marks the availability of the project. The default value is false."
               type: boolean
             created_at:
               example: "2022-02-01T12:00:00+0100"
@@ -3135,6 +3135,7 @@ components:
                 example: "I was productive as hell"
               project_id:
                 type: integer
+                nullable: true
                 example: 5
         skip_approval:
           type: boolean
