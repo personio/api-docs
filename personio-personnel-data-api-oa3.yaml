@@ -3135,7 +3135,7 @@ components:
                 example: "I was productive as hell"
               project_id:
                 type: integer
-                example: null
+                example: 5
         skip_approval:
           type: boolean
           description: "Optional, default value is true. If set to false, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered."
