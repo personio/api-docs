@@ -1359,7 +1359,7 @@ paths:
         - BearerAuth: []
       tags:
         - Projects
-      description: Creates projects into the company account
+      description: Deletes a project from the company account
       parameters:
         - name: id
           in: path
