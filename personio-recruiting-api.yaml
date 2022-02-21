@@ -96,7 +96,7 @@ paths:
       security:
         - bearerAuth: []
       summary: Upload documents to be attached to applications
-      description: Uploading files to this endpoint enables you to attach them to an application later.
+      description: Uploading files to this endpoint enables you to attach them to an application later. Please keep in mind that the auto-generated code on the right-hand side when adding a file from this tool should only be considered as a guide, and might not work when copy-pasting in your code directly. Please refer to the documentation for the language/library you are using on how to upload a multipart-form-data file.
       responses:
         '200':
           description: OK
