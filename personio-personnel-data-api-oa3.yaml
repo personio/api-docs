@@ -814,6 +814,11 @@ paths:
                           value: 2021-01-01
                           universal_id: null
                           type: date
+                        dynamic_180883:
+                          label: Birthday
+                          value: 1983-08-18
+                          universal_id: date_of_birth
+                          type: date
         "404":
           description: ""
           content:
@@ -2930,6 +2935,7 @@ components:
               $ref: '#/components/schemas/TypeEnum'
             universal_id:
               example: iban
+
     EmployeesResponse:
       title: List of Employees
       allOf:
