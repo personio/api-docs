@@ -371,14 +371,16 @@ components:
           properties:
             type:
               type: string
+              example: "system"
               enum:
-              - system
-              - custom
+                - system
+                - custom
               description: The type of application phase.
             id:
               oneOf:
                 - type: string
                 - type: integer
+              example: "offer"
               description: |-
                 For custom phases this is an integer. The IDs for your custom phases can be found under your personio settings (https://{YOUR_COMPANY}.personio.de/configuration/recruiting/phases).
                 
@@ -391,9 +393,6 @@ components:
           required:
             - type
             - id
-          example:
-            type: "system"
-            id: "offer"
         tags:
           type: array
           description: |-
@@ -404,7 +403,7 @@ components:
             Click on +Add to see the type definition for each tag item.
           items:
             type: string
-          example: ["tag1", "tag2", "tag3"]
+            example: "tag1"
         files:
           description: |-
             References to previously uploaded files. These will be attached to the new application.
@@ -417,11 +416,14 @@ components:
               uuid:
                 type: string
                 format: uuid
+                example: "7d0f360a-8da3-11ec-b909-0242ac120002"
                 description: Reference to a previously uploaded file. Use the `uuid` value returned from the documents endpoint here.
               original_filename:
                 type: string
+                example: "My CV.pdf"
               category:
                 type: string
+                example: "cv"
                 enum:
                   - cv
                   - cover-letter
@@ -434,13 +436,6 @@ components:
               - uuid
               - original_filename
               - category
-          example:
-            - uuid: "7d0f360a-8da3-11ec-b909-0242ac120002"
-              original_filename: "My CV.pdf"
-              category: "cv"
-            - uuid: "f4cc2da0-8da4-11ec-b909-0242ac120002"
-              original_filename: "code challenge.zip"
-              category: "work-sample"
         attributes:
           type: array
           description: |-
@@ -452,18 +447,20 @@ components:
             properties:
               id:
                 type: string
+                example: "gender"
                 description: |-
-                  Ids for custom attributes can be found in your personio settings (https://{YOUR_COMPANY}.personio.de/configuration/recruiting/attributes).
+                  Ids for custom attributes have the form `custom_attribute_123` and can be found can be found in your personio settings as `API name` when expanding the details of each attribute (https://{YOUR_COMPANY}.personio.de/configuration/recruiting/attributes).
                   
-                  Supported system attributes are:
-                  - birthday
-                  - gender
+                  Ids for supported system attributes are:
+                  - birthday (YYYY-MM-DD)
+                  - gender (male / female / diverse / undefined)
                   - location
                   - phone
                   - available_from
                   - salary_expectations
               value:
                 type: string
+                example: "male"
                 description: |-
                   Value of the attribute.
                   
@@ -473,25 +470,6 @@ components:
             required:
               - id
               - value
-          example:
-            - id: "birthday"
-              value: "1989-12-17"
-            - id: "gender"
-              value: "male"
-            - id: "location"
-              value: "Munich"
-            - id: "phone"
-              value: "000111222333"
-            - id: "available_from"
-              value: "As soon as possible"
-            - id: "salary_expectations"
-              value: "40k"
-            - id: "custom_attribute_1"
-              value: "attribute value"
-            - id: "custom_attribute_2"
-              value: "custom_option_7"
-            - id: "custom_attribute_3"
-              value: "2017-12-07"
       required:
         - first_name
         - last_name
