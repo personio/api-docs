@@ -371,7 +371,7 @@ components:
           properties:
             type:
               type: string
-              example: "system"
+              example: system
               enum:
                 - system
                 - custom
