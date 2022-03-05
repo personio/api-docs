@@ -2659,9 +2659,13 @@ components:
 
     Employee:
       type: object
+      required:
+        - id
       properties:
         id:
           type: object
+          required:
+            - value
           properties:
             label:
               example: ID
