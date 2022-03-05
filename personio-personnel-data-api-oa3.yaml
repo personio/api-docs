@@ -3507,15 +3507,21 @@ components:
           type: string
     ShortEmployee:
       type: object
+      required:
+        - attributes
       properties:
         type:
           type: string
           example: Employee
         attributes:
           type: object
+          required:
+            - id
           properties:
             id:
               type: object
+              required:
+                - value
               properties:
                 label:
                   example: 1
