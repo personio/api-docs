@@ -2607,8 +2607,14 @@ components:
               example: Team
             attributes:
               type: object
+              required:
+                - id
               properties:
+                id:
+                  type: number
+                  example: 1
                 name:
+                  type: string
                   example: Management
         type:
           $ref: '#/components/schemas/TypeEnum'
