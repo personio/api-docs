@@ -3503,6 +3503,8 @@ components:
         updated_at:
           type: string
           example: 2017-01-17T10:32:18+0100
+        comment:
+          type: string
     ShortEmployee:
       type: object
       properties:
