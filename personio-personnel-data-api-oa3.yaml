@@ -3449,6 +3449,17 @@ components:
 
     Absence:
       type: object
+      required:
+        - id
+        - status
+        - start_date
+        - end_date
+        - half_day_start
+        - half_day_end
+        - time_off_type
+        - employee
+        - created_at
+        - updated_at
       properties:
         id:
           type: integer
@@ -3479,6 +3490,8 @@ components:
               example: TimeOffType
             attributes:
               type: object
+              required:
+                - id
               properties:
                 id:
                   type: integer
