@@ -2480,6 +2480,7 @@ components:
       type: object
       properties:
         label:
+          type: string
           example: Department
         value:
           type: object
@@ -2495,6 +2496,7 @@ components:
         type:
           $ref: '#/components/schemas/TypeEnum'
         universal_id:
+          type: string
           example: department
     CostCenters:
       type: object
