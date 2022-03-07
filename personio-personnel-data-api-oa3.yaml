@@ -2993,12 +2993,12 @@ components:
             data:
               type: array
               items:
-            type: object
-            properties:
-              type:
-                example: Employee
-              attributes:
-                $ref: "#/components/schemas/Employee"
+                type: object
+                properties:
+                  type:
+                    example: Employee
+                  attributes:
+                    $ref: "#/components/schemas/Employee"
 
     EmployeeAbsenceBalance:
       title: Employee Absence Balance
@@ -3292,13 +3292,13 @@ components:
             data:
               type: object
               properties:
-            id:
-              type: array
-              items:
-                type: integer
-                example: 1
-            message:
-              example: Success
+                id:
+                  type: array
+                  items:
+                    type: integer
+                    example: 1
+                message:
+                  example: Success
 
     TimeOffTypeResource:
       title: Type of time-off resource
