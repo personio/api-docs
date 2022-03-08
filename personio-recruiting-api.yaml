@@ -326,42 +326,34 @@ components:
           type: string
           description: First name(s) of the applicant. Must not be empty or only whitespaces
           minLength: 1
-          example: "John"
         last_name:
           type: string
           description: Last name(s) of the applicant. Must not be empty or only whitespaces.
           minLength: 1
-          example: "Doe"
         email:
           type: string
           description: Email address of the applicant.
           format: email
-          example: "john.doe@email.com"
         job_position_id:
           type: integer
           description: The personio internal id of the job this application should belong to.
-          example: 123
         recruiting_channel_id:
           type: integer
           description: |-
             The recruiting channel this application was sourced from.
 
             See https://{YOUR_COMPANY}.personio.de/configuration/recruiting/channels
-          example: 456
         external_posting_id:
           type: string
           description: |-
             The external id of the job posting (E.g. the external id forwarded by Gohiring).
-          example: "4821b24c-8d85-11ec-b909-0242ac120002"
         message:
           type: string
           description: The applicant supplied free-text message.
-          example: "new applicant message"
         application_date:
           type: string
-          description: The application date. It cannot be a date in the future.
+          description: The application date (yyyy-mm-dd). It cannot be a date in the future.
           format: date
-          example: "2022-02-17"
         phase:
           type: object
           description: |-
@@ -379,7 +371,6 @@ components:
               oneOf:
                 - type: string
                 - type: integer
-              example: "offer"
               description: |-
                 For custom phases this is an integer. The IDs for your custom phases can be found under your personio settings (https://{YOUR_COMPANY}.personio.de/configuration/recruiting/phases).
                 
@@ -402,7 +393,6 @@ components:
             Click on +Add to see the type definition for each tag item.
           items:
             type: string
-            example: "tag1"
         files:
           description: |-
             References to previously uploaded files. These will be attached to the new application.
@@ -415,14 +405,11 @@ components:
               uuid:
                 type: string
                 format: uuid
-                example: "7d0f360a-8da3-11ec-b909-0242ac120002"
                 description: Reference to a previously uploaded file. Use the `uuid` value returned from the documents endpoint here.
               original_filename:
                 type: string
-                example: "My CV.pdf"
               category:
                 type: string
-                example: "cv"
                 enum:
                   - cv
                   - cover-letter
@@ -446,7 +433,6 @@ components:
             properties:
               id:
                 type: string
-                example: "gender"
                 description: |-
                   Ids for custom attributes have the form `custom_attribute_123` and can be found can be found in your personio settings as `API name` when expanding the details of each attribute (https://{YOUR_COMPANY}.personio.de/configuration/recruiting/attributes).
                   
@@ -459,7 +445,6 @@ components:
                   - salary_expectations
               value:
                 type: string
-                example: "male"
                 description: |-
                   Value of the attribute.
                   
