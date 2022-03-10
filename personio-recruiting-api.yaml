@@ -729,6 +729,7 @@ components:
             - male
             - female
             - diverse
+            - undefined
         recruiting_channel_id:
           description: ID of the recruiting channel that this applicant applied through recruiting_channel_id has to match the id of a channel you created in Personio
           type: integer
