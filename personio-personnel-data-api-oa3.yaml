@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   version: "1.0"
   title: Personnel Data
-  description: API for reading and writing personnel data including data about attendances and absences
+  description: API for reading and writing personnel data including data about attendances, absences, documents, etc
 paths:
   /auth:
     post:
