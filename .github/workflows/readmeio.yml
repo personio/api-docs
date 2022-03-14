@@ -10,6 +10,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      API_KEY: ${{ secrets.README_API_KEY }}
+
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -22,3 +25,9 @@ jobs:
 
       - name: Validate Recruiting API Definitions
         run: rdme validate personio-recruiting-api.yaml
+
+      - name: Publish API Definitions
+        run: rdme openapi personio-personnel-data-api-oa3.yaml --id=58cd4a8450a0c12500e89bf8 --key "$API_KEY"
+        
+      - name: Publish Recruiting API Definitions
+        run: rdme openapi personio-recruiting-api.yaml --id=609158e7204c7e001baff965 --key "$API_KEY"   
