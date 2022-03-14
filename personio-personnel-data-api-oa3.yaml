@@ -339,7 +339,7 @@ paths:
                     email:
                       type: string
                       example: "john.dou@demo.com"
-                      description: The email field is required for the employee creation. Updating of this field is not currently supported.
+                      description: The e-mail field is required for the employee creation. Updating of this field is not currently supported.
                     first_name:
                       type: string
                       example: "John"
