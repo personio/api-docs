@@ -2074,7 +2074,7 @@ components:
           format: date
           description: "Optional date can be added to the uploaded document. Must follow the format: Y-m-d"
         file:
-          type: string
+          type: file
           format: binary
           description: The document that shall be uploaded to an employees profile
       required:
