@@ -290,6 +290,8 @@ paths:
                     error:
                       message: Service Unavailable
       deprecated: true
+servers:
+  - url: 'https://api.personio.de'
 components:
   securitySchemes:
     bearerAuth:
