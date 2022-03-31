@@ -56,7 +56,7 @@ paths:
       security:
         - bearerAuth: []
       summary: Creating applications in Personio
-      description: Allows you to create applications in Personio. Parameters marked with a red star (*) are mandatory.
+      description: Allows you to create applications in Personio.
       responses:
         '201':
           description: Created - Application was created successfully.
@@ -146,33 +146,7 @@ paths:
         
                     Maximum file size: 20MB
           
-                    Must be one of the supported types:
-                    - pdf
-                    - pptx
-                    - xlsx
-                    - docx
-                    - doc
-                    - xls
-                    - ppt
-                    - ods
-                    - odt
-                    - 7z
-                    - gz
-                    - rar
-                    - zip
-                    - bmp
-                    - gif
-                    - jpg
-                    - png
-                    - tif
-                    - csv
-                    - txt
-                    - rtf
-                    - mp4
-                    - 3gp
-                    - mov
-                    - avi
-                    - wmv
+                    Must be one of the supported types: pdf, pptx, xlsx, docx, doc, xls, ppt, ods, odt, 7z, gz, rar, zip, bmp, gif, jpg, png, tif, csv, txt, rtf, mp4, 3gp, mov, avi, wmv
               required:
                 - file
   /recruiting/applicant:
@@ -395,15 +369,13 @@ components:
             Tags to be associated with this application. Non-existing tags will be created.
 
             See https://{YOUR_COMPANY}.personio.de/configuration/recruiting/tags
-            
-            Click on +Add to see the type definition for each tag item.
           items:
             type: string
         files:
           description: |-
             References to previously uploaded files. These will be attached to the new application.
             
-            Each file item consists of a `uuid`, an `original_filename` and a `category` (To see exact description, click on +Add).
+            Each file item consists of a `uuid`, an `original_filename` and a `category` (To see exact description, click on "ADD OBJECT").
           type: array
           items:
             type: object
@@ -433,7 +405,7 @@ components:
           description: |-
             Attributes for this applicant.
             
-            Each attribute item consists of an `id` and a `value` (To see exact description, click on +Add).
+            Each attribute item consists of an `id` and a `value` (To see exact description, click on "ADD OBJECT").
           items:
             type: object
             properties:
