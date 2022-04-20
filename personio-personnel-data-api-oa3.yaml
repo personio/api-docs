@@ -270,6 +270,7 @@ paths:
                             value: 3000
                             type: decimal
                             universal_id: fix_salary
+                            currency: EUR
                           fix_salary_interval:
                             label: Salary interval
                             value: monthly
@@ -280,6 +281,7 @@ paths:
                             value: 0
                             type: decimal
                             universal_id: hourly_salary
+                            currency: EUR
                           vacation_day_balance:
                             label: Vacation day balance
                             value: 2
@@ -765,6 +767,7 @@ paths:
                           value: 3000
                           type: decimal
                           universal_id: fix_salary
+                          currency: EUR
                         fix_salary_interval:
                           label: Salary interval
                           value: monthly
@@ -775,6 +778,7 @@ paths:
                           value: 0
                           type: decimal
                           universal_id: hourly_salary
+                          currency: EUR
                         vacation_day_balance:
                           label: Vacation day balance
                           value: 2
@@ -2875,6 +2879,9 @@ components:
               $ref: '#/components/schemas/TypeEnum'
             universal_id:
               example: fix_salary
+            currency:
+              example: EUR
+              type: string
         fix_salary_interval:
           type: object
           properties:
@@ -2897,6 +2904,9 @@ components:
               $ref: '#/components/schemas/TypeEnum'
             universal_id:
               example: hourly_salary
+            currency:
+              example: EUR
+              type: string
         vacation_day_balance:
           type: object
           properties:
