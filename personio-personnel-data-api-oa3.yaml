@@ -11,6 +11,10 @@ x-readme:
     - "java"
     - "php"
     - "node"
+  code-samples:
+    - language: "powershell"
+      code: "This languange is not supported"
+      name: "This languange is not supported"
 paths:
   /auth:
     post:
