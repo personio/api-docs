@@ -11,10 +11,6 @@ x-readme:
     - "java"
     - "php"
     - "node"
-  code-samples:
-    - language: "powershell"
-      code: "This languange is not supported"
-      name: "This languange is not supported"
 paths:
   /auth:
     post:
@@ -1958,6 +1954,11 @@ paths:
             schema:
               $ref: "#/components/schemas/DocumentUploadRequest"
         description: Needed data to upload a document
+      x-readme:
+        code-samples:
+          - language: "powershell"
+            code: "This languange is not supported"
+            name: "This languange is not supported"
       responses:
         "201":
           description: "The document was successfully uploaded to the employees profile"
