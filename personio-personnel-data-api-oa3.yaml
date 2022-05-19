@@ -81,7 +81,7 @@ paths:
             type: string
         - name: attributes
           in: query
-          description: Define a list of attributes that shall be returned for all Employee objects.
+          description: Define a list of attributes that shall be returned for all employees.
           required: false
           schema:
             type: array
