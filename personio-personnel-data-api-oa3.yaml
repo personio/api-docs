@@ -79,6 +79,14 @@ paths:
           description: Find an employee with the given email address. The response is still a list, containing only the filtered employee.
           schema:
             type: string
+        - name: attributes
+          in: query
+          description: Define a list of attributes that shall be returned for all Employee objects.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       description: List Company Employees
       responses:
         "200":
