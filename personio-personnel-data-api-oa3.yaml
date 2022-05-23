@@ -1685,7 +1685,6 @@ paths:
         code-samples:
           - language: "powershell"
             code: "Auto-generated code snippets for this language may not be supported"
-        code-samples:
           - language: "php"
             code: "Auto-generated code snippets for this language may not be supported"
       responses:
