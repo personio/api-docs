@@ -1693,6 +1693,8 @@ paths:
         code-samples:
           - language: "powershell"
             code: "Auto-generated code snippets for this language may not be supported"
+          - language: "php"
+            code: "Auto-generated code snippets for this language may not be supported"
       responses:
         "201":
           description: The absence period is successfully created
