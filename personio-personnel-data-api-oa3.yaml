@@ -1051,7 +1051,7 @@ paths:
         - name: employees[]
           in: query
           required: false
-          description: A list of Personio employee ID's to filter the results. The result filters including only absences of provided employees.
+          description: A list of Personio employee ID's to filter the results. The result filters including only attendances of provided employees.
           explode: true
           schema:
             type: array
