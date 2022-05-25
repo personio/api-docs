@@ -2174,7 +2174,7 @@ components:
             data:
               type: object
               properties:
-                id: 
+                id:
                   type: integer
                   example: 1
                 type:
@@ -2516,6 +2516,7 @@ components:
       type: object
       properties:
         label:
+          type: string
           example: Department
         value:
           type: object
@@ -2538,6 +2539,7 @@ components:
         type:
           $ref: '#/components/schemas/TypeEnum'
         universal_id:
+          type: string
           example: department
     CostCenters:
       type: object
@@ -2648,8 +2650,14 @@ components:
               example: Team
             attributes:
               type: object
+              required:
+                - id
               properties:
+                id:
+                  type: number
+                  example: 1
                 name:
+                  type: string
                   example: Management
         type:
           $ref: '#/components/schemas/TypeEnum'
@@ -2694,9 +2702,13 @@ components:
 
     Employee:
       type: object
+      required:
+        - id
       properties:
         id:
           type: object
+          required:
+            - value
           properties:
             label:
               example: ID
@@ -3154,14 +3166,14 @@ components:
               type: string
               example: "Project"
             attributes:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    example: "A project name"
-                  active:
-                    type: boolean
-                    example: true
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "A project name"
+                active:
+                  type: boolean
+                  example: true
 
     AttendanceCreateRequest:
       type: object
@@ -3348,6 +3360,8 @@ components:
           description: Time-off type resource name
         attributes:
           type: object
+          required:
+            - id
           properties:
             id:
               type: integer
@@ -3490,6 +3504,17 @@ components:
 
     Absence:
       type: object
+      required:
+        - id
+        - status
+        - start_date
+        - end_date
+        - half_day_start
+        - half_day_end
+        - time_off_type
+        - employee
+        - created_at
+        - updated_at
       properties:
         id:
           type: integer
@@ -3520,6 +3545,8 @@ components:
               example: TimeOffType
             attributes:
               type: object
+              required:
+                - id
               properties:
                 id:
                   type: integer
@@ -3544,17 +3571,25 @@ components:
         updated_at:
           type: string
           example: 2017-01-17T10:32:18+0100
+        comment:
+          type: string
     ShortEmployee:
       type: object
+      required:
+        - attributes
       properties:
         type:
           type: string
           example: Employee
         attributes:
           type: object
+          required:
+            - id
           properties:
             id:
               type: object
+              required:
+                - value
               properties:
                 label:
                   example: 1
