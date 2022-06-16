@@ -1,0 +1,33 @@
+components:
+    schemas:
+      ErrorResponse:
+      description: Invalid request response.
+      type: object
+      properties:
+        timestamp:
+          description: The timestamp.
+          type: string
+          format: date-time
+          example: 2022-06-17T14:07:17Z
+        trace_id:
+          description: A unique trace ID.
+          type: string
+          example: aswo3f-a202lfso-312123sld-1230dd1
+        errors:
+          description: List of errors
+          type: array
+          items:
+            type: object
+            properties:
+              title:
+                description: The title of the error.
+                type: string
+                example: Invalid credentials
+              details:
+                description: The description of the error.
+                type: string
+                example: The credentials were not correct. Make sure you are providing the right client_id and client_secret.
+              type:
+                description: Reference link to more details.
+                type: string
+                example: https://developer.personio.de/reference/errors#credentials.invalid_credentials
