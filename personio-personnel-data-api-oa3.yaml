@@ -388,7 +388,7 @@ paths:
                       format: date
                       description: "Employee hire date. Format: yyyy-mm-dd"
                       pattern: ^\d{4}-\d{2}-\d{2}$
-                    weekly_hours:
+                    weekly_working_hours:
                       type: number
                       example: 40
                     custom_attributes:
@@ -434,7 +434,7 @@ paths:
                   format: date
                   description: "Employee hire date. Format: yyyy-mm-dd"
                   pattern: ^\d{4}-\d{2}-\d{2}$
-                "employee[weekly_hours]":
+                "employee[weekly_working_hours]":
                   description: Employee weekly working hours
                   type: number
               required:
@@ -515,7 +515,7 @@ paths:
                       format: date
                       description: "Employee hire date. Format: yyyy-mm-dd"
                       pattern: ^\d{4}-\d{2}-\d{2}$
-                    weekly_hours:
+                    weekly_working_hours:
                       type: number
                       example: 40
                     custom_attributes:
@@ -558,7 +558,7 @@ paths:
                   format: date
                   description: "Employee hire date. Format: yyyy-mm-dd"
                   pattern: ^\d{4}-\d{2}-\d{2}$
-                "employee[weekly_hours]":
+                "employee[weekly_working_hours]":
                   description: Employee weekly working hours
                   type: number
       responses:
