@@ -1932,20 +1932,20 @@ paths:
         - Absences
       description: This endpoint is responsible for fetching Hourly absence data for the company employees. The result can be `paginated` and `filtered` by period and/or specific employee/employees. The result contains a list of hourly absence periods.
       parameters:
-        - name: from
+        - name: start_date
           in: query
           required: false
-          description: Filter by absence periods that start at or before given timestamp.
+          description: Filter by absence periods that start at or before given date.
           schema:
             type: string
-            format: date-time
-        - name: to
+            format: date
+        - name: end_date
           in: query
           required: false
-          description: Filter by absence periods that start at or before given timestamp.
+          description: Filter by absence periods that start at or before given date.
           schema:
             type: string
-            format: date-time
+            format: date
         - name: updated_from
           in: query
           required: false
@@ -2025,7 +2025,7 @@ paths:
                       - type: AbsencePeriod
                         attributes:
                           id: 9bba303f-0fbc-4514-9958-0befa21923fb
-                          measurement_unit: "hours"
+                          measurement_unit: "hour"
                           effective_duration: 16
                           employee:
                             type: Employee
