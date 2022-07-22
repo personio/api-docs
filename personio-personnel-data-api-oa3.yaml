@@ -1157,8 +1157,8 @@ paths:
                     success: true
                     data:
                       id: [
-                          1,
-                          2,
+                         1,
+                         2,
                       ]
                       message: 'success'
         "400":
@@ -1921,6 +1921,171 @@ paths:
                     error:
                       code: 404
                       message: 'The absence period was not found.'
+  "/company/absence-periods":
+    parameters:
+      - $ref: "#/components/parameters/XPersonioPartnerID"
+      - $ref: "#/components/parameters/XPersonioAppID"
+    get:
+      security:
+        - BearerAuth: [ ]
+      tags:
+        - Absences
+      description: This endpoint is responsible for fetching Hourly absence data for the company employees. The result can be `paginated` and `filtered` by period and/or specific employee/employees. The result contains a list of hourly absence periods.
+      parameters:
+        - name: start_date
+          in: query
+          required: false
+          description: Filter by absence periods that start at or before given date.
+          schema:
+            type: string
+            format: date
+        - name: end_date
+          in: query
+          required: false
+          description: Filter by absence periods that start at or before given date.
+          schema:
+            type: string
+            format: date
+        - name: updated_from
+          in: query
+          required: false
+          description: Filter by periods that were created or modified from the date updated_from. It is inclusive, so all the periods created or modified from the beginning of the updated_from will be included in the results.
+          schema:
+            type: string
+            format: date-time
+        - name: updated_to
+          in: query
+          required: false
+          description: Filter by periods that were created or modified until the date updated_to. It is inclusive, so all the periods created or modified until the end of the updated_to will be included in the results.
+          schema:
+            type: string
+            format: date-time
+        - name: employees[]
+          in: query
+          required: false
+          description: A list of Personio employee ID's to filter the results. The result filters including only absences of provided employees
+          explode: true
+          schema:
+            type: array
+            items:
+              type: integer
+          allowReserved: true
+        - name: absence_types[]
+          in: query
+          required: false
+          description: A list of Personio absence type IDs to filter the results. The result filters including only absences of provided absence types.
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: absence_periods[]
+          in: query
+          required: false
+          description: A list of Personio absence period IDs to filter the results. The result filters including only absences containing the provided ids.
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          allowReserved: true
+        - name: limit
+          in: query
+          required: false
+          description: Pagination attribute to limit how many absence periods are returned per page.
+          schema:
+            type: integer
+            minimum: 1
+            default: 200
+        - name: offset
+          in: query
+          required: false
+          description: Pagination attribute to identify which page you are requesting, by the form of telling an offset from the first record that would be returned.
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HourlyAbsencePeriodsResponse"
+              examples:
+                response:
+                  value:
+                    success: true
+                    metadata:
+                      total_elements: 1
+                      current_page: 1
+                      total_pages: 1
+                    data:
+                      - type: AbsencePeriod
+                        attributes:
+                          id: 9bba303f-0fbc-4514-9958-0befa21923fb
+                          measurement_unit: "hour"
+                          effective_duration: 16
+                          employee:
+                            type: Employee
+                            attributes:
+                              id:
+                                label: id
+                                value: 2367
+                                type: integer
+                                universal_id: id
+                              first_name:
+                                label: First name
+                                value: Michael
+                                type: standard
+                                universal_id: first_name
+                              last_name:
+                                label: Last name
+                                value: Miller
+                                type: standard
+                                universal_id: last_name
+                              email:
+                                label: Email
+                                value: michael.miller@demo.com
+                                type: standard
+                                universal_id: email
+                          absence_type:
+                            type: AbsenceType
+                            attributes:
+                              id: "9bba303f-0fbc-4514-9958-0befa21923fb"
+                          certificate:
+                            status: not-required
+                          start: "2022-06-20T14:29:56.510Z"
+                          end: "2022-06-20T14:29:56.510Z"
+                          half_day_start: true
+                          half_day_end: false
+                          comment: "this is a comment"
+                          origin: "web"
+                          status: "approved"
+                          created_by: 1
+                          created_at: "2022-06-20T14:29:56.510Z"
+                          updated_at: "2022-06-20T14:29:56.510Z"
+                          approved_at: "2022-06-20T14:29:56.510Z"
+                          breakdowns:
+                            - date: "2020-01-01"
+                              effective_duration: 8
+                            - date: "2020-01-02"
+                              effective_duration: 8
+                    offset: 0,
+                    limit: 200,
+        "400":
+          description: Bad request
+          content:
+            problem+json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error
+          content:
+            problem+json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
   "/company/document-categories":
     parameters:
@@ -2036,7 +2201,7 @@ paths:
                     success: false
                     error:
                       message: "No query results for model [DocumentCategory] 1"
-                      code: 0 
+                      code: 0
         "422":
           description: "This status code is returned if the provided request parameters cannot be processed or if the parameters are invalid."
           content:
@@ -2050,7 +2215,7 @@ paths:
                     error:
                       message: "The given data was invalid."
                       code: 0
-                      error_data: 
+                      error_data:
                         file: [
                           "The file must be a file of type: pdf, docx, doc, jpg, zip, png, txt, jpeg, odt, xlsx, rtf, htm, xls, p7s, pptx, pages, rar, ppt, gif, tif, html, msg, asc, tiff, wps, bmp, 7z, csv, ics, vcf, dotx, numbers, eps, gz, ods, otf, odp, odg, rtfd, txz, webarchive, xml, xps, md, fax."
                         ]
@@ -2160,7 +2325,7 @@ components:
                     file:
                       type: array
                       items:
-                        type: string 
+                        type: string
                         example: "The file must be a file of type: pdf, docx, doc, jpg, zip, png, txt, jpeg, odt, xlsx, rtf, htm, xls, p7s, pptx, pages, rar, ppt, gif, tif, html, msg, asc, tiff, wps, bmp, 7z, csv, ics, vcf, dotx, numbers, eps, gz, ods, otf, odp, odg, rtfd, txz, webarchive, xml, xps, md, fax."
 
     DocumentUploadSuccessResponse:
@@ -2174,7 +2339,7 @@ components:
             data:
               type: object
               properties:
-                id: 
+                id:
                   type: integer
                   example: 1
                 type:
@@ -3154,14 +3319,14 @@ components:
               type: string
               example: "Project"
             attributes:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    example: "A project name"
-                  active:
-                    type: boolean
-                    example: true
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "A project name"
+                active:
+                  type: boolean
+                  example: true
 
     AttendanceCreateRequest:
       type: object
@@ -3469,6 +3634,124 @@ components:
                     example: TimeOffPeriod
                   attributes:
                     $ref: "#/components/schemas/Absence"
+    HourlyAbsencePeriodsResponse:
+      title: List All Hourly Absence Periods response
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/Response"
+        - type: object
+          properties:
+            metadata:
+              type: object
+              required:
+                - total_elements
+                - current_page
+                - total_pages
+              properties:
+                total_elements:
+                  type: integer
+                  description: The total number of items matching the query filters.
+                total_pages:
+                  type: integer
+                  description: The total number of pages distributing sets of items matching the query filters.
+                current_page:
+                  type: integer
+                  description: Current page number containing the returned set of items matching with the query filters. The page number range is from 0 to total_pages - 1
+            offset:
+              type: integer
+            limit:
+              type: integer
+            data:
+              type: array
+              items:
+                type: object
+                required:
+                  - type
+                  - attributes
+                properties:
+                  type:
+                    example: AbsencePeriod
+                  attributes:
+                    $ref: "#/components/schemas/HourlyAbsence"
+    HourlyAbsencePeriodResponseAttributes:
+      type: object
+      required:
+        - id
+        - employee
+        - absence_type_id
+        - start
+        - half_day_start
+        - half_day_end
+        - origin
+        - status
+        - certificate
+        - created_by
+        - effective_duration
+        - created_at
+        - updated_at
+        - breakdowns
+      properties:
+        id:
+          type: string
+          example: 9bba303f-0fbc-4514-9958-0befa21923fb
+        measurement_unit:
+          type: string
+          enum: [minutes]
+          example: "minutes"
+        effective_duration:
+          type: integer
+          example: 60
+          description: Period effective duration in minutes
+        employee:
+          $ref: "#/components/schemas/ShortEmployee"
+        absence_type_id:
+          $ref: "#/components/schemas/AbsenceType"
+        certificate:
+          type: object
+          properties:
+            status:
+              example: not-required
+              type: string
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+          nullable: true
+        half_day_start:
+          type: boolean
+        half_day_end:
+          type: boolean
+        comment:
+          type: string
+        origin:
+          type: string
+          nullable: true
+          enum: [web,api,mobile,slack,msteams]
+          example: web
+        status:
+          type: string
+          example: approved
+        created_by:
+          type: integer
+          example: 1
+          description: "ID of the employee who created the absence period."
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        approved_at:
+          type: string
+          format: date-time
+          nullable: true
+        breakdowns:
+          type: array
+          description: "Breakdowns of effective duration by day of absence."
+          items:
+            $ref: "#/components/schemas/AbsencePeriodBreakdown"
 
     AbsencePeriodResponse:
       title: Absence Periods response
@@ -3544,6 +3827,86 @@ components:
         updated_at:
           type: string
           example: 2017-01-17T10:32:18+0100
+    HourlyAbsence:
+      type: object
+      properties:
+        measurement_unit:
+          type: string
+          example: "hours"
+        effective_duration:
+          type: integer
+          example: 16
+          description: Period effective duration in minutes
+        employee:
+          $ref: "#/components/schemas/ShortEmployee"
+        absence_type:
+          $ref: "#/components/schemas/AbsenceType"
+        certificate:
+          type: object
+          properties:
+            status:
+              example: not-required
+              type: string
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+          nullable: true
+        half_day_start:
+          type: boolean
+        half_day_end:
+          type: boolean
+        comment:
+          type: string
+        origin:
+          type: string
+          example: web
+        status:
+          type: string
+          example: approved
+        created_by:
+          type: integer
+          example: 1
+          description: "ID of the employee who created the absence period."
+        created_at:
+          type: string
+          example: 2017-01-17T10:32:18+0100
+        updated_at:
+          type: string
+          example: 2017-01-17T10:32:18+0100
+        approved_at:
+          type: string
+          format: date-time
+          nullable: true
+        breakdowns:
+          type: array
+          description: "Breakdowns of effective duration by day of absence."
+          items:
+            $ref: "#/components/schemas/AbsencePeriodBreakdown"
+    AbsenceType:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 61fe126b-a7b3-449a-b5ee-3865a6fcc546
+    AbsencePeriodBreakdown:
+      type: object
+      required:
+        - date
+        - effective_duration
+      properties:
+        date:
+          type: string
+          format: date
+        effective_duration:
+          description: Number representing the value of duration in minutes.
+          type: integer
+          example: 60
     ShortEmployee:
       type: object
       properties:
