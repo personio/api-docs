@@ -1491,7 +1491,7 @@ paths:
         - BearerAuth: []
       tags:
         - Absences
-      description: Provides a list of available absences types. For example 'Paid vacation', 'Parental leave' or 'Home office'
+      description: Provides a list of absence types for absences **tracked in days**. For example 'Paid vacation', 'Parental leave' or 'Home office'.
       parameters:
         - name: limit
           in: query
@@ -1560,7 +1560,7 @@ paths:
         - BearerAuth: []
       tags:
         - Absences
-      description: This endpoint is responsible for fetching absence data for the company employees.The result can be `paginated` and `filtered` by period and/or specific employee/employees. The result contains a list of absence periods.
+      description: Fetches absence periods for absences **tracked in days**. The result can be `paginated` and `filtered` by period and/or specific employee/employees. The result contains a list of absence periods.
       parameters:
         - name: start_date
           in: query
@@ -1681,7 +1681,7 @@ paths:
         - BearerAuth: []
       tags:
         - Absences
-      description: This endpoint is responsible for adding absence data for the company employees.
+      description: Adds absence data for absence types **tracked in days**.
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -1804,7 +1804,7 @@ paths:
         - BearerAuth: []
       tags:
         - Absences
-      description: This endpoint is responsible for deleting absence period data for the company employees.
+      description: Deletes absence period data for absence types **tracked in days**.
       parameters:
         - name: id
           in: path
@@ -1844,7 +1844,7 @@ paths:
         - BearerAuth: []
       tags:
         - Absences
-      description: Show Absence Period
+      description: Gets an absence period for absences **tracked in days**.
       parameters:
         - name: id
           in: path
@@ -1930,7 +1930,7 @@ paths:
         - BearerAuth: [ ]
       tags:
         - Absences
-      description: This endpoint is responsible for fetching Hourly absence data for the company employees. The result can be `paginated` and `filtered` by period and/or specific employee/employees. The result contains a list of hourly absence periods.
+      description: Fetches absence periods for absences **tracked in hours**. The result can be `paginated` and `filtered` by period and/or specific employee/employees. The result contains a list of hourly absence periods.
       parameters:
         - name: start_date
           in: query
@@ -2026,7 +2026,7 @@ paths:
                         attributes:
                           id: 9bba303f-0fbc-4514-9958-0befa21923fb
                           measurement_unit: "hour"
-                          effective_duration: 16
+                          effective_duration: 960
                           employee:
                             type: Employee
                             attributes:
@@ -2056,8 +2056,8 @@ paths:
                               id: "9bba303f-0fbc-4514-9958-0befa21923fb"
                           certificate:
                             status: not-required
-                          start: "2022-06-20T14:29:56.510Z"
-                          end: "2022-06-20T14:29:56.510Z"
+                          start: "2022-05-31T22:00:00.0Z"
+                          end: "2022-06-02T22:00:00.0Z"
                           half_day_start: true
                           half_day_end: false
                           comment: "this is a comment"
@@ -2068,10 +2068,10 @@ paths:
                           updated_at: "2022-06-20T14:29:56.510Z"
                           approved_at: "2022-06-20T14:29:56.510Z"
                           breakdowns:
-                            - date: "2020-01-01"
-                              effective_duration: 8
-                            - date: "2020-01-02"
-                              effective_duration: 8
+                            - date: "2022-06-01"
+                              effective_duration: 480
+                            - date: "2022-06-02"
+                              effective_duration: 480
                     offset: 0,
                     limit: 200,
         "400":
