@@ -527,8 +527,6 @@ paths:
                           example: "German"
                   required:
                     - email
-                    - first_name
-                    - last_name
           application/x-www-form-urlencoded:
             schema:
               type: object
