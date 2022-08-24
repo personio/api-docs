@@ -27,7 +27,7 @@ components:
             errors:
               - title: Internal error.
                 details: Your request cannot be completed. Please try again later.
-                type: https://developer.personio.de/reference/errors#sample.internal_error
+                type: https://developer.personio.de/reference/errors#sample_service.internal_error
   schemas:
     ErrorResponse:
       description: Invalid request response.
@@ -53,15 +53,15 @@ components:
               title:
                 description: The title of the error.
                 type: string
-                example: Invalid credentials
+                example: Sample Error Response
               details:
                 description: The description of the error.
                 type: string
-                example: The credentials were not correct. Make sure you are providing the right client_id and client_secret.
+                example: This is sample how error response looks like.
               type:
                 description: Reference link to more details.
                 type: string
-                example: https://developer.personio.de/reference/errors#credentials.internal_error
+                example: https://developer.personio.de/reference/errors#sample_service.internal_error
             required:
               - title
               - details
