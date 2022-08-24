@@ -2,7 +2,7 @@ openapi: '3.0.0'
 info:
   description: This specification is only for sample error response for API v2.
   version: '1.0'
-  title: Sample Error Response
+  title: Public API V2 Sample Error Responses
 servers:
   - url: 'http://sample-service'
 paths:
@@ -16,7 +16,7 @@ paths:
 components:
   responses:
     InternalServerError:
-      description: Server error. This should happen rarerly.
+      description: Server error. This should happen rarely.
       content:
         application/json:
           schema:
@@ -25,16 +25,16 @@ components:
             timestamp: 2022-06-17T14:07:17Z
             trace_id: aswo3f-a202lfso-312123sld-1230dd1
             errors:
-              - title: Internal error.
+              - title: Internal Server Error.
                 details: Your request cannot be completed. Please try again later.
-                type: https://developer.personio.de/reference/errors#sample_service.internal_error
+                type: https://developer.personio.de/reference/errors#sample_service.internal_server_error
   schemas:
     ErrorResponse:
       description: Invalid request response.
       type: object
       properties:
         timestamp:
-          description: The timestamp.
+          description: The timestamp of the executed request.
           type: string
           format: date-time
           example: 2022-06-17T14:07:17Z
