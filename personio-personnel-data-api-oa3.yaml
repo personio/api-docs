@@ -4766,6 +4766,9 @@ components:
     CustomReportsErrorResponse:
       type: object
       properties:
+        status:
+          type: integer
+          example: 500
         trace_id:
           type: string
           example: ABCXXX
