@@ -2268,7 +2268,7 @@ paths:
         - name: reportId
           in: path
           schema:
-            $ref: "#/components/schemas/UniqueIdentifier"
+            type: string
           required: true
         - name: locale
           in: query
@@ -4208,7 +4208,8 @@ components:
       type: object
       properties:
         id:
-          $ref: "#/components/schemas/UniqueIdentifier"
+          type: string
+          example: "eb7482f3-2323-43e2-87ed-99d2399e8e22"
         name:
           type: string
           example: Employee vacations past month
@@ -4271,7 +4272,17 @@ components:
         filters:
           type: array
           items:
-            $ref: "#/components/schemas/Filter"
+            type: object
+            properties:
+              column:
+                type: string
+                example: office_id
+              comparison:
+                type: string
+                example: eq
+              value:
+                type: string
+                example: 1
         period_type:
           type: string
           example: fixed
@@ -4289,7 +4300,8 @@ components:
       type: object
       properties:
         id:
-          $ref: "#/components/schemas/UniqueIdentifier"
+          type: string
+          example: "eb7482f3-2323-43e2-87ed-99d2399e8e22"
         name:
           type: string
           example: Employee vacations past month
@@ -4352,7 +4364,17 @@ components:
         filters:
           type: array
           items:
-            $ref: "#/components/schemas/Filter"
+            type: object
+            properties:
+              column:
+                type: string
+                example: office_id
+              comparison:
+                type: string
+                example: eq
+              value:
+                type: string
+                example: 1
         period_type:
           type: string
           example: fixed
