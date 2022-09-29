@@ -4246,24 +4246,24 @@ components:
             - update_failed
         start_date:
           type: string
-          format: date-time
+          format: date
           example: "2019-04-01"
         end_date:
           type: string
-          format: date-time
+          format: date
           example: "2019-04-10"
         created_at:
           type: string
-          format: date
-          example: "2019-04-10"
+          format: date-time
+          example: "2019-04-10T17:32:28Z"
         updated_at:
           type: string
-          format: date
-          example: "2019-04-10"
+          format: date-time
+          example: "2019-04-10T17:32:28Z"
         data_refreshed_at:
           type: string
           format: date-time
-          example: "2019-04-10"
+          example: "2019-04-10T17:32:28Z"
         columns:
           type: array
           items:
@@ -4335,16 +4335,16 @@ components:
           example: "2019-04-10"
         created_at:
           type: string
-          format: date
-          example: "2019-04-10"
+          format: date-time
+          example: "2019-04-10T17:32:28Z"
         updated_at:
           type: string
-          format: date
-          example: "2019-04-10"
+          format: date-time
+          example: "2019-04-10T17:32:28Z"
         data_refreshed_at:
           type: string
           format: date-time
-          example: "2019-04-10"
+          example: "2019-04-10T17:32:28Z"
         columns:
           type: array
           items:
