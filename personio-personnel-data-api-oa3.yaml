@@ -2221,25 +2221,32 @@ paths:
       tags:
         - Custom Reports
       parameters:
+        - $ref: "#/components/parameters/XPersonioPartnerID"
+        - $ref: "#/components/parameters/XPersonioAppID"
         - name: X-Company-Id
           in: header
           schema:
             type: integer
+          example: 12
           required: true
+          description: The ID of the company used in the request.
         - name: report_ids
           in: query
           schema:
             type: array
             items:
               type: string
+          example: eea50309-d1b1-47d6-bc7e-27de7a3ab491, baa50309-d1b1-47d6-bc76-27de7a3ab491
           required: false
+          description: A list of report ID's to filter the results.
         - name: status
           in: query
           schema:
             type: string
           example: "up_to_date"
           required: false
-      summary: List of reports
+          description: The status of the report to filter the results.
+      description: List of reports
       operationId: listReports
       responses:
         200:
@@ -2255,28 +2262,35 @@ paths:
               schema:
                 $ref: "#/components/schemas/PublicAPIException"
 
-  /company/custom-reports/reports/{reportId}:
+  /company/custom-reports/reports/{report_id}:
     get:
       tags:
         - Custom Reports
       parameters:
+        - $ref: "#/components/parameters/XPersonioPartnerID"
+        - $ref: "#/components/parameters/XPersonioAppID"
         - name: X-Company-Id
           in: header
           schema:
             type: integer
+          example: 12
+          description: The ID of the company used in the request.
           required: true
-        - name: reportId
+        - name: report_id
           in: path
           schema:
             type: string
+          example: "eea50309-d1b1-47d6-bc7e-27de7a3ab491"
+          description: The ID of the report to filter the result.
           required: true
         - name: locale
           in: query
-          description: locale used to translate localized fields
+          description: locale used to translate localized fields.
           schema:
             type: string
+          example: "de"
           required: false
-      summary: Get report with items
+      description: Get report with items
       operationId: listReportItems
       responses:
         200:
@@ -2285,6 +2299,12 @@ paths:
             "application/json":
               schema:
                 $ref: "#/components/schemas/PublicReportResponse"
+        404:
+          description: Report not found
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/PublicAPIException"
         500:
           description: Internal Server Error
           content:
@@ -2297,11 +2317,14 @@ paths:
       tags:
         - Custom Reports
       parameters:
+        - $ref: "#/components/parameters/XPersonioPartnerID"
+        - $ref: "#/components/parameters/XPersonioAppID"
         - name: X-Company-Id
           in: header
           schema:
             type: integer
           example: 1
+          description: The ID of the company used in the request.
           required: true
         - name: columns
           in: query
@@ -2310,19 +2333,23 @@ paths:
             items:
               type: string
           example: first_name,last_name
+          description: The columns to filter the results.
           required: false
         - name: locale
           in: query
           schema:
             type: string
           example: "en"
+          description: locale used to translate localized fields.
           required: false
         - name: report_id
           in: query
           schema:
             type: string
+          example: "eea50309-d1b1-47d6-bc7e-27de7a3ab491"
+          description: The ID of the report to filter the result of the columns. If no ID is passed, all columns for the company are returned.
           required: false
-      summary: List of columns
+      description: List of columns
       operationId: listColumns
       responses:
         200:
@@ -4808,10 +4835,13 @@ components:
       properties:
         title:
           type: string
+          example: Not Found
         details:
           type: string
+          example: Report not found
         type:
           type: string
+          example: search
         _meta:
           type: array
           items:
@@ -4822,5 +4852,7 @@ components:
       properties:
         field:
           type: string
+          example: ID
         description:
           type: string
+          example: Report ID not found
