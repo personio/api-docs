@@ -2216,6 +2216,155 @@ paths:
                           "The file must be a file of type: pdf, docx, doc, jpg, zip, png, txt, jpeg, odt, xlsx, rtf, htm, xls, p7s, pptx, pages, rar, ppt, gif, tif, html, msg, asc, tiff, wps, bmp, 7z, csv, ics, vcf, dotx, numbers, eps, gz, ods, otf, odp, odg, rtfd, txz, webarchive, xml, xps, md, fax."
                         ]
 
+  /company/custom-reports/reports:
+    get:
+      tags:
+        - Custom Reports
+      parameters:
+        - $ref: "#/components/parameters/XPersonioPartnerID"
+        - $ref: "#/components/parameters/XPersonioAppID"
+        - name: X-Company-Id
+          in: header
+          schema:
+            type: integer
+          example: 12
+          required: true
+          description: The ID of the company used in the request.
+        - name: report_ids
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+          example: eea50309-d1b1-47d6-bc7e-27de7a3ab491, baa50309-d1b1-47d6-bc76-27de7a3ab491
+          required: false
+          description: A list of report ID's to filter the results.
+        - name: status
+          in: query
+          schema:
+            type: string
+          example: "up_to_date"
+          required: false
+          description: The status of the report to filter the results.
+      description: List of reports
+      operationId: listReports
+      responses:
+        200:
+          description: Ok
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/PublicListReportsResponse"
+        500:
+          description: Internal Server Error
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/PublicAPIException"
+
+  /company/custom-reports/reports/{report_id}:
+    get:
+      tags:
+        - Custom Reports
+      parameters:
+        - $ref: "#/components/parameters/XPersonioPartnerID"
+        - $ref: "#/components/parameters/XPersonioAppID"
+        - name: X-Company-Id
+          in: header
+          schema:
+            type: integer
+          example: 12
+          description: The ID of the company used in the request.
+          required: true
+        - name: report_id
+          in: path
+          schema:
+            type: string
+          example: "eea50309-d1b1-47d6-bc7e-27de7a3ab491"
+          description: The ID of the report to filter the result.
+          required: true
+        - name: locale
+          in: query
+          description: locale used to translate localized fields.
+          schema:
+            type: string
+          example: "de"
+          required: false
+      description: Get report with items
+      operationId: listReportItems
+      responses:
+        200:
+          description: Ok
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/PublicReportResponse"
+        404:
+          description: Report not found
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/PublicAPIException"
+        500:
+          description: Internal Server Error
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/PublicAPIException"
+
+  /company/custom-reports/columns:
+    get:
+      tags:
+        - Custom Reports
+      parameters:
+        - $ref: "#/components/parameters/XPersonioPartnerID"
+        - $ref: "#/components/parameters/XPersonioAppID"
+        - name: X-Company-Id
+          in: header
+          schema:
+            type: integer
+          example: 1
+          description: The ID of the company used in the request.
+          required: true
+        - name: columns
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+          example: first_name,last_name
+          description: The columns to filter the results.
+          required: false
+        - name: locale
+          in: query
+          schema:
+            type: string
+          example: "en"
+          description: locale used to translate localized fields.
+          required: false
+        - name: report_id
+          in: query
+          schema:
+            type: string
+          example: "eea50309-d1b1-47d6-bc7e-27de7a3ab491"
+          description: The ID of the report to filter the result of the columns. If no ID is passed, all columns for the company are returned.
+          required: false
+      description: List of columns
+      operationId: listColumns
+      responses:
+        200:
+          description: Ok
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/PublicListColumnsResponse"
+        500:
+          description: Internal Server Error
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/PublicAPIException"
+
 servers:
   - url: https://api.personio.de/v1
 components:
@@ -3983,3 +4132,727 @@ components:
         - link
         - tags
         - multiline
+
+    PublicListReportsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        metadata:
+          $ref: "#/components/schemas/PublicReportMetaData"
+        offset:
+          type: integer
+        limit:
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/PublicReportData"
+
+    PublicReportResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        metadata:
+          $ref: "#/components/schemas/PublicReportMetaData"
+        offset:
+          type: integer
+        limit:
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/PublicReportItemsData"
+
+    PublicListColumnsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        metadata:
+          $ref: "#/components/schemas/PublicReportMetaData"
+        offset:
+          type: integer
+        limit:
+          type: integer
+        data:
+          $ref: "#/components/schemas/PublicColumnData"
+
+    PublicReportMetaData:
+      type: object
+      properties:
+        total_elements:
+          type: integer
+        current_page:
+          type: integer
+        total_pages:
+          type: integer
+
+    PublicReportData:
+      type: object
+      properties:
+        type:
+          type: string
+          example: "Report"
+        attributes:
+          $ref: "#/components/schemas/PublicReportAttributes"
+
+    PublicReportItemsData:
+      type: object
+      properties:
+        type:
+          type: string
+          example: "Report"
+        attributes:
+          $ref: "#/components/schemas/PublicReportItemsAttributes"
+
+    PublicColumnData:
+      type: object
+      properties:
+        type:
+          type: string
+          example: "Column"
+        attributes:
+          type: array
+          items:
+            $ref: "#/components/schemas/PublicColumnAttributes"
+
+    PublicColumnAttributes:
+      type: object
+      properties:
+        attribute_id:
+          type: string
+          example: first_name
+        human_readable:
+          type: string
+          example: First Name
+        data_type:
+          type: string
+          example: "TEXT"
+
+    PublicReportAttributes:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "eb7482f3-2323-43e2-87ed-99d2399e8e22"
+        name:
+          type: string
+          example: Employee vacations past month
+        description:
+          type: string
+          example: Shows vacations of all employees that were taken past month
+        author_first_name:
+          type: string
+          description: Report author
+          example: Robert
+        author_last_name:
+          type: string
+          description: Report author
+          example: Sirano
+        type:
+          type: string
+          example: point_in_time
+          enum:
+            - point_in_time
+            - historical_data
+            - timeframe
+        employee_status:
+          type: string
+          example: currently_active
+          enum:
+            - currently_active
+            - active_at_given_date
+            - all
+        status:
+          type: string
+          example: up_to_date
+          enum:
+            - up_to_date
+            - updating
+            - update_failed
+        start_date:
+          type: string
+          format: date
+          example: "2019-04-01"
+        end_date:
+          type: string
+          format: date
+          example: "2019-04-10"
+        created_at:
+          type: string
+          format: date-time
+          example: "2019-04-10T17:32:28Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2019-04-10T17:32:28Z"
+        data_refreshed_at:
+          type: string
+          format: date-time
+          example: "2019-04-10T17:32:28Z"
+        columns:
+          type: array
+          items:
+            type: string
+        filters:
+          type: array
+          items:
+            type: object
+            properties:
+              column:
+                type: string
+                example: office_id
+              comparison:
+                type: string
+                example: eq
+              value:
+                type: string
+                example: 1
+        period_type:
+          type: string
+          example: fixed
+          enum:
+            - fixed
+            - today
+            - last_day_of_this_month
+            - this_year
+            - last_month
+            - last_thirty_days
+            - this_month
+            - year_to_date
+
+    PublicReportItemsAttributes:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "eb7482f3-2323-43e2-87ed-99d2399e8e22"
+        name:
+          type: string
+          example: Employee vacations past month
+        description:
+          type: string
+          example: Shows vacations of all employees that were taken past month
+        author_first_name:
+          type: string
+          description: Report author
+          example: Robert
+        author_last_name:
+          type: string
+          description: Report author
+          example: Sirano
+        type:
+          type: string
+          example: point_in_time
+          enum:
+            - point_in_time
+            - historical_data
+            - timeframe
+        employee_status:
+          type: string
+          example: currently_active
+          enum:
+            - currently_active
+            - active_at_given_date
+            - all
+        status:
+          type: string
+          example: created
+          enum:
+            - up_to_date
+            - updating
+            - update_failed
+        start_date:
+          type: string
+          format: date-time
+          example: "2019-04-01"
+        end_date:
+          type: string
+          format: date-time
+          example: "2019-04-10"
+        created_at:
+          type: string
+          format: date-time
+          example: "2019-04-10T17:32:28Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2019-04-10T17:32:28Z"
+        data_refreshed_at:
+          type: string
+          format: date-time
+          example: "2019-04-10T17:32:28Z"
+        columns:
+          type: array
+          items:
+            type: string
+        filters:
+          type: array
+          items:
+            type: object
+            properties:
+              column:
+                type: string
+                example: office_id
+              comparison:
+                type: string
+                example: eq
+              value:
+                type: string
+                example: 1
+        period_type:
+          type: string
+          example: fixed
+          enum:
+            - fixed
+            - today
+            - last_month
+            - last_day_of_this_month
+            - this_year
+            - last_thirty_days
+            - this_month
+            - year_to_date
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              employee_id:
+                type: integer
+                example: 17
+              attributes:
+                type: array
+                items:
+                  anyOf:
+                    - $ref: "#/components/schemas/DefaultAttribute"
+                    - $ref: "#/components/schemas/EntityAttribute"
+                    - $ref: "#/components/schemas/DurationAttribute"
+                    - $ref: "#/components/schemas/CostCenterAttribute"
+                    - $ref: "#/components/schemas/AbsenceOverviewAttribute"
+                    - $ref: "#/components/schemas/AbsencePeriodAttribute"
+                    - $ref: "#/components/schemas/PerformanceTargetAttribute"
+                    - $ref: "#/components/schemas/PerformanceKpiAttribute"
+                    - $ref: "#/components/schemas/SalaryAttribute"
+                    - $ref: "#/components/schemas/CompensationAttribute"
+              historical_attributes:
+                type: array
+                items:
+                  anyOf:
+                    - $ref: "#/components/schemas/DefaultHistoricalAttribute"
+                    - $ref: "#/components/schemas/EntityHistoricalAttribute"
+                    - $ref: "#/components/schemas/DurationHistoricalAttribute"
+                    - $ref: "#/components/schemas/CostCenterHistoricalAttribute"
+                    - $ref: "#/components/schemas/SalaryHistoricalAttribute"
+
+    DefaultAttribute:
+      type: object
+      properties:
+        attribute_id:
+          type: string
+          example: first_name
+        data_type:
+          type: string
+          enum:
+            - TEXT
+        value:
+          type: string
+          example: Robert
+        employee_id:
+          type: integer
+          example: 17
+
+    EntityAttribute:
+      type: object
+      properties:
+        attribute_id:
+          type: string
+          example: department
+        entity_id:
+          type: string
+          example: 1
+        data_type:
+          type: string
+          enum:
+            - ENTITY
+        value:
+          type: string
+          example: IT
+        employee_id:
+          type: integer
+          example: 17
+
+    CostCenterAttribute:
+      type: object
+      properties:
+        attribute_id:
+          type: string
+          example: cost_center
+        data_type:
+          type: string
+          enum:
+            - COST_CENTER
+        employee_id:
+          type: integer
+          example: 17
+        cost_centers:
+          type: array
+          items:
+            $ref: "#/components/schemas/CostCenter"
+
+    CostCenter:
+      type: object
+      properties:
+        cost_center_id:
+          type: string
+          example: 1
+        value:
+          type: string
+          example: Test Center
+        weight:
+          type: string
+          example: 100%
+
+    AbsenceOverviewAttribute:
+      type: object
+      properties:
+        attribute_id:
+          type: string
+          example: absence_123
+        data_type:
+          type: string
+          enum:
+            - ABSENCE_OVERVIEW
+        start_date:
+          type: string
+          format: date
+          example: "2019-12-01"
+        end_date:
+          type: string
+          format: date
+          example: "2019-12-01"
+        duration_days:
+          type: string
+          example: 2
+        duration_hours:
+          type: string
+          example: 5
+        employee_id:
+          type: integer
+          example: 17
+
+    AbsencePeriodAttribute:
+      type: object
+      properties:
+        attribute_id:
+          type: string
+          example: period_123
+        data_type:
+          type: string
+          enum:
+            - ABSENCE_PERIOD
+        start_date:
+          type: string
+          format: date
+          example: "2019-12-01"
+        end_date:
+          type: string
+          format: date
+          example: "2019-12-01"
+        half_day_at_start:
+          type: boolean
+        half_day_at_end:
+          type: boolean
+        employee_id:
+          type: integer
+          example: 17
+
+    DurationAttribute:
+      type: object
+      properties:
+        attribute_id:
+          type: string
+          example: duration_123
+        data_type:
+          type: string
+          enum:
+            - DURATION
+        duration:
+          type: integer
+          example: 10
+        employee_id:
+          type: integer
+          example: 17
+
+    PerformanceTargetAttribute:
+      type: object
+      properties:
+        attribute_id:
+          type: string
+          example: performance_target_123
+        data_type:
+          type: string
+          enum:
+            - PERFORMANCE_TARGET
+        employee_id:
+          type: integer
+          example: 17
+        performance_targets:
+          type: array
+          items:
+            $ref: "#/components/schemas/PerformanceTarget"
+
+    PerformanceTarget:
+      type: object
+      properties:
+        performance_target_id:
+          type: string
+          example: 1
+        performance_target_value:
+          type: string
+          example: 20
+
+    PerformanceKpiAttribute:
+      type: object
+      properties:
+        attribute_id:
+          type: string
+        data_type:
+          type: string
+          enum:
+            - PERFORMANCE_KPI
+        employee_id:
+          type: integer
+          example: 17
+        performance_target_kpis:
+          type: array
+          items:
+            $ref: "#/components/schemas/PerformanceTarget"
+
+    PerformanceTargetKpi:
+      type: object
+      properties:
+        performance_target_id:
+          type: string
+          example: id_123
+        performance_kpis:
+          type: array
+          items:
+            $ref: "#/components/schemas/PerformanceKpi"
+
+    PerformanceKpi:
+      type: object
+      properties:
+        performance_kpi_id:
+          type: string
+          example: kpi_123
+        performance_kpi_value:
+          type: string
+          example: 14
+
+    SalaryAttribute:
+      type: object
+      properties:
+        attribute_id:
+          type: string
+          example: salary_123
+        data_type:
+          type: string
+          enum:
+            - SALARY
+        amount:
+          type: string
+          example: 12.20
+        currency_symbol:
+          type: string
+          example: $
+        employee_id:
+          type: integer
+          example: 17
+
+    CompensationAttribute:
+      type: object
+      properties:
+        attribute_id:
+          type: string
+          example: ABCXXX
+        data_type:
+          type: string
+          enum:
+            - COMPENSATION
+        amount:
+          type: string
+          example: 12.20
+        currency_code:
+          type: string
+          example: USD
+        currency_symbol:
+          type: string
+          example: $
+        overtime_hours:
+          type: string
+          example: 12
+        bonus_type:
+          type: string
+          example: MAX
+        employee_id:
+          type: integer
+          example: 17
+
+    DefaultHistoricalAttribute:
+      type: object
+      properties:
+        attribute_id:
+          type: string
+          example: first_name
+        data_type:
+          type: string
+          enum:
+            - TEXT
+        value:
+          type: string
+          example: Robert
+        employee_id:
+          type: integer
+          example: 17
+        effective_date:
+          type: string
+          example: 2021-01-01
+
+    DurationHistoricalAttribute:
+      type: object
+      properties:
+        attribute_id:
+          type: string
+          example: duration_123
+        data_type:
+          type: string
+          enum:
+            - DURATION
+        duration:
+          type: integer
+          example: 10
+        employee_id:
+          type: integer
+          example: 17
+        effective_date:
+          type: string
+          example: 2021-01-01
+
+    EntityHistoricalAttribute:
+      type: object
+      properties:
+        attribute_id:
+          type: string
+          example: department
+        entity_id:
+          type: string
+          example: 1
+        data_type:
+          type: string
+          enum:
+            - ENTITY
+        value:
+          type: string
+          example: IT
+        employee_id:
+          type: integer
+          example: 17
+        effective_date:
+          type: string
+          example: 2021-01-01
+
+    CostCenterHistoricalAttribute:
+      type: object
+      properties:
+        attribute_id:
+          type: string
+          example: cost_center
+        data_type:
+          type: string
+          enum:
+            - COST_CENTER
+        employee_id:
+          type: integer
+          example: 17
+        cost_centers:
+          type: array
+          items:
+            $ref: "#/components/schemas/CostCenter"
+        effective_date:
+          type: string
+          example: 2021-01-01
+
+    SalaryHistoricalAttribute:
+      type: object
+      properties:
+        attribute_id:
+          type: string
+          example: salary_123
+        data_type:
+          type: string
+          enum:
+            - SALARY
+        amount:
+          type: string
+          example: 12.20
+        currency_symbol:
+          type: string
+          example: $
+        employee_id:
+          type: integer
+          example: 17
+        effective_date:
+          type: string
+          example: 2021-01-01
+
+    PublicAPIException:
+      type: array
+      items:
+        $ref: "#/components/schemas/CustomReportsErrorResponse"
+
+    CustomReportsErrorResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 500
+        trace_id:
+          type: string
+          example: ABCXXX
+        timestamp:
+          type: string
+          format: date-time
+          example: "2020-01-01T00:00:00Z"
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/ErrorDetails"
+
+    ErrorDetails:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Not Found
+        details:
+          type: string
+          example: Report not found
+        type:
+          type: string
+          example: search
+        _meta:
+          type: array
+          items:
+            $ref: "#/components/schemas/ErrorMeta"
+
+    ErrorMeta:
+      type: object
+      properties:
+        field:
+          type: string
+          example: ID
+        description:
+          type: string
+          example: Report ID not found
