@@ -2223,13 +2223,6 @@ paths:
       parameters:
         - $ref: "#/components/parameters/XPersonioPartnerID"
         - $ref: "#/components/parameters/XPersonioAppID"
-        - name: X-Company-Id
-          in: header
-          schema:
-            type: integer
-          example: 12
-          required: true
-          description: The ID of the company used in the request.
         - name: report_ids
           in: query
           schema:
@@ -2269,13 +2262,6 @@ paths:
       parameters:
         - $ref: "#/components/parameters/XPersonioPartnerID"
         - $ref: "#/components/parameters/XPersonioAppID"
-        - name: X-Company-Id
-          in: header
-          schema:
-            type: integer
-          example: 12
-          description: The ID of the company used in the request.
-          required: true
         - name: report_id
           in: path
           schema:
@@ -2319,13 +2305,6 @@ paths:
       parameters:
         - $ref: "#/components/parameters/XPersonioPartnerID"
         - $ref: "#/components/parameters/XPersonioAppID"
-        - name: X-Company-Id
-          in: header
-          schema:
-            type: integer
-          example: 1
-          description: The ID of the company used in the request.
-          required: true
         - name: columns
           in: query
           schema:
