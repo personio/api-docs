@@ -2239,7 +2239,7 @@ paths:
           example: "up_to_date"
           required: false
           description: The status of the report to filter the results.
-      description: List of reports
+      description: This endpoint provides you with metadata about existing custom reports in your Personio account, such as report name, report type, report date / timeframe.
       operationId: listReports
       responses:
         200:
@@ -2276,7 +2276,7 @@ paths:
             type: string
           example: "de"
           required: false
-      description: Get report with items
+      description: This endpoint provides you with the data of an existing Custom Report. 
       operationId: listReportItems
       responses:
         200:
@@ -2328,7 +2328,7 @@ paths:
           example: "eea50309-d1b1-47d6-bc7e-27de7a3ab491"
           description: The ID of the report to filter the result of the columns. If no ID is passed, all columns for the company are returned.
           required: false
-      description: List of columns
+      description: This endpoint provides human-readable labels for report table columns. It is particularly important if you get a report with custom attributes or absence data to match the column IDs to the translation. 
       operationId: listColumns
       responses:
         200:
@@ -4184,7 +4184,10 @@ components:
           type: string
           example: "Report"
         attributes:
-          $ref: "#/components/schemas/PublicReportItemsAttributes"
+          oneOf:
+            - $ref: "#/components/schemas/PublicReportItemsAttributes"
+            - $ref: "#/components/schemas/PublicTimeframeReportItemsAttributes"
+            - $ref: "#/components/schemas/PublicHistoricalReportItemsAttributes"
 
     PublicColumnData:
       type: object
@@ -4237,13 +4240,6 @@ components:
             - point_in_time
             - historical_data
             - timeframe
-        employee_status:
-          type: string
-          example: currently_active
-          enum:
-            - currently_active
-            - active_at_given_date
-            - all
         status:
           type: string
           example: up_to_date
@@ -4254,23 +4250,23 @@ components:
         start_date:
           type: string
           format: date
-          example: "2019-04-01"
+          example: "2022-09-01"
         end_date:
           type: string
           format: date
-          example: "2019-04-10"
+          example: "2022-09-30"
         created_at:
           type: string
           format: date-time
-          example: "2019-04-10T17:32:28Z"
+          example: "2022-04-10T17:32:28Z"
         updated_at:
           type: string
           format: date-time
-          example: "2019-04-10T17:32:28Z"
+          example: "2022-04-10T17:32:28Z"
         data_refreshed_at:
           type: string
           format: date-time
-          example: "2019-04-10T17:32:28Z"
+          example: "2022-04-10T17:32:28Z"
         columns:
           type: array
           items:
@@ -4310,10 +4306,10 @@ components:
           example: "eb7482f3-2323-43e2-87ed-99d2399e8e22"
         name:
           type: string
-          example: Employee vacations past month
+          example: Employee vacations at a specific point in time
         description:
           type: string
-          example: Shows vacations of all employees that were taken past month
+          example: Shows vacations of all employees on a specific date
         author_first_name:
           type: string
           description: Report author
@@ -4327,15 +4323,6 @@ components:
           example: point_in_time
           enum:
             - point_in_time
-            - historical_data
-            - timeframe
-        employee_status:
-          type: string
-          example: currently_active
-          enum:
-            - currently_active
-            - active_at_given_date
-            - all
         status:
           type: string
           example: created
@@ -4346,23 +4333,23 @@ components:
         start_date:
           type: string
           format: date-time
-          example: "2019-04-01"
+          example: "2022-04-10"
         end_date:
           type: string
           format: date-time
-          example: "2019-04-10"
+          example: "2022-04-10"
         created_at:
           type: string
           format: date-time
-          example: "2019-04-10T17:32:28Z"
+          example: "2022-04-10T17:32:28Z"
         updated_at:
           type: string
           format: date-time
-          example: "2019-04-10T17:32:28Z"
+          example: "2022-04-10T17:32:28Z"
         data_refreshed_at:
           type: string
           format: date-time
-          example: "2019-04-10T17:32:28Z"
+          example: "2022-04-10T17:32:28Z"
         columns:
           type: array
           items:
@@ -4387,12 +4374,15 @@ components:
           enum:
             - fixed
             - today
-            - last_month
+            - yesterday
+            - last_day_of_this_week
+            - last_day_of_last_week
             - last_day_of_this_month
-            - this_year
-            - last_thirty_days
-            - this_month
-            - year_to_date
+            - last_day_of_last_month
+            - last_day_of_this_quarter
+            - last_day_of_last_quarter
+            - last_day_of_this_year
+            - last_day_of_last_year
         items:
           type: array
           items:
@@ -4415,6 +4405,216 @@ components:
                     - $ref: "#/components/schemas/PerformanceKpiAttribute"
                     - $ref: "#/components/schemas/SalaryAttribute"
                     - $ref: "#/components/schemas/CompensationAttribute"
+
+    PublicTimeframeReportItemsAttributes:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "eb7482f3-2323-43e2-87ed-99d2399e8e22"
+        name:
+          type: string
+          example: Employee vacations past month
+        description:
+          type: string
+          example: Shows vacations of all employees that were taken past month
+        author_first_name:
+          type: string
+          description: Report author
+          example: Robert
+        author_last_name:
+          type: string
+          description: Report author
+          example: Sirano
+        type:
+          type: string
+          example: timeframe
+          enum:
+            - timeframe
+        status:
+          type: string
+          example: created
+          enum:
+            - up_to_date
+            - updating
+            - update_failed
+        start_date:
+          type: string
+          format: date-time
+          example: "2022-04-01"
+        end_date:
+          type: string
+          format: date-time
+          example: "2022-04-10"
+        created_at:
+          type: string
+          format: date-time
+          example: "2022-04-10T17:32:28Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2022-04-10T17:32:28Z"
+        data_refreshed_at:
+          type: string
+          format: date-time
+          example: "2022-04-10T17:32:28Z"
+        columns:
+          type: array
+          items:
+            type: string
+        filters:
+          type: array
+          items:
+            type: object
+            properties:
+              column:
+                type: string
+                example: office_id
+              comparison:
+                type: string
+                example: eq
+              value:
+                type: string
+                example: 1
+        period_type:
+          type: string
+          example: fixed
+          enum:
+            - fixed
+            - today
+            - yesterday
+            - this_week
+            - last_week
+            - this_month
+            - last_month
+            - last_thirty_days
+            - next_month
+            - this_quarter
+            - last_quarter
+            - this_year
+            - year_to_date
+            - last_year
+            - next_year
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              employee_id:
+                type: integer
+                example: 17
+              attributes:
+                type: array
+                items:
+                  anyOf:
+                    - $ref: "#/components/schemas/DefaultAttribute"
+                    - $ref: "#/components/schemas/EntityAttribute"
+                    - $ref: "#/components/schemas/DurationAttribute"
+                    - $ref: "#/components/schemas/CostCenterAttribute"
+                    - $ref: "#/components/schemas/AbsenceOverviewAttribute"
+                    - $ref: "#/components/schemas/AbsencePeriodAttribute"
+                    - $ref: "#/components/schemas/PerformanceTargetAttribute"
+                    - $ref: "#/components/schemas/PerformanceKpiAttribute"
+                    - $ref: "#/components/schemas/SalaryAttribute"
+                    - $ref: "#/components/schemas/CompensationAttribute"
+
+    PublicHistoricalReportItemsAttributes:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "eb7482f3-2323-43e2-87ed-99d2399e8e22"
+        name:
+          type: string
+          example: Department changes in the past year
+        description:
+          type: string
+          example: Shows department changes of all employees over the past year
+        author_first_name:
+          type: string
+          description: Report author
+          example: Robert
+        author_last_name:
+          type: string
+          description: Report author
+          example: Sirano
+        type:
+          type: string
+          example: historical_data
+          enum:
+            - historical_data
+        status:
+          type: string
+          example: created
+          enum:
+            - up_to_date
+            - updating
+            - update_failed
+        start_date:
+          type: string
+          format: date-time
+          example: "2022-01-01"
+        end_date:
+          type: string
+          format: date-time
+          example: "2022-09-30"
+        created_at:
+          type: string
+          format: date-time
+          example: "2022-04-10T17:32:28Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2022-04-10T17:32:28Z"
+        data_refreshed_at:
+          type: string
+          format: date-time
+          example: "2022-04-10T17:32:28Z"
+        columns:
+          type: array
+          items:
+            type: string
+        filters:
+          type: array
+          items:
+            type: object
+            properties:
+              column:
+                type: string
+                example: office_id
+              comparison:
+                type: string
+                example: eq
+              value:
+                type: string
+                example: 1
+        period_type:
+          type: string
+          example: fixed
+          enum:
+            - fixed
+            - today
+            - yesterday
+            - this_week
+            - last_week
+            - this_month
+            - last_month
+            - last_thirty_days
+            - next_month
+            - this_quarter
+            - last_quarter
+            - this_year
+            - year_to_date
+            - last_year
+            - next_year
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              employee_id:
+                type: integer
+                example: 17
               historical_attributes:
                 type: array
                 items:
@@ -4506,11 +4706,11 @@ components:
         start_date:
           type: string
           format: date
-          example: "2019-12-01"
+          example: "2022-03-01"
         end_date:
           type: string
           format: date
-          example: "2019-12-01"
+          example: "2022-03-03"
         duration_days:
           type: string
           example: 2
@@ -4526,7 +4726,7 @@ components:
       properties:
         attribute_id:
           type: string
-          example: period_123
+          example: "absence_123:periods"
         data_type:
           type: string
           enum:
@@ -4534,11 +4734,11 @@ components:
         start_date:
           type: string
           format: date
-          example: "2019-12-01"
+          example: "2022-03-01"
         end_date:
           type: string
           format: date
-          example: "2019-12-01"
+          example: "2022-03-03"
         half_day_at_start:
           type: boolean
         half_day_at_end:
@@ -4552,7 +4752,7 @@ components:
       properties:
         attribute_id:
           type: string
-          example: duration_123
+          example: attendance_contractual_target_hours
         data_type:
           type: string
           enum:
@@ -4569,7 +4769,7 @@ components:
       properties:
         attribute_id:
           type: string
-          example: performance_target_123
+          example: performance_target_name
         data_type:
           type: string
           enum:
@@ -4704,7 +4904,7 @@ components:
       properties:
         attribute_id:
           type: string
-          example: duration_123
+          example: attendance_contractual_target_hours
         data_type:
           type: string
           enum:
