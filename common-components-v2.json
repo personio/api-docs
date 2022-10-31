@@ -28,6 +28,7 @@
       "MetaObject": {
         "description": "This object represents the metadata information for an object. It's a set of arbitrary key/value attributes such as `links`.",
         "type": "object",
+        "readOnly": true,
         "properties": {
           "links": {
             "type": "object",
@@ -44,11 +45,13 @@
         "description": "This is an object that is returned whenever a new resource is created. It contains the unique identifier for the created resource and optionally a link that can be used to retrieve it.",
         "properties": {
           "id": {
+            "readOnly": true,
             "type": "string",
             "example": "some-random-id",
             "description": "The id of the created resource."
           },
           "_meta": {
+            "readOnly": true,
             "type": "object",
             "properties": {
               "links": {
@@ -98,7 +101,7 @@
       },
       "ErrorResponse": {
         "type": "object",
-        "description": "asdf",
+        "description": "This object represents an error response.",
         "properties": {
           "trace_id": {
             "type": "string",
