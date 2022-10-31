@@ -1,0 +1,185 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "This specification provides common re-usable components for the public API.",
+    "version": "2.0",
+    "title": "Public API V2 Common components"
+  },
+  "servers": [
+    {
+      "url": "https://api.personio.de"
+    }
+  ],
+  "paths": null,
+  "components": {
+    "responses": {
+      "NotFoundResponse": {
+        "description": "The requested resource was not found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ResourceNotFound"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "MetaObject": {
+        "description": "This object represents the metadata information for an object. It's a set of arbitrary key/value attributes such as `links`.",
+        "type": "object",
+        "properties": {
+          "links": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "example": {
+              "self": "https://api.personio.de/v2/person?cursor=<current-cursor>"
+            }
+          }
+        }
+      },
+      "CreatedObject": {
+        "description": "This is an object that is returned whenever a new resource is created. It contains the unique identifier for the created resource and optionally a link that can be used to retrieve it.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "some-random-id",
+            "description": "The id of the created resource."
+          },
+          "_meta": {
+            "type": "object",
+            "properties": {
+              "links": {
+                "type": "object",
+                "properties": {
+                  "self": {
+                    "type": "string",
+                    "format": "uri",
+                    "example": "https://api.personio.de/v2/persons/some-person-id"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "DateTimeWithTimezone": {
+        "description": "Definition of date + timestamp formats.",
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2022-01-01T14:07:17.000Z",
+            "description": "Date + timestamp. Date time has no offset from UTC."
+          },
+          "timezone": {
+            "type": "string",
+            "example": "Europe/Berlin",
+            "description": "Timezone database name."
+          }
+        }
+      },
+      "ResourceNotFound": {
+        "description": "This object is used to describe the use case where a specific requested resource does not exist.",
+        "x-papi-gateway-errors": [
+          {
+            "code": "common.requested_resource_not_found",
+            "description": "The requested resource was not found. The resource could have been deleted or never existed in our system\""
+          }
+        ],
+        "properties": {
+          "schema": {
+            "$ref": "#/components/schemas/ErrorResponse"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "description": "asdf",
+        "properties": {
+          "trace_id": {
+            "type": "string",
+            "example": "aswo3f-a202lfso-312123sld-1230ddd",
+            "description": "A unique ID that was created for this error."
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2021-05-28T11:17:30.000Z",
+            "description": "The timestamp of when the error occurred."
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Not found",
+                  "description": "The title of the error."
+                },
+                "detail": {
+                  "type": "string",
+                  "example": "The requested resource was not found.",
+                  "description": "A short description about the error."
+                },
+                "type": {
+                  "type": "string",
+                  "format": "uri",
+                  "example": "https://developer.personio.de/reference/errors#common.requested_resource_not_found",
+                  "description": "A link to the developer hub where more information can be found for the encountered error."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "PersonioPartnerId": {
+        "name": "Personio-Partner-ID",
+        "in": "header",
+        "required": false,
+        "description": "The partner identifier. This is an optional header in case you are a partner of Personio. The value  should represent your distinct company name and must be provided in UPPER_SNAKE_CASE. For example MY_COMPANY_NAME. [Read more details](https://developer.personio.de/reference/include-our-headers-in-your-requests)",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "PersonioAppId": {
+        "name": "Personio-App-ID",
+        "in": "header",
+        "required": false,
+        "description": "The application identifier. This is an optional header in case you are a partner of Personio. The value should represent your distinct application within your company. The name and must be provided in UPPER_SNAKE_CASE.  For example MY_APPLICATION_NAME.  [Read more details](https://developer.personio.de/reference/include-our-headers-in-your-requests)",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Pagination": {
+        "in": "query",
+        "name": "limit",
+        "required": false,
+        "schema": {
+          "example": 100,
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200,
+          "default": 100
+        },
+        "description": "The amount of resources to be returned per one request. It can range between 1 and 200,  and the default is 100."
+      },
+      "Cursor": {
+        "in": "query",
+        "name": "cursor",
+        "example": "cur_82sQwR2eZvKilo2duNh219Kw",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The pagination cursor to navigate over to the next list of resources. If you pass a specific limit to your  request, or you rely on the default value of the number of resources to be returned, then your subsequent call has to include the cursor in order to retrieve the next list of resources. If cursor is missing,  the first page is returned."
+      }
+    }
+  }
+}
