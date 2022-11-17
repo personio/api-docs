@@ -82,7 +82,7 @@ paths:
         - name: updated_since
           in: query
           required: false
-          description: Find an employees that had been updated since the provided value. The format is `ISO 8601` (2022-12-24T08:15:30).
+          description: Find all employees that have been updated since the provided date. The format is `ISO 8601` (2022-12-24T08:15:30).
           schema:
             type: string
             example: 2022-12-24T08:15:30
