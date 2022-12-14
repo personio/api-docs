@@ -570,15 +570,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: "#/components/schemas/EmployeeCreatedResponse"
-              examples:
-                response:
-                  value:
-                    success: true
-                    data:
-                      id: 81723
-                      message: "success"
+                $ref: "#/components/schemas/EmployeeUpdatedResponse"
 
     get:
       security:
@@ -2786,6 +2778,25 @@ components:
               example: 1
             message:
               example: success
+
+    EmployeeUpdatedResponse:
+      title: Successfully updated employee response
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            id:
+              type: number
+              example: 12345
+        meta:
+          type: array
+          items:
+            type: string
+          default: []
 
     Office:
       type: object
