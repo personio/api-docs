@@ -1598,19 +1598,20 @@ paths:
         - name: limit
           in: query
           required: false
-          description: Pagination attribute to limit how many attendances is returning per page
+          description: Pagination attribute to limit how many absences to return per page. Maximum is 200.
           schema:
             type: integer
             minimum: 1
+            maximum: 200
             default: 200
         - name: offset
           in: query
           required: false
-          description: Pagination attribute to identify which page you are requesting, by the form of telling an offset from the first record that would be returned.
+          description: Pagination attribute to identify which page to request from the chunks indicated by `limit`. The value `0` is interpreted as page `1`. You cannot pass a value larger than the available amount of pages, as returned by the `total_pages` meta data in the response.
           schema:
             type: integer
-            minimum: 0
-            default: 0
+            minimum: 1
+            default: 1
       responses:
         "200":
           description: ""
