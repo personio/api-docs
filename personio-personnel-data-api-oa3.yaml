@@ -448,6 +448,9 @@ paths:
                 "employee[weekly_working_hours]":
                   description: Employee weekly working hours
                   type: number
+                "employee[supervisor_id]":
+                  description: Employee ID of the supervisor
+                  type: number
                 "employee[status]":
                   description: Employee status
                   type: string
@@ -541,6 +544,9 @@ paths:
                       type: string
                       description: "Status of the employee."
                       example: "active"
+                    supervisor_id:
+                      type: number
+                      example: 1
                     custom_attributes:
                       type: object
                       properties:
@@ -579,6 +585,9 @@ paths:
                   pattern: ^\d{4}-\d{2}-\d{2}$
                 "employee[weekly_working_hours]":
                   description: Employee weekly working hours
+                  type: number
+                "employee[supervisor_id]":
+                  description: Employee ID of the supervisor
                   type: number
                 "employee[status]":
                   description: Employee status
