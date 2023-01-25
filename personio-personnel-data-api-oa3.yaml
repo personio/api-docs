@@ -351,7 +351,7 @@ paths:
         - Employees
       summary: Create an employee
       description: >
-        Creates new employee. Status of the employee will be set to `active` if `hire_date` provided is in the past. Otherwise status will be set to `onboarding`. This endpoint responds with `id` of created employee in case of success.
+        Creates a new employee. If the employee's status is not provided, it will be set based on the `hire_date` value - if it is in the past, status will be `active`, otherwise `onboarding`. This endpoint responds with the `id` of the created employee in case of success.
       requestBody:
         content:
           application/json:
@@ -393,11 +393,15 @@ paths:
                       type: string
                       example: '2020-01-31'
                       format: date
-                      description: "Employee hire date. Format: yyyy-mm-dd"
+                      description: "Employee hire date. Format: \"yyyy-mm-dd\". If `status` is not provided, it will be set to `active` if the hire date is in the past, or to `onboarding` if it's in the future."
                       pattern: ^\d{4}-\d{2}-\d{2}$
                     weekly_working_hours:
                       type: number
                       example: 40
+                    status:
+                      type: string
+                      description: "Status of the employee. Overrides the status determined based on the value of `hire_date`."
+                      example: "active"
                     custom_attributes:
                       type: object
                       properties:
@@ -444,6 +448,14 @@ paths:
                 "employee[weekly_working_hours]":
                   description: Employee weekly working hours
                   type: number
+                "employee[status]":
+                  description: Employee status
+                  type: string
+                  enum:
+                    - onboarding
+                    - active
+                    - leave
+                    - inactive
               required:
                 - employee[email]
                 - employee[first_name]
@@ -520,11 +532,15 @@ paths:
                       type: string
                       example: '2020-01-31'
                       format: date
-                      description: "Employee hire date. Format: yyyy-mm-dd"
+                      description: "Employee hire date. Format: \"yyyy-mm-dd\". Update of the `hire_date` will not update employee status on its own (for that you'll need to update the `status` field)"
                       pattern: ^\d{4}-\d{2}-\d{2}$
                     weekly_working_hours:
                       type: number
                       example: 40
+                    status:
+                      type: string
+                      description: "Status of the employee."
+                      example: "active"
                     custom_attributes:
                       type: object
                       properties:
@@ -564,6 +580,14 @@ paths:
                 "employee[weekly_working_hours]":
                   description: Employee weekly working hours
                   type: number
+                "employee[status]":
+                  description: Employee status
+                  type: string
+                  enum:
+                    - onboarding
+                    - active
+                    - leave
+                    - inactive
       responses:
         "200":
           description: Employee is updated
@@ -2275,7 +2299,7 @@ paths:
             type: string
           example: "de"
           required: false
-      description: This endpoint provides you with the data of an existing Custom Report. 
+      description: This endpoint provides you with the data of an existing Custom Report.
       operationId: listReportItems
       responses:
         200:
@@ -2327,7 +2351,7 @@ paths:
           example: "eea50309-d1b1-47d6-bc7e-27de7a3ab491"
           description: The ID of the report to filter the result of the columns. If no ID is passed, all columns for the company are returned.
           required: false
-      description: This endpoint provides human-readable labels for report table columns. It is particularly important if you get a report with custom attributes or absence data to match the column IDs to the translation. 
+      description: This endpoint provides human-readable labels for report table columns. It is particularly important if you get a report with custom attributes or absence data to match the column IDs to the translation.
       operationId: listColumns
       responses:
         200:
