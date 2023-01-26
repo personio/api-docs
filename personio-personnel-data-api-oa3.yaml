@@ -449,7 +449,7 @@ paths:
                   description: Employee weekly working hours
                   type: number
                 "employee[supervisor_id]":
-                  description: Employee ID of the supervisor
+                  description: Employee ID of the Supervisor to be assigned. It needs to belong to a current existing employee, otherwise an error will be returned. If not present, no supervisor will be assigned.
                   type: number
                 "employee[status]":
                   description: Employee status
@@ -546,6 +546,7 @@ paths:
                       example: "active"
                     supervisor_id:
                       type: number
+                      description: Employee ID of the Supervisor to be assigned. It needs to belong to a current existing employee and not the same as the one of the employee being updated, otherwise an error will be returned. If sent as null, will unset the employee's supervisor.
                       example: 1
                     custom_attributes:
                       type: object
@@ -587,7 +588,7 @@ paths:
                   description: Employee weekly working hours
                   type: number
                 "employee[supervisor_id]":
-                  description: Employee ID of the supervisor
+                  description: Employee ID of the Supervisor to be assigned. It needs to belong to a current existing employee and not the same as the one of the employee being updated, otherwise an error will be returned. If sent as null, will unset the employee's supervisor.
                   type: number
                 "employee[status]":
                   description: Employee status
