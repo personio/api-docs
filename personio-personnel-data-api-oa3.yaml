@@ -82,7 +82,7 @@ paths:
         - name: updated_since
           in: query
           required: false
-          description: "Find all employees that have been updated since the provided date. The format is `ISO 8601` (2022-12-24T08:15:30). NOTE: when using the updated_since filter, the email, limit, offset parameters are ignored."
+          description: "Find all employees that have been updated since the provided date. The format is `ISO 8601` (2022-12-24T08:15:30). NOTE: when using the updated_since filter, the email, limit, and offset parameters are ignored."
           schema:
             type: string
             example: 2022-12-24T08:15:30
