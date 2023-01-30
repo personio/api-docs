@@ -76,13 +76,13 @@ paths:
         - name: email
           in: query
           required: false
-          description: Find an employee with the given email address. The response is still a list, containing only the filtered employee.
+          description: "Find an employee with the given email address. The response is still a list, containing only the filtered employee. NOTE: when using the updated_since filter, the email filter is ignored."
           schema:
             type: string
         - name: updated_since
           in: query
           required: false
-          description: "Find all employees that have been updated since the provided date. The format is `ISO 8601` (2022-12-24T08:15:30). NOTE: when using updated_since, the limit and offset parameters are ignored."
+          description: "Find all employees that have been updated since the provided date. The format is `ISO 8601` (2022-12-24T08:15:30). NOTE: when using the updated_since filter, the email, limit, offset parameters are ignored."
           schema:
             type: string
             example: 2022-12-24T08:15:30
