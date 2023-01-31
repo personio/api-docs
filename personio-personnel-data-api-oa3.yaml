@@ -448,6 +448,9 @@ paths:
                 "employee[weekly_working_hours]":
                   description: Employee weekly working hours
                   type: number
+                "employee[supervisor_id]":
+                  description: Employee ID of the Supervisor to be assigned. It needs to belong to a current existing employee, otherwise an error will be returned. If not present, no supervisor will be assigned.
+                  type: number
                 "employee[status]":
                   description: Employee status
                   type: string
@@ -475,6 +478,20 @@ paths:
                     data:
                       id: 81723
                       message: "success"
+        "422":
+          description: Employee creation failed due to invalid payload
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/EmployeeCreationErrorResponse"
+              examples:
+                response:
+                  value:
+                    success: false
+                    error:
+                      code: 422
+                      message: "Supervisor with ID 1 not found"
   "/company/employees/{employee_id}":
     parameters:
       - $ref: "#/components/parameters/XPersonioPartnerID"
@@ -541,6 +558,10 @@ paths:
                       type: string
                       description: "Status of the employee."
                       example: "active"
+                    supervisor_id:
+                      type: number
+                      description: Employee ID of the Supervisor to be assigned. It needs to belong to a current existing employee and not the same as the one of the employee being updated, otherwise an error will be returned. If sent as null, will unset the employee's supervisor.
+                      example: 1
                     custom_attributes:
                       type: object
                       properties:
@@ -580,6 +601,9 @@ paths:
                 "employee[weekly_working_hours]":
                   description: Employee weekly working hours
                   type: number
+                "employee[supervisor_id]":
+                  description: Employee ID of the Supervisor to be assigned. It needs to belong to a current existing employee and not the same as the one of the employee being updated, otherwise an error will be returned. If sent as null, will unset the employee's supervisor.
+                  type: number
                 "employee[status]":
                   description: Employee status
                   type: string
@@ -595,6 +619,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EmployeeUpdatedResponse"
+        "422":
+          description: Employee update failed due to invalid payload
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeeUpdateErrorResponse"
 
     get:
       security:
@@ -2789,7 +2819,7 @@ components:
               example: Es ist ein Problem aufgetreten
 
     EmployeeCreatedResponse:
-      title: Sucsefully created employee response
+      title: Successfully created employee response
       type: object
       properties:
         success:
@@ -2801,7 +2831,24 @@ components:
               type: number
               example: 1
             message:
+              type: string
               example: success
+
+    EmployeeCreationErrorResponse:
+      title: Employee creation failed due to invalid payload
+      type: object
+      properties:
+        success:
+          type: boolean
+        error:
+          type: object
+          properties:
+            code:
+              type: number
+              example: 422
+            message:
+              type: string
+              example: "Supervisor with ID 1 not found"
 
     EmployeeUpdatedResponse:
       title: Successfully updated employee response
@@ -2821,6 +2868,22 @@ components:
           items:
             type: string
           default: []
+
+    EmployeeUpdateErrorResponse:
+      title: Employee update failed due to invalid payload
+      type: object
+      properties:
+        success:
+          type: boolean
+        error:
+          type: object
+          properties:
+            code:
+              type: number
+              example: 422
+            message:
+              type: string
+              example: "Supervisor with ID 1 not found"
 
     Office:
       type: object
