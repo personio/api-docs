@@ -402,6 +402,10 @@ paths:
                       type: string
                       description: "Status of the employee. Overrides the status determined based on the value of `hire_date`."
                       example: "active"
+                    "supervisor_id":
+                      description: Employee ID of the Supervisor to be assigned. It needs to belong to a current existing employee, otherwise an error will be returned. If not present, no supervisor will be assigned.
+                      type: number
+                      example: 5
                     custom_attributes:
                       type: object
                       properties:
@@ -561,7 +565,7 @@ paths:
                     supervisor_id:
                       type: number
                       description: Employee ID of the Supervisor to be assigned. It needs to belong to a current existing employee and not the same as the one of the employee being updated, otherwise an error will be returned. If sent as null, will unset the employee's supervisor.
-                      example: 1
+                      example: 5
                     custom_attributes:
                       type: object
                       properties:
