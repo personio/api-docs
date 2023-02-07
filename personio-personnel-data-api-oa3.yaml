@@ -1656,7 +1656,7 @@ paths:
         - name: limit
           in: query
           required: false
-          description: Pagination attribute to limit how many attendances is returning per page
+          description: Pagination attribute to limit the number of absence periods per page
           schema:
             type: integer
             minimum: 1
@@ -1664,7 +1664,7 @@ paths:
         - name: offset
           in: query
           required: false
-          description: Pagination attribute to identify which page you are requesting, by the form of telling an offset from the first record that would be returned.
+          description: Pagination attribute to identify which page number you are requesting
           schema:
             type: integer
             minimum: 0
