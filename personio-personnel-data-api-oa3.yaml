@@ -1123,7 +1123,7 @@ paths:
         - name: offset
           in: query
           required: false
-          description: The offset from the first record that would be returned. With total of 3 results and provided offset of 1, two results will be returned.
+          description: The offset from the first record that would be returned. With 3 results [A, B, C] and an offset of 1, the following two results are returned [B, C].
           schema:
             type: integer
             minimum: 0
