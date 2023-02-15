@@ -1123,7 +1123,7 @@ paths:
         - name: offset
           in: query
           required: false
-          description: Pagination attribute to identify which page you are requesting, by the form of telling an offset from the first record that would be returned.
+          description: The offset from the first record that would be returned. With 3 results and an offset of 1, 2 results are returned.
           schema:
             type: integer
             minimum: 0
