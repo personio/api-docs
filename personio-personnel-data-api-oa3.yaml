@@ -2127,7 +2127,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: "#/components/schemas/DocumentUploadRequest"
-        description: Upload data. Maximum size 30MB.
+        description: Data necessary for document upload.
       x-readme:
         code-samples:
           - language: "powershell"
@@ -2400,7 +2400,7 @@ components:
         file:
           type: string
           format: binary
-          description: The document that shall be uploaded to an employees profile
+          description: The document that shall be uploaded to an employees profile. Maximum file size is 30MB.
       required:
         - title
         - employee_id
