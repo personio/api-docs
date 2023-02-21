@@ -2127,7 +2127,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: "#/components/schemas/DocumentUploadRequest"
-        description: Needed data to upload a document
+        description: Upload data. Maximum size 30MB.
       x-readme:
         code-samples:
           - language: "powershell"
@@ -2275,7 +2275,7 @@ paths:
             type: string
           example: "de"
           required: false
-      description: This endpoint provides you with the data of an existing Custom Report. 
+      description: This endpoint provides you with the data of an existing Custom Report.
       operationId: listReportItems
       responses:
         200:
@@ -2327,7 +2327,7 @@ paths:
           example: "eea50309-d1b1-47d6-bc7e-27de7a3ab491"
           description: The ID of the report to filter the result of the columns. If no ID is passed, all columns for the company are returned.
           required: false
-      description: This endpoint provides human-readable labels for report table columns. It is particularly important if you get a report with custom attributes or absence data to match the column IDs to the translation. 
+      description: This endpoint provides human-readable labels for report table columns. It is particularly important if you get a report with custom attributes or absence data to match the column IDs to the translation.
       operationId: listColumns
       responses:
         200:
