@@ -503,7 +503,7 @@ components:
         | errors.file-validation.file-not-exists           | The supplied reference could not be resolved.                               |
         | errors.invalid-file-type                         | The supplied file is of an unsupported format.                              |
         | errors.file-too-big                              | The file size exceeded the configured limit                                 |
-        | errors.applicant-exists                          | We could not verify that this email has not yet applied to this position.   |
+        | errors.applicant-already-exists                  | We could not verify that this email has not yet applied to this position.   |
         | errors.posting-validation.posting-not-found      | The job posting could not be found or did not match the supplied channel.   |
         | errors.posting-validation.channel-not-found      | The recruiting channel could not be found.                                  |
         | feature.recruiting.disabled                      | Your company does not have access to Personio's recruiting features.        |
