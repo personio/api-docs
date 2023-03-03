@@ -494,20 +494,26 @@ components:
         Includes details about errors when submitting an application.
         Possible Error codes:
 
-        |                       code                       |                                   Meaning                                   |
-        |:------------------------------------------------:|:---------------------------------------------------------------------------:|
-        |                                                  | The supplied attribute was not found in our system.                         |
-        | errors.attribute-validation.required-attribute   | A required attribute was missing, null or blank.                            |
-        | errors.attribute-validation.invalid-date-format  | The supplied date attribute did not match the "ISO-8601 Local Date" format. |
-        | errors.attribute-validation.invalid-email-format | The supplied email seems not to be valid.                                   |
-        | errors.file-validation.file-not-exists           | The supplied reference could not be resolved.                               |
-        | errors.invalid-file-type                         | The supplied file is of an unsupported format.                              |
-        | errors.file-too-big                              | The file size exceeded the configured limit                                 |
-        | errors.applicant-already-exists                  | We could not verify that this email has not yet applied to this position.   |
-        | errors.posting-validation.posting-not-found      | The job posting could not be found or did not match the supplied channel.   |
-        | errors.posting-validation.channel-not-found      | The recruiting channel could not be found.                                  |
-        | feature.recruiting.disabled                      | Your company does not have access to Personio's recruiting features.        |
-        | feature.public-api.disabled                      | Your company does not have access to Personio's recruiting API.             |
+        |                       code                           |                                   Meaning                                   |
+        |:---------------------------------------------------: |:---------------------------------------------------------------------------:|
+        | errors.attribute-validation.unknown                  | The supplied attribute was not found in our system.                         |
+        | errors.attribute-validation.required-attribute       | A required attribute was missing, null or blank.                            |
+        | errors.attribute-validation.invalid-date-format      | The supplied date attribute did not match the "ISO-8601 Local Date" format. |
+        | errors.attribute-validation.invalid-email-format     | The supplied email seems not to be valid.                                   |
+        | errors.attribute-validation.invalid-type             | The supplied attribute type is not supported.                               |
+        | errors.attribute-validation.unknown-attribute-option | The attribute value is not in the provided options.                         |
+        | errors.date-validation.date-in-the-future            | Invalid application date.                                                   |
+        | errors.phase-validation.invalid-system-phase         | The supplied application phase is not supported.                            |
+        | errors.file-validation.file-not-exists               | The supplied reference could not be resolved.                               |
+        | errors.file-validation.unknown-file-category         | The supplied document category is not supported.                            |
+        | errors.invalid-file-type                             | The supplied file is of an unsupported format.                              |
+        | errors.file-too-big                                  | The file size exceeded the configured limit                                 |
+        | errors.applicant-already-exists                      | We could not verify that this email has not yet applied to this position.   |
+        | errors.posting-validation.posting-not-found          | The job posting could not be found or did not match the supplied channel.   |
+        | errors.posting-validation.channel-not-found          | The recruiting channel could not be found.                                  |
+        | errors.job-position.not-published                    | Job position for which the application is created is not published.         |
+        | feature.recruiting.disabled                          | Your company does not have access to Personio's recruiting features.        |
+        | feature.public-api.disabled                          | Your company does not have access to Personio's recruiting API.             |
       properties:
         errors:
           type: array
