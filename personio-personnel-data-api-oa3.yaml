@@ -1740,7 +1740,7 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: "#/components/schemas/CreateTimeOffPeriodRequest"
-        description: Absense data
+        description: Absence data
         required: true
       x-readme:
         code-samples:
@@ -1749,7 +1749,7 @@ paths:
           - language: "php"
             code: "Auto-generated code snippets for this language may not be supported"
       responses:
-        "201":
+        "200":
           description: The absence period is successfully created
           content:
             application/json:
@@ -1804,6 +1804,7 @@ paths:
                         certificate:
                           status: not-required
                         created_at: '2017-01-17T10:32:18+0100'
+                        created_by: 'API'
                         updated_at: '2017-01-17T10:32:18+0100'
         "400":
           description: Invalid request
@@ -1831,7 +1832,7 @@ paths:
                     success: false
                     error:
                       code: 0
-                      message: 'Something went wrong'
+                      message: 'Time-off type not found.'
 
         "422":
           description: Validation error
@@ -2107,6 +2108,7 @@ paths:
                             type: AbsenceType
                             attributes:
                               id: "9bba303f-0fbc-4514-9958-0befa21923fb"
+                              name: "Absence Type Name"
                           certificate:
                             status: not-required
                           start: "2022-05-31T22:00:00.0Z"
@@ -2139,6 +2141,148 @@ paths:
             problem+json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+    post:
+      security:
+        - BearerAuth: [ ]
+      tags:
+        - Absences
+      description: Adds absence data for absence types **tracked in hours**.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/CreateAbsencePeriodRequest"
+        description: Absence data
+        required: true
+      x-readme:
+        code-samples:
+          - language: "powershell"
+            code: "Auto-generated code snippets for this language may not be supported"
+          - language: "php"
+            code: "Auto-generated code snippets for this language may not be supported"
+      responses:
+        "201":
+          description: The absence period was successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/HourlyAbsencePeriodResponse"
+              examples:
+                response:
+                  value:
+                    success: true
+                    data:
+                      - type: AbsencePeriod
+                        attributes:
+                          id: 9bba303f-0fbc-4514-9958-0befa21923fb
+                          measurement_unit: "hour"
+                          effective_duration: 960
+                          employee:
+                            type: Employee
+                            attributes:
+                              id:
+                                label: id
+                                value: 2367
+                                type: integer
+                                universal_id: id
+                              first_name:
+                                label: First name
+                                value: Michael
+                                type: standard
+                                universal_id: first_name
+                              last_name:
+                                label: Last name
+                                value: Miller
+                                type: standard
+                                universal_id: last_name
+                              email:
+                                label: Email
+                                value: michael.miller@demo.com
+                                type: standard
+                                universal_id: email
+                          absence_type:
+                            type: AbsenceType
+                            attributes:
+                              id: "9bba303f-0fbc-4514-9958-0befa21923fb"
+                              name: "Absence Type Name"
+                              time_off_type_id: 45678
+                          certificate:
+                            status: not-required
+                          start: "2022-05-31T22:00:00.0Z"
+                          end: "2022-06-02T22:00:00.0Z"
+                          half_day_start: true
+                          half_day_end: false
+                          comment: "this is a comment"
+                          origin: "web"
+                          status: "approved"
+                          timezone: "Europe/Berlin"
+                          created_by: 1
+                          created_at: "2022-06-20T14:29:56.510Z"
+                          updated_at: "2022-06-20T14:29:56.510Z"
+                          approved_at: "2022-06-20T14:29:56.510Z"
+                          breakdowns:
+                            - date: "2022-06-01"
+                              effective_duration: 480
+                            - date: "2022-06-02"
+                              effective_duration: 480
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorInsertingAbsenceResponse"
+              examples:
+                response:
+                  value:
+                    success: false
+                    error:
+                      code: 400
+                      message: 'Error when trying to insert absence period'
+
+        "404":
+          description: Employee or Absence type not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                response:
+                  value:
+                    success: false
+                    error:
+                      code: 0
+                      message: 'Absence type not found.'
+
+        "422":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorCreateAbsenceResponse"
+              examples:
+                response:
+                  value:
+                    success: false
+                    error:
+                      code: 0
+                      message: 'The given data failed to pass validation.'
+                      error_data: '{...}'
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                response:
+                  value:
+                    success: false
+                    error:
+                      code: 0
+                      message: 'Something went wrong'
 
   "/company/document-categories":
     parameters:
@@ -2721,7 +2865,7 @@ components:
               example: The absence period was not found.
 
     ErrorInsertingAbsenceResponse:
-      title: 400 absense error
+      title: 400 absence error
       type: object
       properties:
         success:
@@ -3808,11 +3952,11 @@ components:
         half_day_start:
           type: boolean
           example: false
-          description: Weather the start date is a half-day off.
+          description: Whether the start date is a half-day off.
         half_day_end:
           type: boolean
           example: false
-          description: Weather the end date is a half-day off.
+          description: Whether the end date is a half-day off.
         comment:
           type: string
           example: Some Comment
@@ -3828,6 +3972,63 @@ components:
         - end_date
         - half_day_start
         - half_day_end
+    CreateAbsencePeriodRequest:
+      title: Create Absence periods **tracked in hours**
+      type: object
+      properties:
+        employee_id:
+          type: integer
+          description: Employee identifier
+          example: 10735
+        time_off_type_id:
+          type: integer
+          description: Time-off type identifier
+          example: 10735
+        start_date:
+          type: string
+          format: date
+          description: "Absence start date. Format: yyyy-mm-dd"
+          example: '2020-01-31'
+        end_date:
+          type: string
+          format: date
+          description: "Absence end date. Format: yyyy-mm-dd"
+          example: '2020-01-31'
+        full_day:
+          type: boolean
+          example: false
+          description: Whether it's a full day absence or not, only required if the start_date and end_date are the same (one day absence at most)
+        start_time:
+          type: string
+          format: date
+          description: "Absence start time. Format: HH:mm (hours and minutes in UTC timezone) and only required if the start_date and end_date are the same, and full_day is false (partial-day absence)"
+          example: '03:00'
+        end_time:
+          type: string
+          format: date
+          description: "Absence end time. Format: HH:mm (hours and minutes in UTC timezone) and only required if the start_date and end_date are the same, and full_day is false (partial-day absence)"
+          example: '15:00'
+        half_day_start:
+          type: boolean
+          example: false
+          description: Whether the start date is a half-day off, only required if the start_date and end_date are not the same (more than one day absence)
+        half_day_end:
+          type: boolean
+          example: false
+          description: Whether the end date is a half-day off, only required if the start_date and end_date are not the same (more than one day absence)
+        comment:
+          type: string
+          example: Some Comment
+          description: Optional comment
+        skip_approval:
+          type: boolean
+          example: false
+          description: Optional, default value is true. If set to false, the approval status of the absence request will be "pending" if an approval rule is set for the absence type in Personio. The respective approval flow will be triggered.
+      required:
+        - employee_id
+        - time_off_type_id
+        - start_date
+        - end_date
     AbsencePeriodsResponse:
       title: List All Absence Periods response
       type: object
@@ -4004,6 +4205,24 @@ components:
                 attributes:
                   $ref: "#/components/schemas/Absence"
 
+    HourlyAbsencePeriodResponse:
+      title: Absence Periods response
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/Response"
+        - type: object
+          properties:
+            data:
+              type: object
+              required:
+                - type
+                - attributes
+              properties:
+                type:
+                  example: AbsencePeriod
+                attributes:
+                  $ref: "#/components/schemas/HourlyAbsence"
+
     Absence:
       type: object
       properties:
@@ -4057,12 +4276,20 @@ components:
         created_at:
           type: string
           example: 2017-01-17T10:32:18+0100
+        created_by:
+          type: string
+          example: 'API'
+          description: "API if the origin is api, otherwise returns an admin employee's name who's account is used to create the absence"
         updated_at:
           type: string
           example: 2017-01-17T10:32:18+0100
     HourlyAbsence:
       type: object
       properties:
+        id:
+          type: string
+          format: uuid
+          example: 61fe126b-a7b3-449a-b5ee-3865a6fcc546
         measurement_unit:
           type: string
           example: "hours"
@@ -4099,6 +4326,9 @@ components:
         status:
           type: string
           example: approved
+        timezone:
+          type: string
+          example: "Europe/Berlin"
         created_by:
           type: integer
           example: 1
@@ -4127,6 +4357,12 @@ components:
           type: string
           format: uuid
           example: 61fe126b-a7b3-449a-b5ee-3865a6fcc546
+        name:
+          type: string
+          example: Absence Type Name
+        time_off_type_id:
+          type: integer
+          example: 1
     AbsencePeriodBreakdown:
       type: object
       required:
