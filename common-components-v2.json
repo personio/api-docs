@@ -141,6 +141,8 @@
         }
       },
       "CustomAttribute": {
+        "description": "Custom Attribute schema",
+        "type": "object",
         "properties": {
           "id": {
             "type": "string",
