@@ -139,6 +139,33 @@
             }
           }
         }
+      },
+      "CustomAttribute": {
+        "description": "Custom Attribute schema",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "UNSPECIFIED",
+              "STRING",
+              "INT",
+              "DOUBLE",
+              "DATE",
+              "BOOLEAN",
+              "STRING_LIST"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "global_id": {
+            "type": "string"
+          }
+        }
       }
     },
     "parameters": {
