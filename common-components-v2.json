@@ -141,11 +141,16 @@
         }
       },
       "CustomAttribute": {
-        "description": "Custom Attribute schema",
-        "type": "object",
         "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The unique identifier for this `custom_attribute`.",
+            "readOnly": true
+          },
           "type": {
             "type": "string",
+            "description": "The type of the custom attribute. Only listed values are valid.",
             "enum": [
               "UNSPECIFIED",
               "STRING",
@@ -156,16 +161,44 @@
               "STRING_LIST"
             ]
           },
-          "name": {
-            "type": "string"
+          "global_id": {
+            "type": "string",
+            "description": "The global identifier for this attribute. This value is unique and can be set to a selected value at the creation of the custom attribute.",
+            "readOnly": true
+          },
+          "label": {
+            "type": "string",
+            "description": "The label defined for this attribute.",
+            "readOnly": true
           },
           "value": {
-            "type": "string"
-          },
-          "global_id": {
-            "type": "string"
+            "$ref": "#/components/schemas/CustomAttributeValue"
           }
         }
+      },
+      "CustomAttributeValue": {
+        "anyOf": [
+          {
+            "type": "string",
+            "description": "An arbitrary value that can be represented as a string."
+          },
+          {
+            "type": "array",
+            "description": "A list of values.",
+            "items": {
+              "type": "string",
+              "description": "An arbitrary value that can be represented as a string."
+            }
+          },
+          {
+            "type": "array",
+            "description": "A list of objects.",
+            "items": {
+              "type": "object",
+              "description": "An arbitrary object."
+            }
+          }
+        ]
       }
     },
     "parameters": {
