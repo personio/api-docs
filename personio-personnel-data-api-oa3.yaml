@@ -1544,7 +1544,7 @@ paths:
         - BearerAuth: []
       tags:
         - Absences
-      description: Provides a list of absence types for absences **tracked in days**. For example 'Paid vacation', 'Parental leave' or 'Home office'.
+      description: Provides a list of absence types for absences **tracked in days and hours**. For example 'Paid vacation', 'Parental leave' or 'Home office'.
       parameters:
         - name: limit
           in: query
