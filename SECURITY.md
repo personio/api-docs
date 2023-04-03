@@ -12,17 +12,10 @@ below.
 **Please do not report (potential) security issues through public GitHub issues.**
 
 Instead please report them through our responsible disclosure program.
-We are currently operating an invite-only bug bounty with Intigriti. In
-order to participate, please register with Intigriti
-(https://login.intigriti.com/account/register). Then send an email to us at
-security@personio.de with your @intigriti.me email address. We will then
-invite you to our bounty program. Once onboard, you will be able to review
-our bounty terms and scope, and safely share your findings with the team.
-
-Alternatively, you can report them directly to our security team via
-**[security@personio.de](mailto:security@personio.de)**. If possible, please
-encrypt the message with our PGP key. You can find it here:
-https://keys.openpgp.org/vks/v1/by-fingerprint/C921305FC1B574C16533ACA4B3E23F29B4B09BE1
+We are currently operating a registered (public with an Intigriti account) bug bounty program with Intigriti.
+In order to participate, please register with Intigriti (https://login.intigriti.com/account/register).
+Then go to the following link and apply (https://app.intigriti.com/researcher/programs/personio/personio/).
+Once onboard, you will be able to review our bounty terms and scope, and safely share your findings with the team.
 
 Please include the information listed below to help us better understand and
 address the issue:
