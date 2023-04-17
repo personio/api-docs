@@ -2284,6 +2284,65 @@ paths:
                       code: 0
                       message: 'Something went wrong'
 
+  "/company/absence-periods/{id}":
+    parameters:
+      - $ref: "#/components/parameters/XPersonioPartnerID"
+      - $ref: "#/components/parameters/XPersonioAppID"
+    delete:
+      security:
+        - BearerAuth: []
+      tags:
+        - Absences
+      description: Deletes absence period data for absence types **tracked in hours**.
+      parameters:
+        - name: id
+          in: path
+          description: ID of the absence period to delete
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 61fe126b-a7b3-449a-b5ee-3865a6fcc546
+      responses:
+        "200":
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeletedAbsenceResponse"
+              examples:
+                response:
+                  value:
+                    success: true
+                    data:
+                      message: The absence period was deleted.
+        "404":
+          description: Not found response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAbsenceResponse"
+              examples:
+                response:
+                  value:
+                    success: false
+                    error:
+                      code: 404
+                      message: 'The absence period was not found.'
+        "400":
+          description: Bad request response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAbsenceResponse"
+              examples:
+                response:
+                  value:
+                    success: false
+                    error:
+                      code: 400
+                      message: 'The absence period id is invalid.'
+
   "/company/document-categories":
     parameters:
       - $ref: "#/components/parameters/XPersonioPartnerID"
