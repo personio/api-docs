@@ -4056,12 +4056,12 @@ components:
         start_time:
           type: string
           format: date
-          description: "Absence start time. Format: HH:mm (hours and minutes in UTC timezone) and only required if the start_date and end_date are the same (partial-day absence)"
+          description: "Absence start time. Format: HH:mm (hours and minutes) and only required if the start_date and end_date are the same (partial-day absence)"
           example: '03:00'
         end_time:
           type: string
           format: date
-          description: "Absence end time. Format: HH:mm (hours and minutes in UTC timezone) and only required if the start_date and end_date are the same (partial-day absence)"
+          description: "Absence end time. Format: HH:mm (hours and minutes) and only required if the start_date and end_date are the same (partial-day absence)"
           example: '15:00'
         half_day_start:
           type: boolean
