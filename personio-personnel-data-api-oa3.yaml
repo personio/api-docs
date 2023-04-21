@@ -4053,28 +4053,24 @@ components:
           format: date
           description: "Absence end date. Format: yyyy-mm-dd"
           example: '2020-01-31'
-        full_day:
-          type: boolean
-          example: false
-          description: Whether it's a full day absence or not, only required if the start_date and end_date are the same (one day absence at most)
         start_time:
           type: string
           format: date
-          description: "Absence start time. Format: HH:mm (hours and minutes in UTC timezone) and only required if the start_date and end_date are the same, and full_day is false (partial-day absence)"
+          description: "Absence start time. Format: HH:mm (hours and minutes in UTC timezone) and only required if the start_date and end_date are the same (partial-day absence)"
           example: '03:00'
         end_time:
           type: string
           format: date
-          description: "Absence end time. Format: HH:mm (hours and minutes in UTC timezone) and only required if the start_date and end_date are the same, and full_day is false (partial-day absence)"
+          description: "Absence end time. Format: HH:mm (hours and minutes in UTC timezone) and only required if the start_date and end_date are the same (partial-day absence)"
           example: '15:00'
         half_day_start:
           type: boolean
           example: false
-          description: Whether the start date is a half-day off, only required if the start_date and end_date are not the same (more than one day absence)
+          description: Whether the start date is a half-day off, only considered if the start_date and end_date are not the same (more than one day absence)
         half_day_end:
           type: boolean
           example: false
-          description: Whether the end date is a half-day off, only required if the start_date and end_date are not the same (more than one day absence)
+          description: Whether the end date is a half-day off, only considered if the start_date and end_date are not the same (more than one day absence)
         comment:
           type: string
           example: Some Comment
