@@ -179,7 +179,7 @@
         }
       },
       "CustomAttributeValue": {
-        "anyOf": [
+        "oneOf": [
           {
             "type": "string",
             "description": "An arbitrary value that can be represented as a string."
