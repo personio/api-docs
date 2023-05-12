@@ -28,24 +28,26 @@ paths:
               properties:
                 client_id:
                   type: string
-                  required: true
                   description: Client id of the downloaded credentials file
                 client_secret:
-                  required: true
                   type: string
                   description: Client secret of the downloaded credentials file
+              required:
+                - client_id
+                - client_secret
           application/x-www-form-urlencoded:
             schema:
               type: object
               properties:
                 client_id:
                   type: string
-                  required: true
                   description: Client id of the downloaded credentials file
                 client_secret:
-                  required: true
                   type: string
                   description: Client secret of the downloaded credentials file
+              required:
+                - client_id
+                - client_secret
       responses:
         '200':
           description: 'Authentication token response'
