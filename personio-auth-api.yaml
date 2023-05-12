@@ -17,17 +17,20 @@ paths:
       description: 'Request Authentication Token'
       produces:
         - application/json
-      parameters:
-        - name: client_id
-          in: query
-          required: true
-          type: string
-          description: Client id of the downloaded credentials file
-        - name: client_secret
-          in: query
-          required: true
-          type: string
-          description: Client secret of the downloaded credentials file
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                  required: true
+                  description: Client id of the downloaded credentials file
+                client_secret:
+                  required: true
+                  type: string
+                  description: Client secret of the downloaded credentials file
       responses:
         '200':
           description: ''
@@ -49,7 +52,7 @@ definitions:
         type: object
     required:
       - success
-      - data  
+      - data
   AuthenticationTokenResponse:
     title: Request Authentication Token response
     allOf:
@@ -63,4 +66,3 @@ definitions:
             properties:
               token:
                 type: string
-                
