@@ -1586,6 +1586,7 @@ paths:
                           id: 1234
                           name: 'Paid vacation'
                           category: null
+                          legacy_category: null
                           unit: 'day'
                           half_day_requests_enabled: true
                           certification_required: false
@@ -1597,6 +1598,7 @@ paths:
                           id: 1235
                           name: 'Home office'
                           category: 'offsite_work'
+                          legacy_category: 'offsite_work'
                           unit: 'hour'
                           half_day_requests_enabled: true
                           certification_required: true
@@ -3958,6 +3960,10 @@ components:
               type: string
               example: Paid vacation
             category:
+              type: string
+              nullable: true
+              example: offsite_work
+            legacy_category:
               type: string
               nullable: true
               example: offsite_work
