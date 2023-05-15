@@ -3962,10 +3962,47 @@ components:
             category:
               type: string
               nullable: true
+              enum:
+                - family_care
+                - maternity_parental_leave
+                - child_care
+                - short_time_allowance
+                - quarantine
+                - lockout
+                - irrevocable_exemption
+                - sick_leave
+                - voluntary_military_service
+                - unlawful_strike
+                - lawful_strike
+                - paid_vacation
+                - unpaid_vacation
+                - unexcused_absence
+                - offsite_work
+                - other
+                - undefined
               example: offsite_work
             legacy_category:
               type: string
               nullable: true
+              enum:
+                - family_care_sick_leave
+                - individual_prohibition_of_employment
+                - maternity_protection_period
+                - other
+                - paid_vacation
+                - parental_leave
+                - sick_leave
+                - lawful_strike
+                - unlawful_strike
+                - treatment
+                - unexcused_absence
+                - unpaid_vacation
+                - voluntary_military_service
+                - offsite_work
+                - family_care_long_term
+                - paid_child_sick
+                - unpaid_child_sick
+                - undefined
               example: offsite_work
             unit:
               type: string
