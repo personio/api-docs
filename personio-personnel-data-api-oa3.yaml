@@ -12,41 +12,6 @@ x-readme:
     - "php"
     - "node"
 paths:
-  /auth:
-    post:
-      tags:
-        - Auth
-      description: 'Request Authentication Token'
-      parameters:
-        - $ref: "#/components/parameters/XPersonioPartnerID"
-        - $ref: "#/components/parameters/XPersonioAppID"
-        - name: client_id
-          in: query
-          required: true
-          description: Client id of the downloaded credentials file
-          schema:
-            type: string
-        - name: client_secret
-          in: query
-          required: true
-          description: Client secret of the downloaded credentials file
-          schema:
-            type: string
-      responses:
-        "200":
-          description: Bearer token
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/AuthenticationTokenResponse"
-              examples:
-                response:
-                  value:
-                    success: true
-                    data:
-                      token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLmRldi5wZXJzb25pby5kZTozMDAwMS92MS9hdXRoIiwiaWF0IjoxNDg5MDkxMzA2LCJleHAiOjE0ODkxNzc3MDYsIm5iZiI6MTQ4OTA5MTMwNiwianRpIjoiZmU1ZjkxOGY2MDZjOWI4OGMwMzM0ZmJkZjkyYzkwMzgiLCJzdWIiOiJPR014TVdRd1kySmxZbVF6Tm1RNVpqQmxOell6WmpsaSJ9.QZZCdlDjmL-LYdoDx2XLUfhwTdcjDgm9h4t-6JoACiM"
-
   /company/employees:
     parameters:
       - $ref: "#/components/parameters/XPersonioPartnerID"
@@ -4527,20 +4492,6 @@ components:
                   $ref: '#/components/schemas/TypeEnum'
                 universal_id:
                   example: email
-
-    AuthenticationTokenResponse:
-      title: Request Authentication Token response
-      allOf:
-        - $ref: '#/components/schemas/Response'
-        - type: object
-          properties:
-            data:
-              type: object
-              required:
-                - token
-              properties:
-                token:
-                  type: string
 
     TypeEnum:
       type: string

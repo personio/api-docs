@@ -48,6 +48,8 @@ paths:
               required:
                 - client_id
                 - client_secret
+        - $ref: "#/components/parameters/XPersonioPartnerID"
+        - $ref: "#/components/parameters/XPersonioAppID"
       responses:
         '200':
           description: 'Authentication token response'
