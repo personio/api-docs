@@ -1847,6 +1847,19 @@ paths:
                     success: true
                     data:
                       message: The absence period was deleted.
+        "400":
+          description: Bad request response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAbsenceResponse"
+              examples:
+                response:
+                  value:
+                    success: false
+                    error:
+                      code: 400
+                      message: 'The absence period id is invalid.'
         "404":
           description: Not found response
           content:
