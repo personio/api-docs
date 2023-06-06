@@ -2525,6 +2525,12 @@ paths:
             "application/json":
               schema:
                 $ref: "#/components/schemas/PublicReportResponse"
+        400:
+          description: Bad request
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/PublicAPIException"
         404:
           description: Report not found
           content:
