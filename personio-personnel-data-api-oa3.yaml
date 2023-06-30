@@ -1164,7 +1164,7 @@ paths:
         required: true
       responses:
         "200":
-          description: The attendance periods are successfullycreated
+          description: The attendance periods are successfully created
           content:
             application/json:
               schema:
@@ -1251,7 +1251,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DeletedAtendanceResponse"
+                $ref: "#/components/schemas/DeletedAttendanceResponse"
               examples:
                 response:
                   value:
@@ -1291,7 +1291,7 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/AttendanceUpdateRequest"
-        description: attendance period data to update
+        description: Attendance period data to update. At least one of the properties (`date`, `start_time`, `end_time`, `break`, `comment`, `project_id`, `skip_approval`) is required.
         required: true
       responses:
         "200":
@@ -2837,7 +2837,7 @@ components:
             message:
               example: The absence period was deleted.
 
-    DeletedAtendanceResponse:
+    DeletedAttendanceResponse:
       title: Default response object
       type: object
       properties:
@@ -3711,6 +3711,7 @@ components:
           example: "08:00"
         end_time:
           type: string
+          nullable: true
           pattern: ^\d\d:\d\d$
           example: "17:00"
         break:
@@ -3733,6 +3734,7 @@ components:
             - rejected
         project:
           type: object
+          nullable: true
           properties:
             id:
               type: integer
@@ -3757,9 +3759,11 @@ components:
           type: array
           items:
             type: object
+            required: [employee, date, start_time, break]
             properties:
               employee:
                 type: integer
+                minimum: 1
                 example: 1
               date:
                 type: string
@@ -3771,19 +3775,23 @@ components:
                 description: "Format: hh:mm"
               end_time:
                 type: string
+                nullable: true
                 pattern: ^\d\d:\d\d$
                 example: "17:00"
                 description: "Format: hh:mm"
               break:
                 type: integer
+                minimum: 0
                 example: 60
               comment:
                 type: string
+                nullable: true
                 example: "I was productive as hell"
               project_id:
                 type: integer
                 nullable: true
                 example: 5
+          minItems: 1
         skip_approval:
           type: boolean
           description: "Optional, default value is true. If set to false, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered."
@@ -3801,14 +3809,17 @@ components:
           description: "Format: hh:mm"
         end_time:
           type: string
+          nullable: true
           pattern: ^\d\d:\d\d$
           example: "17:00"
           description: "Format: hh:mm"
         break:
           type: integer
+          minimum: 0
           example: 60
         comment:
           type: string
+          nullable: true
           example: "I was productive as hell"
         project_id:
           type: integer
@@ -3819,7 +3830,7 @@ components:
           description: "Optional, default value is true. If set to false, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered."
 
     AttendancePeriodsResponse:
-      title: List All Attenance Periods response
+      title: List All Attendance Periods response
       type: object
       allOf:
         - $ref: "#/components/schemas/Response"
@@ -3881,21 +3892,25 @@ components:
           example: '08:00'
         attendances[][end_time]:
           type: string
+          nullable: true
           pattern: ^\d\d:\d\d$
           description: "End time. Format: hh:mm"
           example: '12:00'
         attendances[]break:
           type: integer
+          minimum: 0
           format: int32
           description: Break in minutes
         attendances[][comment]:
           type: string
+          nullable: true
           description: Optional comment
         skip_approval:
           type: boolean
           description: "Optional, default value is true. If set to false, the approval status of the attendance period will be \"pending\" if an approval rule is set for the attendances type. The respective approval flow will be triggered."
         project_id:
           type: integer
+          nullable: true
           format: int32
           description: The ID of the project
           example: 5
@@ -3903,9 +3918,7 @@ components:
         - attendances[][employee]
         - attendances[][date]
         - attendances[][start_time]
-        - attendances[][end_time]
         - attendances[]break
-        - attendances[][comment]
 
     NewAttendancePeriodResponse:
       type: object
