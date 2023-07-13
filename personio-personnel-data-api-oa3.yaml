@@ -2126,7 +2126,7 @@ paths:
         - BearerAuth: [ ]
       tags:
         - Absences
-      description: Adds absence data for absence types **tracked in hours**.
+      description: Adds absence data for absence types **tracked in hours**. Note that creating periods for absence types with certificate requirement enabled is not supported!
       requestBody:
         content:
           application/x-www-form-urlencoded:
