@@ -28,10 +28,10 @@ paths:
               properties:
                 client_id:
                   type: string
-                  description: Client id of the downloaded credentials file
+                  description: API Client id
                 client_secret:
                   type: string
-                  description: Client secret of the downloaded credentials file
+                  description: API Client secret
               required:
                 - client_id
                 - client_secret
@@ -41,10 +41,10 @@ paths:
               properties:
                 client_id:
                   type: string
-                  description: Client id of the downloaded credentials file
+                  description: API Client id
                 client_secret:
                   type: string
-                  description: Client secret of the downloaded credentials file
+                  description: API Client secret
               required:
                 - client_id
                 - client_secret
