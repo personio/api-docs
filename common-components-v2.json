@@ -103,7 +103,7 @@
         "type": "object",
         "description": "This object represents an error response.",
         "properties": {
-          "trace_id": {
+          "personio_trace_id": {
             "type": "string",
             "example": "aswo3f-a202lfso-312123sld-1230ddd",
             "description": "A unique ID that was created for this error."
@@ -249,7 +249,7 @@
     "examples": {
       "ResourceNotFound": {
         "value": {
-          "trace_id": "aswo3f-a202lfso-312123sld-1230ddd",
+          "personio_trace_id": "aswo3f-a202lfso-312123sld-1230ddd",
           "timestamp": "2021-05-28T11:17:30+00:00",
           "errors": [
             {
@@ -262,7 +262,7 @@
       },
       "InternalServerError": {
         "value": {
-          "trace_id": "aswo3f-a202lfso-312123sld-1230ddd",
+          "personio_trace_id": "aswo3f-a202lfso-312123sld-1230ddd",
           "timestamp": "2021-05-28T11:17:30+00:00",
           "errors": [
             {
@@ -275,7 +275,7 @@
       },
       "BadGateway": {
         "value": {
-          "trace_id": "aswo3f-a202lfso-312123sld-1230ddd",
+          "personio_trace_id": "aswo3f-a202lfso-312123sld-1230ddd",
           "timestamp": "2021-05-28T11:17:30+00:00",
           "errors": [
             {
@@ -288,7 +288,7 @@
       },
       "ServiceUnavailable": {
         "value": {
-          "trace_id": "aswo3f-a202lfso-312123sld-1230ddd",
+          "personio_trace_id": "aswo3f-a202lfso-312123sld-1230ddd",
           "timestamp": "2021-05-28T11:17:30+00:00",
           "errors": [
             {
@@ -301,7 +301,7 @@
       },
       "GatewayTimeout": {
         "value": {
-          "trace_id": "aswo3f-a202lfso-312123sld-1230ddd",
+          "personio_trace_id": "aswo3f-a202lfso-312123sld-1230ddd",
           "timestamp": "2021-05-28T11:17:30+00:00",
           "errors": [
             {
