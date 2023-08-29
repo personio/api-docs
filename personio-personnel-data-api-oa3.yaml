@@ -2516,7 +2516,21 @@ paths:
             type: string
           example: "de"
           required: false
-      description: This endpoint provides you with the data of an existing Custom Report.
+        - name: page
+          in: query
+          description: Pagination parameter to identify the page to return.
+          schema:
+            type: integer
+          example: 1
+          required: false
+        - name: limit
+          in: query
+          description: Pagination parameter to limit the number of employees returned per page.
+          schema:
+            type: integer
+          example: 10
+          required: false
+      description: This endpoint provides you with the data of an existing Custom Report. 
       operationId: listReportItems
       responses:
         200:
@@ -4563,6 +4577,7 @@ components:
           $ref: "#/components/schemas/PublicReportMetaData"
         offset:
           type: integer
+          deprecated: true
         limit:
           type: integer
         data:
