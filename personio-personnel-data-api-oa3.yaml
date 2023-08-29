@@ -30,6 +30,7 @@ paths:
             type: integer
             minimum: 1
             default: 10
+            example: 10
         - name: offset
           in: query
           required: false
@@ -38,6 +39,7 @@ paths:
             type: integer
             minimum: 0
             default: 0
+            example: 0
         - name: email
           in: query
           required: false
@@ -472,7 +474,9 @@ paths:
         - Employees
       summary: Update an employee
       description: >
-        Update existing employee. Note: Updating of Email field is not currently supported.
+        Updates an existing employee. Note: Only the fields that are listed in the body example 
+        are updatable. Attributes that are not part of the sample request body but are present 
+        inside the request are ignored. It's not possible to update the Email field.
       parameters:
         - name: employee_id
           in: path
