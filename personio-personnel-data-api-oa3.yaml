@@ -2093,6 +2093,7 @@ paths:
                             attributes:
                               id: "9bba303f-0fbc-4514-9958-0befa21923fb"
                               name: "Absence Type Name"
+                              time_off_type_id: 45678
                           certificate:
                             status: not-required
                           start: "2022-05-31T22:00:00.0Z"
@@ -3613,20 +3614,18 @@ components:
                     $ref: "#/components/schemas/Employee"
 
     EmployeeResponse:
-      title: Employee
+      title: Employee Response
       allOf:
         - $ref: "#/components/schemas/Response"
         - type: object
           properties:
             data:
-              type: array
-              items:
-                type: object
-                properties:
-                  type:
-                    example: Employee
-                  attributes:
-                    $ref: "#/components/schemas/Employee"
+              type: object
+              properties:
+                type:
+                  example: Employee
+                attributes:
+                  $ref: "#/components/schemas/Employee"
 
     EmployeeAbsenceBalance:
       title: Employee Absence Balance
