@@ -55,7 +55,7 @@ paths:
             This filter is returning a paginated response. Therefore, it is necessary to provide the limit and offset
             parameters when using this filter. In case a request is send without the limit and offset parameters, a
             default limit of 200 is used and the offset is set to 0.
-            NOTE: when using the updated_since filter, the email parameters is ignored.
+            NOTE: when using the updated_since filter, the email parameter is ignored.
           schema:
             type: string
             example: 2022-12-24T08:15:30
