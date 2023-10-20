@@ -61,6 +61,8 @@ paths:
                     success: true
                     data:
                       token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLmRldi5wZXJzb25pby5kZTozMDAwMS92MS9hdXRoIiwiaWF0IjoxNDg5MDkxMzA2LCJleHAiOjE0ODkxNzc3MDYsIm5iZiI6MTQ4OTA5MTMwNiwianRpIjoiZmU1ZjkxOGY2MDZjOWI4OGMwMzM0ZmJkZjkyYzkwMzgiLCJzdWIiOiJPR014TVdRd1kySmxZbVF6Tm1RNVpqQmxOell6WmpsaSJ9.QZZCdlDjmL-LYdoDx2XLUfhwTdcjDgm9h4t-6JoACiM"
+                      expires_in: 86400
+                      scope: employees:read absences:read
 components:
   schemas:
     Response:
@@ -86,4 +88,8 @@ components:
                 - token
               properties:
                 token:
+                  type: string
+                expires_in:
+                  type: number
+                scope:
                   type: string
