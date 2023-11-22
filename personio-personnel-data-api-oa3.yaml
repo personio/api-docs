@@ -1148,6 +1148,10 @@ paths:
                           is_holiday: false
                           is_on_time_off: true
                           project: null
+        "401":
+          $ref: "#/components/responses/401UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/403ForbiddenResponse"
 
     post:
       security:
@@ -1183,6 +1187,10 @@ paths:
                          2,
                       ]
                       message: 'success'
+        "401":
+          $ref: "#/components/responses/401UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/403ForbiddenResponse"
         "400":
           description: Invalid request
           content:
@@ -1275,8 +1283,12 @@ paths:
                     error:
                       code: 400
                       message: 'Bad Request'
+        "401":
+          $ref: "#/components/responses/401UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/403ForbiddenResponse"
         "404":
-          description: Not found response
+          description: Not Found
           content:
             application/json:
               schema:
@@ -1336,6 +1348,10 @@ paths:
                     error:
                       code: 400
                       message: Error when trying to insert Attendances periods rows.
+        "401":
+          $ref: "#/components/responses/401UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/403ForbiddenResponse"
         "404":
           description: Not found response
           content:
@@ -5521,3 +5537,41 @@ components:
         description:
           type: string
           example: Report ID not found
+  examples:
+    401UnauthorizedErrorExample:
+      value:
+        {
+          "success": false,
+          "error": {
+            "message": "Authorization is not provided",
+            "code": 401
+          }
+        }
+    403ForbiddenErrorExample:
+      value:
+        {
+          "success": false,
+          "error": {
+            "message": "Provided authorization is not valid",
+            "code": 403
+          }
+        }
+  responses:
+    401UnauthorizedResponse:
+      description: "Unauthorized Access"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          examples:
+            response:
+              $ref: "#/components/examples/401UnauthorizedErrorExample"
+    403ForbiddenResponse:
+      description: "Forbidden Access"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          examples:
+            response:
+              $ref: "#/components/examples/403ForbiddenErrorExample"
