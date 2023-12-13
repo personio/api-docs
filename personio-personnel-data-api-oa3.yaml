@@ -474,8 +474,8 @@ paths:
         - Employees
       summary: Update an employee
       description: >
-        Updates an existing employee. Note: Only the fields that are listed in the body example 
-        are updatable. Attributes that are not part of the sample request body but are present 
+        Updates an existing employee. Note: Only the fields that are listed in the body example
+        are updatable. Attributes that are not part of the sample request body but are present
         inside the request are ignored. It's not possible to update the Email field.
       parameters:
         - name: employee_id
@@ -1099,7 +1099,7 @@ paths:
             default: 0
       responses:
         "200":
-          description: ""
+          description: "The Attendance periods matching the provided filters"
           content:
             application/json:
               schema:
@@ -1148,6 +1148,10 @@ paths:
                           is_holiday: false
                           is_on_time_off: true
                           project: null
+        "401":
+          $ref: "#/components/responses/401UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/403ForbiddenResponse"
 
     post:
       security:
@@ -1183,12 +1187,16 @@ paths:
                          2,
                       ]
                       message: 'success'
+        "401":
+          $ref: "#/components/responses/401UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/403ForbiddenResponse"
         "400":
           description: Invalid request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorCreateAttendanceResponse"
+                $ref: "#/components/schemas/AttendanceCreateUpdate400ErrorResponse"
               examples:
                 response:
                   value:
@@ -1262,12 +1270,29 @@ paths:
                     success: true
                     data:
                       message: 'The attendance period was deleted.'
-        "404":
-          description: Not found response
+        "400":
+          description: "Bad Request"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorAttendanceResponse"
+                $ref: "#/components/schemas/AttendanceDelete400ErrorResponse"
+              examples:
+                response:
+                  value:
+                    success: false
+                    error:
+                      code: 400
+                      message: 'Bad Request'
+        "401":
+          $ref: "#/components/responses/401UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/403ForbiddenResponse"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Attendance404ErrorResponse"
               examples:
                 response:
                   value:
@@ -1310,12 +1335,29 @@ paths:
                     success: true
                     data:
                       message: The attendance period was updated.
+        "400":
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AttendanceCreateUpdate400ErrorResponse"
+              examples:
+                response:
+                  value:
+                    success: false
+                    error:
+                      code: 400
+                      message: Error when trying to insert Attendances periods rows.
+        "401":
+          $ref: "#/components/responses/401UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/403ForbiddenResponse"
         "404":
           description: Not found response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorAttendanceResponse"
+                $ref: "#/components/schemas/Attendance404ErrorResponse"
               examples:
                 response:
                   value:
@@ -2535,7 +2577,7 @@ paths:
             type: integer
           example: 10
           required: false
-      description: This endpoint provides you with the data of an existing Custom Report. 
+      description: This endpoint provides you with the data of an existing Custom Report.
       operationId: listReportItems
       responses:
         200:
@@ -2913,7 +2955,7 @@ components:
               example: The given data failed to pass validation.
 
     ErrorAbsenceResponse:
-      title: 404 absense error
+      title: 404 absence error
       type: object
       properties:
         success:
@@ -2944,8 +2986,8 @@ components:
             message:
               example: Error when trying to insert absence period
 
-    ErrorCreateAttendanceResponse:
-      title: 400 attendances error
+    AttendanceCreateUpdate400ErrorResponse:
+      title: 400 [Bad Request] Attendances Creation Error
       type: object
       properties:
         success:
@@ -2998,8 +3040,24 @@ components:
                     nullable: true
                     example: null
 
-    ErrorAttendanceResponse:
-      title: 404 absense error
+    AttendanceDelete400ErrorResponse:
+      title: 400 [Bad Request] Attendance Error
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              example: 400
+            message:
+              example: Bad Request
+
+    Attendance404ErrorResponse:
+      title: 404 [Not Found] Attendance Error
       type: object
       properties:
         success:
@@ -3015,7 +3073,7 @@ components:
               example: The attendance period was not found.
 
     Employee404ErrorResponse:
-      title: 404 absense error
+      title: 404 [Not Found] Employee Error
       type: object
       properties:
         success:
@@ -5479,3 +5537,41 @@ components:
         description:
           type: string
           example: Report ID not found
+  examples:
+    401UnauthorizedErrorExample:
+      value:
+        {
+          "success": false,
+          "error": {
+            "message": "Authorization is not provided",
+            "code": 401
+          }
+        }
+    403ForbiddenErrorExample:
+      value:
+        {
+          "success": false,
+          "error": {
+            "message": "Provided authorization is not valid",
+            "code": 403
+          }
+        }
+  responses:
+    401UnauthorizedResponse:
+      description: "Unauthorized Access"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          examples:
+            response:
+              $ref: "#/components/examples/401UnauthorizedErrorExample"
+    403ForbiddenResponse:
+      description: "Forbidden Access"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          examples:
+            response:
+              $ref: "#/components/examples/403ForbiddenErrorExample"
