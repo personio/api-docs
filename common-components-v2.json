@@ -124,7 +124,7 @@
                   "example": "Not found",
                   "description": "The title of the error."
                 },
-                "detail": {
+                "details": {
                   "type": "string",
                   "example": "The requested resource was not found.",
                   "description": "A short description about the error."
