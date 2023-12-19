@@ -124,7 +124,7 @@
                   "example": "Not found",
                   "description": "The title of the error."
                 },
-                "details": {
+                "detail": {
                   "type": "string",
                   "example": "The requested resource was not found.",
                   "description": "A short description about the error."
@@ -254,7 +254,7 @@
           "errors": [
             {
               "title": "Resource not found",
-              "details": "The requested resource was not found. The resource could have been deleted or never existed in our system.",
+              "detail": "The requested resource was not found. The resource could have been deleted or never existed in our system.",
               "type": "https://developer.personio.de/reference/errors#common.requested_resource_not_found"
             }
           ]
@@ -267,7 +267,7 @@
           "errors": [
             {
               "title": "Internal Server Error",
-              "details": "There was a problem while processing this request. Please try again later.",
+              "detail": "There was a problem while processing this request. Please try again later.",
               "type": "https://developer.personio.de/reference/errors#common.internal_server_error"
             }
           ]
@@ -280,7 +280,7 @@
           "errors": [
             {
               "title": "Bad Gateway",
-              "details": "There was a problem while processing this request. Please try again later.",
+              "detail": "There was a problem while processing this request. Please try again later.",
               "type": "https://developer.personio.de/reference/errors#common.bad_gateway"
             }
           ]
@@ -293,7 +293,7 @@
           "errors": [
             {
               "title": "Service Unavailable",
-              "details": "The server is temporarily unavailable. Please try again later.",
+              "detail": "The server is temporarily unavailable. Please try again later.",
               "type": "https://developer.personio.de/reference/errors#common.service_unavailable"
             }
           ]
@@ -306,7 +306,7 @@
           "errors": [
             {
               "title": "Gateway Timeout",
-              "details": "There was a problem while processing this request. Please try again later.",
+              "detail": "There was a problem while processing this request. Please try again later.",
               "type": "https://developer.personio.de/reference/errors#common.gateway_timeout"
             }
           ]
