@@ -49,13 +49,13 @@ paths:
         - name: updated_since
           in: query
           required: false
-          description: "Find all employees that have been updated since the provided date. The format is `ISO 8601` (2022-12-24T08:15:30). NOTE: when using the updated_since filter, the email, limit, and offset parameters are ignored. In case `attributes[]` query parameter is provided, only the employees that had one of the provided attributes updated will be returned."
+          description: "Filter to select and return only the employees that have been updated after `updated_since`. When it is used together with the `attributes[]` query parameter, the filter will select only the employees that have had any of the provided `attributes[]` updated since `updated_since`. The format is `ISO 8601` (2022-12-24T08:15:30). NOTE: when using the `updated_since` filter, the `email`, `limit`, and `offset` parameters are ignored."
           schema:
             type: string
             example: 2022-12-24T08:15:30
         - name: attributes[]
           in: query
-          description: "A list of attributes that will be returned for all employees. In case `updated_since` query parameter is used, this list will be used to filter returning only the employees that had one of the provided attributes updated since `updated_since`."
+          description: "A list of attributes that will be returned for the employees, ie. a projection. In case `updated_since` query parameter is used, this list will additionally be used to filter returning only the employees that have had at least one of the provided `attributes[]` updated since `updated_since`, ie. a selection."
           required: false
           schema:
             type: array
