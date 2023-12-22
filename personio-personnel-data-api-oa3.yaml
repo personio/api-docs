@@ -46,21 +46,156 @@ paths:
           description: "Find an employee with the given email address. The response is still a list, containing only the filtered employee. NOTE: when using the updated_since filter, the email filter is ignored."
           schema:
             type: string
-        - name: updated_since
-          in: query
-          required: false
-          description: "Find all employees that have been updated since the provided date. The format is `ISO 8601` (2022-12-24T08:15:30). NOTE: when using the updated_since filter, the email, limit, and offset parameters are ignored."
-          schema:
-            type: string
-            example: 2022-12-24T08:15:30
         - name: attributes[]
           in: query
-          description: Define a list of whitelisted attributes that shall be returned for all employees.
+          description: |-
+            A list of attributes that will be returned for the employees, ie. a projection of the employee fields and relationships. In case `updated_since` query parameter is used, this list will additionally be used to exclude the employees that had none of the provided `attributes[]` updated since `updated_since`, ie. a selection filter.
+          example: "?attributes[]=first_name&attributes[]=last_name"
           required: false
           schema:
             type: array
             items:
               type: string
+            example: ["first_name", "last_name"]
+        - name: updated_since
+          in: query
+          required: false
+          description: >2- # indentation is 2 spaces (so code is aligned); strip LF at the end
+            Filter to select and return only the employees that have been updated after `updated_since`. When it is used together with the `attributes[]` query parameter, the filter will select only the employees that have had any of the provided `attributes[]` updated since `updated_since`. The format is `ISO 8601` (2022-12-24T08:15:30). NOTE: when using the `updated_since` filter, the `email`, `limit`, and `offset` parameters are ignored.
+
+            <details>
+            <summary><b>Examples with <code>updated_since</code> and <code>attributes[]</code>:</b></summary><br />
+            In an example company that has 17 employees:<br /><br />
+            <details>
+              <summary>
+              <code class="language-html">?updated_since=2022-12-24T08:15:30</code>
+              will yield 10 employees that were recently updated:
+              </summary>
+            <p><pre class="prettyprint"><code language="json" class="language-json">
+            {
+              "success": true,
+              "metadata": {
+                "total_elements": 10,
+                "current_page": 0,
+                "total_pages": 10
+              },
+              "offset": 0,
+              "limit": 1,
+              "data": [
+                {
+                  "type": "Employee",
+                  "attributes": {
+                    "id": {
+                      "label": "ID",
+                      "value": 1,
+                      "type": "integer",
+                      "universal_id": "id"
+                    },
+                    "first_name": {
+                      "label": "First name",
+                      "value": "Alexander",
+                      "type": "standard",
+                      "universal_id": "first_name"
+                    },
+                    "last_name": {
+                      "label": "Last name",
+                      "value": "Bergmann",
+                      "type": "standard",
+                      "universal_id": "last_name"
+                    },
+                    "email": {
+                      "label": "Email",
+                      "value": "alexander.bergmann@demo.com",
+                      "type": "standard",
+                      "universal_id": "email"
+                    }
+                  }
+                }, ...
+              ],
+              ...
+              ...
+            }
+            </code></pre></p>
+            </details><br />
+            <details>
+              <summary>
+              <code class="language-html">?attributes[]=first_name</code>
+              will yield all 17 employees:
+              </summary>
+            <p><pre class="prettyprint"><code language="json" class="language-json">
+            {
+              "success": true,
+              "metadata": {
+                "total_elements": 17,
+                "current_page": 0,
+                "total_pages": 17
+              },
+              "offset": 0,
+              "limit": 1,
+              "data": [
+                {
+                  "type": "Employee",
+                  "attributes": {
+                    "id": {
+                      "label": "ID",
+                      "value": 1,
+                      "type": "integer",
+                      "universal_id": "id"
+                    },
+                    "first_name": {
+                      "label": "First name",
+                      "value": "Alexander",
+                      "type": "standard",
+                      "universal_id": "first_name"
+                    }
+                  }
+                }
+              ]
+            }
+            </code></pre></p>
+            </details><br />
+            <details>
+              <summary>
+              <code class="language-html">?attributes[]=first_name&updated_since=2022-12-24T08:15:30</code>
+              will yield 3 employees, ones that had their <code>first_name</code> changed since <code>2022-12-24T08:15:30</code>:
+              </summary>
+            <p><pre class="prettyprint"><code language="json" class="language-json">
+            {
+              "success": true,
+              "metadata": {
+                "total_elements": 3,
+                "current_page": 0,
+                "total_pages": 3
+              },
+              "offset": 0,
+              "limit": 1,
+              "data": [
+                {
+                  "type": "Employee",
+                  "attributes": {
+                    "id": {
+                      "label": "ID",
+                      "value": 1,
+                      "type": "integer",
+                      "universal_id": "id"
+                    },
+                    "first_name": {
+                      "label": "First name",
+                      "value": "Alexander",
+                      "type": "standard",
+                      "universal_id": "first_name"
+                    }
+                  }
+                }
+              ]
+            }
+            </code></pre></p>
+            </details>
+            </details>
+          example: "2022-12-24T08:15:30"
+          schema:
+            type: string
+            example: 2022-12-24T08:15:30
       description: List Company Employees
       responses:
         "200":
