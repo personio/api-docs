@@ -4547,11 +4547,11 @@ components:
           type: number
           example: 3
         half_day_start:
-          type: boolean
-          example: false
+          type: number
+          example: 0
         half_day_end:
-          type: boolean
-          example: false
+          type: number
+          example: 0
         time_off_type:
           type: object
           properties:
