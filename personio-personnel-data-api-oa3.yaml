@@ -97,6 +97,11 @@ paths:
                             value: Bergmann
                             type: standard
                             universal_id: last_name
+                          preferred_name:
+                            label: Name (preferred)
+                            value: Alexander Bergmann
+                            type: standard
+                            universal_id: preferred_name
                           email:
                             label: Email
                             value: alexander.bergmann@demo.email
@@ -338,6 +343,9 @@ paths:
                     last_name:
                       type: string
                       example: "Dou"
+                    preferred_name:
+                      type: string
+                      example: "John Dou"
                     gender:
                       type: string
                       example: male
@@ -396,6 +404,9 @@ paths:
                   type: string
                 "employee[last_name]":
                   description: Employee last name
+                  type: string
+                "employee[preferred_name]":
+                  description: Employee preferred name
                   type: string
                 "employee[gender]":
                   description: Employee gender
@@ -500,6 +511,9 @@ paths:
                     last_name:
                       type: string
                       example: "Dou"
+                    preferred_name:
+                      type: string
+                      example: "John Dou"
                     gender:
                       type: string
                       example: male
@@ -551,6 +565,9 @@ paths:
                   type: string
                 "employee[last_name]":
                   description: Employee last name
+                  type: string
+                "employee[preferred_name]":
+                  description: Employee preferred name
                   type: string
                 "employee[gender]":
                   description: Employee gender
@@ -642,6 +659,11 @@ paths:
                           value: Bergmann
                           type: standard
                           universal_id: last_name
+                        preferred_name:
+                          label: Name (preferred)
+                          value: Alexander Bergmann
+                          type: standard
+                          universal_id: preferred_name
                         email:
                           label: Email
                           value: alexander.bergmann@demo.email
@@ -1179,8 +1201,8 @@ paths:
                     success: true
                     data:
                       id: [
-                         1,
-                         2,
+                        1,
+                        2,
                       ]
                       message: 'success'
         "400":
@@ -2535,7 +2557,7 @@ paths:
             type: integer
           example: 10
           required: false
-      description: This endpoint provides you with the data of an existing Custom Report. 
+      description: This endpoint provides you with the data of an existing Custom Report.
       operationId: listReportItems
       responses:
         200:
@@ -3334,6 +3356,17 @@ components:
               $ref: '#/components/schemas/TypeEnum'
             universal_id:
               example: last_name
+        preferred_name:
+          type: object
+          properties:
+            label:
+              example: Name (preferred)
+            value:
+              example: Michael Dou
+            type:
+              $ref: '#/components/schemas/TypeEnum'
+            universal_id:
+              example: preferred_name
         email:
           type: object
           properties:
