@@ -1,0 +1,1617 @@
+{
+	"info": {
+		"_postman_id": "a9dd2360-3664-41f6-85b4-3d4bdee3f94c",
+		"name": "Personio - Public API Collection",
+		"description": "This collection contains all of Personio's V1 Public API endpoints.\n\nPlease make sure to replace the placeholders in the \"Pre-request Script\" tab with your company's [API credentials](https://support.personio.de/hc/en-us/articles/4404623630993-Generate-and-manage-API-credentials):\n\n<img src=\"https://content.pstmn.io/1e8c2a10-47de-4b2b-916f-76f93402b013/U2NyZWVuc2hvdCAyMDI0LTAzLTA3IGF0IDE4LjM4LjU0LnBuZw==\" alt=\"\" height=\"679\" width=\"1289\">\n\nFor any support requests, please use the [Help area](https://support.personio.de/hc/en-us/articles/5659436229277-The-in-product-Help-area) in your Personio.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21595602"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Auth Endpoint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json();",
+									"var token = data.data.token;",
+									"",
+									"if (token) {",
+									"    pm.environment.set(\"authToken\", token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://api.personio.de/v1/auth?client_id=XXXXX&client_secret=XXXXX",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"auth"
+							],
+							"query": [
+								{
+									"key": "client_id",
+									"value": "XXXXX"
+								},
+								{
+									"key": "client_secret",
+									"value": "XXXXX"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "[https://developer.personio.de/reference/auth](https://developer.personio.de/reference/auth)",
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Employees",
+			"item": [
+				{
+					"name": "Get All Employees",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.personio.de/v1/company/employees?offset=0&limit=200",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"employees"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "email",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "attributes[]",
+									"value": "Value1",
+									"disabled": true
+								},
+								{
+									"key": "attributes[]",
+									"value": "Value2",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "200"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create an Employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"employee\": {\n\t\t\"first_name\": \"First Name\",\n\t\t\"last_name\": \"Last Name\",\n\t\t\"email\": \"new@address.cm\",\n        \"gender\": \"male\",\n        \"position\": \"Position Name\",\n        \"subcompany\": \"Existing Subcompany in Personio\",\n        \"department\": \"Existing Department in Personio\",\n        \"office\": \"Existing Office in personio\",\n        \"hire_date\": \"2022-01-01\",\n        \"weekly_working_hours\": 40,\n        \"custom_attributes\": {\n            \"dynamic_1170389\": \"1994-11-14\"\n        }\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.personio.de/v1/company/employees",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update an Employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"employee\": {\n    \"first_name\": \"New First Name\",\n    \"last_name\": \"New Last Name\",\n    \"gender\": \"male\",\n    \"position\": \"New Position Name\",\n    \"subcompany\": \"Existing Subcompany in Personio\",\n    \"department\": \"Existing Department in Personio\",\n    \"office\": \"Existing Office in personio\",\n    \"hire_date\": \"2022-01-02\",\n    \"weekly_working_hours\": 35,\n    \"custom_attributes\": {\n        \"dynamic_1170389\": \"1994-11-14\"\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.personio.de/v1/company/employees/{{EMPLOYEE_ID}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"employees",
+								"{{EMPLOYEE_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one Employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.personio.de/v1/company/employees/{{EMPLOYEE_ID}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"employees",
+								"{{EMPLOYEE_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Absence Balance for one Employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.personio.de/v1/company/employees/{{EMPLOYEE_ID}}/absences/balance",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"employees",
+								"{{EMPLOYEE_ID}}",
+								"absences",
+								"balance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Custom Attributes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.personio.de/v1/company/employees/custom-attributes",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"employees",
+								"custom-attributes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Attributes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.personio.de/v1/company/employees/attributes",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"employees",
+								"attributes"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- [https://developer.personio.de/reference/get_company-employees](https://developer.personio.de/reference/get_company-employees)\n- [https://developer.personio.de/reference/post_company-employees](https://developer.personio.de/reference/post_company-employees)\n- [https://developer.personio.de/reference/patch_company-employees-employee-id](https://developer.personio.de/reference/patch_company-employees-employee-id)\n- [https://developer.personio.de/reference/get_company-employees-employee-id](https://developer.personio.de/reference/get_company-employees-employee-id)\n- [https://developer.personio.de/reference/get_company-employees-employee-id-absences-balance](https://developer.personio.de/reference/get_company-employees-employee-id-absences-balance)\n- [https://developer.personio.de/reference/get_company-employees-custom-attributes](https://developer.personio.de/reference/get_company-employees-custom-attributes)\n- [https://developer.personio.de/reference/get_company-employees-attributes](https://developer.personio.de/reference/get_company-employees-attributes)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Attendances",
+			"item": [
+				{
+					"name": "Get All Attendances",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"start_date\": \"2022-01-01\",\n    \"end_date\": \"2022-12-31\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.personio.de/v1/company/attendances?start_date=2022-01-01&end_date=2022-09-30&limit=2&offset=0",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"attendances"
+							],
+							"query": [
+								{
+									"key": "start_date",
+									"value": "2022-01-01"
+								},
+								{
+									"key": "end_date",
+									"value": "2022-09-30"
+								},
+								{
+									"key": "updated_from",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "updated_to",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "includePending",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "employees[]",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "employees[]",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create one or many Attendances",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"attendances\": [\n        {\n            \"employee\": 5671547,\n            \"date\": \"2022-08-22\",\n            \"start_time\": \"14:00\",\n            \"end_time\": \"14:30\",\n            \"break\": 0,\n            \"comment\": \"Some comment\",\n            \"project_id\": 51059\n        },\n                {\n            \"employee\": 5671547,\n            \"date\": \"2022-08-23\",\n            \"start_time\": \"14:00\",\n            \"end_time\": \"14:30\",\n            \"break\": 0,\n            \"comment\": \"Another comment\",\n            \"project_id\": 51059\n        }\n    ],\n    \"skip_approval\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.personio.de/v1/company/attendances",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"attendances"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete one Attendance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://api.personio.de/v1/company/attendances/{{ATTENDANCE_ID}}?skip_approval=false ",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"attendances",
+								"{{ATTENDANCE_ID}}"
+							],
+							"query": [
+								{
+									"key": "skip_approval",
+									"value": "false "
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update one Attendance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"attendances\":{\n        \"employee\": 420888,\n        \"date\": \"2018-03-05\",\n        \"start_time\": \"08:00\",\n        \"end_time\": \"11:00\",\n        \"break\": 15,\n        \"comment\": \"Some comment\",\n        \"project_id\": 51059\n    },\n    \"skip_approval\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.personio.de/v1/company/attendances/{{ATTENDANCE_ID}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"attendances",
+								"{{ATTENDANCE_ID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- [https://developer.personio.de/reference/get_company-attendances](https://developer.personio.de/reference/get_company-attendances)\n    \n- [https://developer.personio.de/reference/post_company-attendances](https://developer.personio.de/reference/post_company-attendances)\n    \n- [https://developer.personio.de/reference/delete_company-attendances-id](https://developer.personio.de/reference/delete_company-attendances-id)\n    \n- [https://developer.personio.de/reference/patch_company-attendances-id](https://developer.personio.de/reference/patch_company-attendances-id)"
+		},
+		{
+			"name": "Projects",
+			"item": [
+				{
+					"name": "Get All Projects",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.personio.de/v1/company/attendances/projects",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"attendances",
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a Project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Project Name\",\n    \"active\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.personio.de/v1/company/attendances/projects",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"attendances",
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://api.personio.de/v1/company/attendances/projects/{{PROJECT_ID}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"attendances",
+								"projects",
+								"{{PROJECT_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a Project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"A potentially new name\",\n    \"active\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.personio.de/v1/company/attendances/projects/{{PROJECT_ID}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"attendances",
+								"projects",
+								"{{PROJECT_ID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- [https://developer.personio.de/reference/get_company-attendances-projects](https://developer.personio.de/reference/get_company-attendances-projects)\n    \n- [https://developer.personio.de/reference/post_company-attendances-projects](https://developer.personio.de/reference/post_company-attendances-projects)\n    \n- [https://developer.personio.de/reference/delete_company-attendances-projects-id](https://developer.personio.de/reference/delete_company-attendances-projects-id)\n    \n- [https://developer.personio.de/reference/patch_company-attendances-projects-id](https://developer.personio.de/reference/patch_company-attendances-projects-id)"
+		},
+		{
+			"name": "Absences",
+			"item": [
+				{
+					"name": "Get all Time-Off Types",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.personio.de/v1/company/time-off-types?limit=50&offset=0",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"time-off-types"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "50"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Time-Offs tracked in Days",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.personio.de/v1/company/time-offs?start_date=2000-07-01&end_date=2022-09-30&limit=2&offset=0",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"time-offs"
+							],
+							"query": [
+								{
+									"key": "start_date",
+									"value": "2000-07-01"
+								},
+								{
+									"key": "end_date",
+									"value": "2022-09-30"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "updated_from",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "updated_to",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "employees[]",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "employees[]",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create an Absence tracked in Days",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "employee_id",
+									"value": "{{EMPLOYEE_ID}}",
+									"type": "text"
+								},
+								{
+									"key": "time_off_type_id",
+									"value": "{{TIME_OFF_TYPE_ID}}",
+									"type": "text"
+								},
+								{
+									"key": "start_date",
+									"value": "2022-09-02",
+									"type": "text"
+								},
+								{
+									"key": "end_date",
+									"value": "2022-09-02",
+									"type": "text"
+								},
+								{
+									"key": "half_day_start",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "half_day_end",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "comment",
+									"value": "Optional",
+									"type": "text"
+								},
+								{
+									"key": "skip_approval",
+									"value": "false",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.personio.de/v1/company/time-offs",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"time-offs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete an Absence tracked in Days",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://api.personio.de/v1/company/time-offs/{{ABSENCE_ID}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"time-offs",
+								"{{ABSENCE_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one Absence tracked in Hours",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.personio.de/v1/company/time-offs/{{ABSENCE_ID}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"time-offs",
+								"{{ABSENCE_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Absence Period tracked in Hours",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.personio.de/v1/company/absence-periods",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"absence-periods"
+							],
+							"query": [
+								{
+									"key": "start_date",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "end_date",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "updated_from",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "updated_to",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "employees[]",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "absence_types[]",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "absence_periods[]",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "offset",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create an Absence tracked in Hours",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "employee_id",
+									"value": "{{EMPLOYEE_ID}}",
+									"type": "text"
+								},
+								{
+									"key": "time_off_type_id",
+									"value": "{{TIME_OFF_TYPE_ID}}",
+									"type": "text"
+								},
+								{
+									"key": "start_date",
+									"value": "2022-09-02",
+									"type": "text"
+								},
+								{
+									"key": "end_date",
+									"value": "2022-09-02",
+									"type": "text"
+								},
+								{
+									"key": "half_day_start",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "half_day_end",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "comment",
+									"value": "Optional",
+									"type": "text"
+								},
+								{
+									"key": "skip_approval",
+									"value": "false",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.personio.de/v1/company/absence-periods",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"absence-periods"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete an Absence tracked in Hours",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://api.personio.de/v1/company/absence-periods/{{ABSENCE_ID}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"absence-periods",
+								"{{ABSENCE_ID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- [https://developer.personio.de/reference/get_company-time-off-types](https://developer.personio.de/reference/get_company-time-off-types)\n    \n- [https://developer.personio.de/reference/get_company-time-offs](https://developer.personio.de/reference/get_company-time-offs)\n    \n- [https://developer.personio.de/reference/post_company-time-offs](https://developer.personio.de/reference/post_company-time-offs)\n    \n- [https://developer.personio.de/reference/delete_company-time-offs-id](https://developer.personio.de/reference/delete_company-time-offs-id)\n    \n- [https://developer.personio.de/reference/get_company-time-offs-id](https://developer.personio.de/reference/get_company-time-offs-id)\n    \n- [https://developer.personio.de/reference/get_company-absence-periods](https://developer.personio.de/reference/get_company-absence-periods)\n    \n- [https://developer.personio.de/reference/post_company-absence-periods](https://developer.personio.de/reference/post_company-absence-periods)\n    \n- [https://developer.personio.de/reference/delete_company-absence-periods-id](https://developer.personio.de/reference/delete_company-absence-periods-id)"
+		},
+		{
+			"name": "Documents",
+			"item": [
+				{
+					"name": "Get Document Categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.personio.de/v1/company/document-categories",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"document-categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Document",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var authHeader = pm.response.headers.get(\"authorization\");",
+									"",
+									"if (authHeader) {",
+									"    pm.environment.set(\"authToken\", authHeader.substring(7));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "employee_id",
+									"value": "{{EMPLOYEE_ID}}",
+									"type": "text"
+								},
+								{
+									"key": "date",
+									"value": "2022-01-01",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "Any Document Title",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "{{DOCUMENT_CATEGORY_ID}}",
+									"type": "text"
+								},
+								{
+									"key": "comment",
+									"value": "Optional Comment",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.personio.de/v1/company/documents",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"documents"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- [https://developer.personio.de/reference/get_company-document-categories](https://developer.personio.de/reference/get_company-document-categories)\n    \n- [https://developer.personio.de/reference/post_company-documents](https://developer.personio.de/reference/post_company-documents)"
+		},
+		{
+			"name": "Custom Reports",
+			"item": [
+				{
+					"name": "GET List of Reports",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const AuthRequest = {",
+									"  url: 'https://api.personio.de/v1/auth?client_id=XXXXX&client_secret=XXXXX',",
+									"  method: 'POST',",
+									"};",
+									"",
+									"pm.sendRequest(AuthRequest, function (err, res) {",
+									"    console.log(err ? err : res.json());",
+									"        if (err === null) {",
+									"            console.log('Saving the token')",
+									"            var responseJson = res.json();",
+									"            pm.environment.set('token', responseJson.data.token)",
+									"        }",
+									"    });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.personio.de/v1/company/custom-reports/reports",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"custom-reports",
+								"reports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Report Columns",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.personio.de/v1/company/custom-reports/columns",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"custom-reports",
+								"columns"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Report Data",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const AuthRequest = {",
+									"  url: 'https://api.personio.de/v1/auth?client_id=XXXXX&client_secret=XXXXX',",
+									"  method: 'POST',",
+									"};",
+									"",
+									"pm.sendRequest(AuthRequest, function (err, res) {",
+									"    console.log(err ? err : res.json());",
+									"        if (err === null) {",
+									"            console.log('Saving the token')",
+									"            var responseJson = res.json();",
+									"            pm.environment.set('token', responseJson.data.token)",
+									"        }",
+									"    });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.personio.de/v1/company/custom-reports/reports/{{REPORT_ID}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"personio",
+								"de"
+							],
+							"path": [
+								"v1",
+								"company",
+								"custom-reports",
+								"reports",
+								"{{REPORT_ID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"const AuthRequest = {",
+					"  url: 'https://api.personio.de/v1/auth?client_id=XXXXX&client_secret=XXXXX',",
+					"  method: 'POST',",
+					"};",
+					"",
+					"pm.sendRequest(AuthRequest, function (err, res) {",
+					"    console.log(err ? err : res.json());",
+					"        if (err === null) {",
+					"            console.log('Saving the token')",
+					"            var responseJson = res.json();",
+					"            pm.environment.set('token', responseJson.data.token)",
+					"        }",
+					"    });"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
