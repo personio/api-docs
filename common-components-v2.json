@@ -152,7 +152,6 @@
         "properties": {
           "id": {
             "type": "string",
-            "format": "uuid",
             "description": "The unique identifier for this `custom_attribute`.",
             "readOnly": true
           },
