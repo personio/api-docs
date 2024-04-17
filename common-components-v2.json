@@ -135,7 +135,7 @@
                   "example": "https://developer.personio.de/reference/errors#common.requested_resource_not_found",
                   "description": "A link to the developer hub where more information can be found for the encountered error."
                 },
-                "meta": {
+                "_meta": {
                   "type": "object",
                   "additionalProperties": {
                     "type": "string"
