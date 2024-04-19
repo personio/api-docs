@@ -3889,7 +3889,15 @@ components:
                 example: custom_absence
               balance:
                 type: number
+                description: >
+                  Effective balance, as of request date; not deducting any upcoming absence periods,
+                  but only what has been taken. If the absence period is currently ongoing,
+                  the effective balance only considers the part of the period until today.
                 example: 10.5
+              available_balance:
+                type: number
+                description: Available balance is what actually left to be planned (where upcoming absence periods are already deducted).
+                example: 8.5
 
     Project:
       type: object
