@@ -3773,6 +3773,8 @@ components:
               type: string
         vacation_day_balance:
           type: object
+          deprecated: true
+          description: Substituted by available_balance in EmployeeAbsenceBalance
           properties:
             label:
               example: Vacation day balance
