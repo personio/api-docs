@@ -1057,19 +1057,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EmployeeAbsenceBalance"
-              examples:
-                response:
-                  value:
-                    success: true
-                    data:
-                      - id: 21799
-                        name: "Paid Vacation"
-                        category: null
-                        balance: 14
-                      - id: 33523
-                        name: "Sick Days"
-                        category: null
-                        balance: 0
         "404":
           description: ""
           content:
