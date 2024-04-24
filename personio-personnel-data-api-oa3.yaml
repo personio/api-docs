@@ -2329,7 +2329,7 @@ paths:
         - BearerAuth: []
       tags:
         - Documents
-      description: This endpoint is responsible for uploading documents for the company employees.
+      description: This endpoint is responsible for uploading documents for the company employees. It has a rate limit of 60 requests per minute. Exceeding this limit will result in 429 “Too many attempts” errors.
       summary: Upload Document
       requestBody:
         content:
