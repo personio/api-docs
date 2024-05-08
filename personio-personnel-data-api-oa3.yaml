@@ -729,11 +729,6 @@ paths:
                           type: decimal
                           universal_id: hourly_salary
                           currency: EUR
-                        vacation_day_balance:
-                          label: Vacation day balance
-                          value: 2
-                          type: decimal
-                          universal_id: vacation_day_balance
                         last_working_day:
                           label: Last day of work
                           value:
@@ -3538,19 +3533,6 @@ components:
             currency:
               example: EUR
               type: string
-        vacation_day_balance:
-          type: object
-          deprecated: true
-          description: Substituted by available_balance in EmployeeAbsenceBalance
-          properties:
-            label:
-              example: Vacation day balance
-            value:
-              example: 20.5
-            type:
-              $ref: '#/components/schemas/TypeEnum'
-            universal_id:
-              example: vacation_day_balance
         last_working_day:
           type: object
           properties:
