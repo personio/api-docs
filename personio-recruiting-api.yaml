@@ -51,6 +51,8 @@ paths:
       - $ref: "#/components/parameters/XPersonioAppID"
       - $ref: "#/components/parameters/XCompanyID"
     post:
+      x-readme:
+        samples-enabled: false
       tags: 
         - Application
       security:
@@ -371,6 +373,7 @@ components:
             See https://{YOUR_COMPANY}.personio.de/configuration/recruiting/tags
           items:
             type: string
+          example: test
         files:
           description: |-
             References to previously uploaded files. These will be attached to the new application.
