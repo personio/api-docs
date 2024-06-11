@@ -61,7 +61,7 @@ paths:
           in: query
           required: false
           description: >2- # indentation is 2 spaces (so code is aligned); strip LF at the end
-            Filter to select and return only the employees that have been updated after `updated_since`. When it is used together with the `attributes[]` query parameter, the filter will select only the employees that have had any of the provided `attributes[]` updated since `updated_since`. The format is `ISO 8601` (2022-12-24T08:15:30). NOTE: when using the `updated_since` filter, the `email`, `limit`, and `offset` parameters are ignored.
+            Filter to select and return only the employees that have been updated after `updated_since`. When it is used together with the `attributes[]` query parameter, the filter will select only the employees that have had any of the provided `attributes[]` updated since `updated_since`. The format is `ISO 8601` (2022-12-24T08:15:30) or `YYYY-MM-DD`. NOTE: when using the `updated_since` filter, the `email`, `limit`, and `offset` parameters are ignored.
 
             <details>
             <summary><b>Examples with <code>updated_since</code> and <code>attributes[]</code>:</b></summary><br />
@@ -1934,7 +1934,7 @@ paths:
         - name: end_date
           in: query
           required: false
-          description: Filter by absence periods that start at or before given date.
+          description: Filter by absence periods that start at or after given date.
           schema:
             type: string
             format: date
