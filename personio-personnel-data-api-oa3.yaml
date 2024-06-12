@@ -1934,7 +1934,7 @@ paths:
         - name: end_date
           in: query
           required: false
-          description: Filter by absence periods that ends at or before given date.
+          description: Filter by absence periods that start at or before given date.
           schema:
             type: string
             format: date
