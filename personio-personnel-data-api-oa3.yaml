@@ -1927,14 +1927,14 @@ paths:
         - name: start_date
           in: query
           required: false
-          description: When both start_date and end_date values are provided, the list of absences returned is a set that has all absences that intersects the window expressed as [start_date, end_date]. When either value is unspecified, the list list of absences returned are unbounded in the direction of the unspecified value.
+          description: When both start_date and end_date values are provided, the list of absences returned is a set that has all absences that intersects the window expressed as [start_date, end_date]. When either value is unspecified, the list of absences returned are unbounded in the direction of the unspecified value.
           schema:
             type: string
             format: date
         - name: end_date
           in: query
           required: false
-          description: When both start_date and end_date values are provided, the list of absences returned is a set that has all absences that intersects the window expressed as [start_date, end_date]. When either value is unspecified, the list list of absences returned are unbounded in the direction of the unspecified value.
+          description: When both start_date and end_date values are provided, the list of absences returned is a set that has all absences that intersects the window expressed as [start_date, end_date]. When either value is unspecified, the list of absences returned are unbounded in the direction of the unspecified value.
           schema:
             type: string
             format: date
