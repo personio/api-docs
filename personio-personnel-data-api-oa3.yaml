@@ -862,14 +862,35 @@ paths:
                         label: First Name
                         type: standard
                         universal_id: first_name
+                        options: []
                       - key: last_name
                         label: Last Name
                         type: standard
                         universal_id: last_name
+                        options: []
                       - key: dynamic_1
                         label: IBAN
                         type: standard
                         universal_id: iban
+                        options: []
+                      - key: dynamic_2
+                        label: Marital status
+                        type: list
+                        universal_id: null
+                        options: [
+                          "married",
+                          "single",
+                        ]
+                      - key: dynamic_3
+                        label: Language Skills
+                        type: tags
+                        universal_id: null
+                        options: [
+                          "English",
+                          "French",
+                          "Spanish",
+                          "German"
+                        ]
 
   /company/employees/{employee_id}/profile-picture/{width}:
     parameters:
