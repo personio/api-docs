@@ -10,7 +10,7 @@
       "url": "https://api.personio.de"
     }
   ],
-  "paths": null,
+  "paths": {},
   "components": {
     "responses": {
       "NotFoundResponse": {
@@ -33,10 +33,14 @@
           "links": {
             "type": "object",
             "additionalProperties": {
-              "type": "string"
-            },
+              "$ref": "#/components/schemas/LinkObject"
+          },
             "example": {
-              "self": "https://api.personio.de/v2/person?cursor=<current-cursor>"
+              "links": {
+                "self": {
+                  "href": "https://api.personio.de/v2/person?cursor=<current-cursor>"
+                }
+              }
             }
           }
         }
@@ -51,20 +55,7 @@
             "description": "The id of the created resource."
           },
           "_meta": {
-            "readOnly": true,
-            "type": "object",
-            "properties": {
-              "links": {
-                "type": "object",
-                "properties": {
-                  "self": {
-                    "type": "string",
-                    "format": "uri",
-                    "example": "https://api.personio.de/v2/persons/some-person-id"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/schemas/MetaObject"
           }
         }
       },
@@ -206,6 +197,18 @@
             }
           }
         ]
+      },
+      "LinkObject": {
+        "description": "This objects represents a hyperlink.",
+        "type": "object",
+        "readOnly": true,
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "additionalProperties": true
       }
     },
     "parameters": {
