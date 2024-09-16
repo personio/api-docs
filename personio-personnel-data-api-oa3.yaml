@@ -1524,12 +1524,8 @@ paths:
                         attributes:
                           id: 1234
                           name: 'Paid vacation'
-                          category: null
-                          legacy_category: null
+                          category: 'paid_vacation'
                           unit: 'day'
-                          half_day_requests_enabled: true
-                          certification_required: false
-                          substitute_option: disabled
                           approval_required: true
 
                       - type: TimeOffType
@@ -1537,12 +1533,7 @@ paths:
                           id: 1235
                           name: 'Home office'
                           category: 'offsite_work'
-                          legacy_category: 'offsite_work'
                           unit: 'hour'
-                          half_day_requests_enabled: true
-                          certification_required: true
-                          certification_submission_timeframe: 2
-                          substitute_option: optional
                           approval_required: true
 
   /company/time-offs:
@@ -4001,52 +3992,12 @@ components:
                 - other
                 - undefined
               example: offsite_work
-            legacy_category:
-              type: string
-              nullable: true
-              enum:
-                - family_care_sick_leave
-                - individual_prohibition_of_employment
-                - maternity_protection_period
-                - other
-                - paid_vacation
-                - parental_leave
-                - sick_leave
-                - lawful_strike
-                - unlawful_strike
-                - treatment
-                - unexcused_absence
-                - unpaid_vacation
-                - voluntary_military_service
-                - offsite_work
-                - family_care_long_term
-                - paid_child_sick
-                - unpaid_child_sick
-                - undefined
-              example: offsite_work
             unit:
               type: string
               enum:
                 - day
                 - hour
               example: day
-            half_day_requests_enabled:
-              type: boolean
-              example: true
-            certification_required:
-              type: boolean
-              example: false
-            certification_submission_timeframe:
-              description: The timeframe in days under which the employee needs to submit the certification
-              type: integer
-              example: 2
-            substitute_option:
-              type: string
-              enum:
-                - disabled
-                - optional
-                - required
-              example: optional
             approval_required:
               type: boolean
               example: true
