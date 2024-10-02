@@ -2086,6 +2086,23 @@ paths:
             problem+json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: AbsenceType Not Found
+          content:
+            problem+json:
+              schema:
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                        example: 404
+                      message:
+                        example: 'models.absence-types.not-found'
         "500":
           description: Internal server error
           content:
