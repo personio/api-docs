@@ -2102,7 +2102,7 @@ paths:
                         type: integer
                         example: 404
                       message:
-                          type: string
+                        type: string
                         example: 'models.absence-types.not-found'
         "500":
           description: Internal server error
