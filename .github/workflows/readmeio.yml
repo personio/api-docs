@@ -20,10 +20,10 @@ jobs:
       - run: npm install -g rdme
 
       - name: Validate API Definitions
-        run: rdme validate personio-personnel-data-api-oa3.yaml
+        run: rdme openapi:validate personio-personnel-data-api-oa3.yaml
 
       - name: Validate Recruiting API Definitions
-        run: rdme validate personio-recruiting-api.yaml
+        run: rdme openapi:validate personio-recruiting-api.yaml
 
       - name: Publish API Definitions
         run: rdme openapi personio-personnel-data-api-oa3.yaml --id=58cd4a8450a0c12500e89bf8 --key ${{ secrets.README_API_KEY }}
