@@ -4246,12 +4246,11 @@ components:
                 - child_care
                 - short_time_allowance
                 - quarantine
-                - lockout
                 - irrevocable_exemption
                 - sick_leave
-                - voluntary_military_service
-                - unlawful_strike
-                - lawful_strike
+                - strike_and_lockout
+                - public_duty
+                - unpaid_suspension
                 - paid_vacation
                 - unpaid_vacation
                 - unexcused_absence
