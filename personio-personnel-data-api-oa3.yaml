@@ -1196,8 +1196,14 @@ paths:
         - BearerAuth: []
       tags:
         - Attendances
-      description: Fetch attendance data for the company employees. The result can be `paginated` and `filtered` by period, the date and/or time they were updated, and/or specific employee/employees. The result contains a list of attendances.
-      summary: List Attendances
+      description: This endpoint is deprecated, please use v2. Fetch attendance data for the company employees. The result can be `paginated` and `filtered` by period, the date and/or time they were updated, and/or specific employee/employees. The result contains a list of attendances.
+      deprecated: true
+      summary: List Attendances (deprecated)
+      x-papi-meta:
+        deprecation:
+          effective_from: "2026-07-28T00:00:00Z"
+          successor: "/v2/attendance-periods"
+          guide: "https://developer.personio.de/v1.0/changelog/deprecation-of-attendances-and-projects-v1-endpoints"
       parameters:
         - name: start_date
           in: query
@@ -1325,8 +1331,14 @@ paths:
         - BearerAuth: []
       tags:
         - Attendances
-      description: This endpoint is responsible for adding attendance data for the company employees. It is possible to add attendances for one or many employees at the same time. The payload sent on the request should be a list of attendance periods, in the form of an array containing attendance period objects.
-      summary: Create an Attendance
+      description: This endpoint is deprecated, please use v2. The endpoint is responsible for adding attendance data for the company employees. It is possible to add attendances for one or many employees at the same time. The payload sent on the request should be a list of attendance periods, in the form of an array containing attendance period objects.
+      deprecated: true
+      summary: Create an Attendance (deprecated)
+      x-papi-meta:
+        deprecation:
+          effective_from: "2026-07-28T00:00:00Z"
+          successor: "/v2/attendance-periods"
+          guide: "https://developer.personio.de/v1.0/changelog/deprecation-of-attendances-and-projects-v1-endpoints"
       requestBody:
         content:
           application/json:
@@ -1408,9 +1420,14 @@ paths:
         - BearerAuth: []
       tags:
         - Attendances
-      description: This endpoint is responsible for deleting attendance data for the
-        company employees.
-      summary: Delete Attendance by ID
+      description: This endpoint is deprecated, please use v2. It deletes attendance data for the company employees.
+      deprecated: true
+      x-papi-meta:
+        deprecation:
+          effective_from: "2026-07-28T00:00:00Z"
+          successor: "/v2/attendance-periods/{id}"
+          guide: "https://developer.personio.de/v1.0/changelog/deprecation-of-attendances-and-projects-v1-endpoints"
+      summary: Delete Attendance by ID (deprecated)
       parameters:
         - name: id
           in: path
@@ -1475,8 +1492,14 @@ paths:
         - BearerAuth: []
       tags:
         - Attendances
-      description: This endpoint is responsible for updating attendance data for the company employees. Attributes are not required and if not specified, the current value will be used. It is not possible to change the employee id.
-      summary: Update Attendance by ID
+      description: This endpoint is deprecated, please use v2. It is responsible for updating attendance data for the company employees. Attributes are not required and if not specified, the current value will be used. It is not possible to change the employee id.
+      deprecated: true
+      x-papi-meta:
+        deprecation:
+          effective_from: "2026-07-28T00:00:00Z"
+          successor: "/v2/attendance-periods/{id}"
+          guide: "https://developer.personio.de/v1.0/changelog/deprecation-of-attendances-and-projects-v1-endpoints"
+      summary: Update Attendance by ID (deprecated)
       parameters:
         - name: id
           in: path
@@ -1545,8 +1568,14 @@ paths:
         - BearerAuth: []
       tags:
         - Projects
-      description: Provides a list of all company projects.
-      summary: List Projects
+      description: This endpoint is deprecated, please use v2. Provides a list of all company projects.
+      deprecated: true
+      x-papi-meta:
+        deprecation:
+          effective_from: "2026-07-28T00:00:00Z"
+          successor: "/v2/projects"
+          guide: "https://developer.personio.de/v1.0/changelog/deprecation-of-attendances-and-projects-v1-endpoints"
+      summary: List Projects (deprecated)
       responses:
         "200":
           description: List of projects returned
@@ -1566,8 +1595,14 @@ paths:
         - BearerAuth: []
       tags:
         - Projects
-      description: Creates a project into the company account
-      summary: Create a Project
+      description: This endpoint is deprecated, please use v2. Creates a project into the company account
+      deprecated: true
+      x-papi-meta:
+        deprecation:
+          effective_from: "2026-07-28T00:00:00Z"
+          successor: "/v2/projects"
+          guide: "https://developer.personio.de/v1.0/changelog/deprecation-of-attendances-and-projects-v1-endpoints"
+      summary: Create a Project (deprecated)
       requestBody:
         content:
           application/json:
@@ -1620,8 +1655,14 @@ paths:
         - BearerAuth: []
       tags:
         - Projects
-      description: Deletes a project from the company account
-      summary: Delete Project by ID
+      description: This endpoint is deprecated, please use v2. Deletes a project from the company account
+      deprecated: true
+      x-papi-meta:
+        deprecation:
+          effective_from: "2026-07-28T00:00:00Z"
+          successor: "/v2/projects/{id}"
+          guide: "https://developer.personio.de/v1.0/changelog/deprecation-of-attendances-and-projects-v1-endpoints"
+      summary: Delete Project by ID (deprecated)
       parameters:
         - name: id
           in: path
@@ -1675,8 +1716,14 @@ paths:
         - BearerAuth: []
       tags:
         - Projects
-      description: Updates a project with the given data
-      summary: Update Project by ID
+      description: This endpoint is deprecated, please use v2. Updates a project with the given data.
+      deprecated: true
+      x-papi-meta:
+        deprecation:
+          effective_from: "2025-01-15T00:00:00Z"
+          successor: "/v2/projects/{id}"
+          guide: "https://developer.personio.de/v1.0/changelog/deprecation-of-attendances-and-projects-v1-endpoints"
+      summary: Update Project by ID (deprecated)
       parameters:
         - name: id
           in: path
@@ -2628,7 +2675,7 @@ paths:
         - BearerAuth: []
       tags:
         - Documents
-      description: | 
+      description: |
         This endpoint is responsible for uploading documents for the company employees.
         The Documents endpoint has a rate limit of 60 requests per minute.
       summary: Upload Document
