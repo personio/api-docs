@@ -1201,7 +1201,7 @@ paths:
       summary: List Attendances (deprecated)
       x-papi-meta:
         deprecation:
-          effective_from: "2026-07-28T00:00:00Z"
+          effective_from: "2027-01-31T23:59:59Z"
           successor: "/v2/attendance-periods"
           guide: "https://developer.personio.de/v1.0/changelog/deprecation-of-attendances-and-projects-v1-endpoints"
       parameters:
@@ -1336,7 +1336,7 @@ paths:
       summary: Create an Attendance (deprecated)
       x-papi-meta:
         deprecation:
-          effective_from: "2026-07-28T00:00:00Z"
+          effective_from: "2027-01-31T23:59:59Z"
           successor: "/v2/attendance-periods"
           guide: "https://developer.personio.de/v1.0/changelog/deprecation-of-attendances-and-projects-v1-endpoints"
       requestBody:
@@ -1424,7 +1424,7 @@ paths:
       deprecated: true
       x-papi-meta:
         deprecation:
-          effective_from: "2026-07-28T00:00:00Z"
+          effective_from: "2027-01-31T23:59:59Z"
           successor: "/v2/attendance-periods/{id}"
           guide: "https://developer.personio.de/v1.0/changelog/deprecation-of-attendances-and-projects-v1-endpoints"
       summary: Delete Attendance by ID (deprecated)
@@ -1496,7 +1496,7 @@ paths:
       deprecated: true
       x-papi-meta:
         deprecation:
-          effective_from: "2026-07-28T00:00:00Z"
+          effective_from: "2027-01-31T23:59:59Z"
           successor: "/v2/attendance-periods/{id}"
           guide: "https://developer.personio.de/v1.0/changelog/deprecation-of-attendances-and-projects-v1-endpoints"
       summary: Update Attendance by ID (deprecated)
@@ -1572,7 +1572,7 @@ paths:
       deprecated: true
       x-papi-meta:
         deprecation:
-          effective_from: "2026-07-28T00:00:00Z"
+          effective_from: "2027-01-31T23:59:59Z"
           successor: "/v2/projects"
           guide: "https://developer.personio.de/v1.0/changelog/deprecation-of-attendances-and-projects-v1-endpoints"
       summary: List Projects (deprecated)
@@ -1599,7 +1599,7 @@ paths:
       deprecated: true
       x-papi-meta:
         deprecation:
-          effective_from: "2026-07-28T00:00:00Z"
+          effective_from: "2027-01-31T23:59:59Z"
           successor: "/v2/projects"
           guide: "https://developer.personio.de/v1.0/changelog/deprecation-of-attendances-and-projects-v1-endpoints"
       summary: Create a Project (deprecated)
@@ -1659,7 +1659,7 @@ paths:
       deprecated: true
       x-papi-meta:
         deprecation:
-          effective_from: "2026-07-28T00:00:00Z"
+          effective_from: "2027-01-31T23:59:59Z"
           successor: "/v2/projects/{id}"
           guide: "https://developer.personio.de/v1.0/changelog/deprecation-of-attendances-and-projects-v1-endpoints"
       summary: Delete Project by ID (deprecated)
