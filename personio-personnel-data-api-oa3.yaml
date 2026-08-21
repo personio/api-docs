@@ -385,6 +385,7 @@ paths:
                               type: WorkSchedule
                               attributes:
                                 id: 97188
+                                id_str: '97188'
                                 name: Full-time, 40 hours without time tracking, (mon,tue,wed,thu,fri)
                                 valid_from:
                                 monday: '08:00'
@@ -948,6 +949,7 @@ paths:
                             type: WorkSchedule
                             attributes:
                               id: 97188
+                              id_str: '97188'
                               name: Full-time, 40 hours without time tracking, (mon,tue,wed,thu,fri)
                               valid_from:
                               monday: '08:00'
