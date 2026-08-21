@@ -506,7 +506,7 @@ paths:
                       example: '2020-01-31'
                       format: date
                       description: "Employee hire date. Format: \"yyyy-mm-dd\". If `status` is not provided, it will be set to `active` if the hire date is in the past, or to `onboarding` if it's in the future."
-                      pattern: ^\d{4}-\d{2}-\d{2}$
+                      pattern: /^\d{4}-\d{2}-\d{2}$/
                     weekly_working_hours:
                       type: number
                       example: 40
@@ -563,7 +563,7 @@ paths:
                   example: '2020-01-31'
                   format: date
                   description: "Employee hire date. Format: yyyy-mm-dd"
-                  pattern: ^\d{4}-\d{2}-\d{2}$
+                  pattern: /^\d{4}-\d{2}-\d{2}$/
                 "employee[weekly_working_hours]":
                   description: Employee weekly working hours
                   type: number
@@ -674,7 +674,7 @@ paths:
                       example: '2020-01-31'
                       format: date
                       description: "Employee hire date. Format: \"yyyy-mm-dd\". Update of the `hire_date` will not update employee status on its own (for that you'll need to update the `status` field)"
-                      pattern: ^\d{4}-\d{2}-\d{2}$
+                      pattern: /^\d{4}-\d{2}-\d{2}$/
                     weekly_working_hours:
                       type: number
                       example: 40
@@ -724,7 +724,7 @@ paths:
                   example: '2020-01-31'
                   format: date
                   description: "Employee hire date. Format: yyyy-mm-dd"
-                  pattern: ^\d{4}-\d{2}-\d{2}$
+                  pattern: /^\d{4}-\d{2}-\d{2}$/
                 "employee[weekly_working_hours]":
                   description: Employee weekly working hours
                   type: number
@@ -3550,25 +3550,25 @@ components:
                   example: Standard Hours
                 monday:
                   example: 08:30
-                  pattern: ^\d\d:\d\d$
+                  pattern: /^\d\d:\d\d$/
                 tuesday:
                   example: 08:30
-                  pattern: ^\d\d:\d\d$
+                  pattern: /^\d\d:\d\d$/
                 wednesday:
                   example: 08:30
-                  pattern: ^\d\d:\d\d$
+                  pattern: /^\d\d:\d\d$/
                 thursday:
                   example: 08:30
-                  pattern: ^\d\d:\d\d$
+                  pattern: /^\d\d:\d\d$/
                 friday:
                   example: 08:30
-                  pattern: ^\d\d:\d\d$
+                  pattern: /^\d\d:\d\d$/
                 saturday:
                   example: 00:00
-                  pattern: ^\d\d:\d\d$
+                  pattern: /^\d\d:\d\d$/
                 sunday:
                   example: 00:00
-                  pattern: ^\d\d:\d\d$
+                  pattern: /^\d\d:\d\d$/
         type:
           $ref: '#/components/schemas/TypeEnum'
         universal_id:
@@ -4064,12 +4064,12 @@ components:
           format: date
         start_time:
           type: string
-          pattern: ^\d\d:\d\d$
+          pattern: /^\d\d:\d\d$/
           example: "08:00"
         end_time:
           type: string
           nullable: true
-          pattern: ^\d\d:\d\d$
+          pattern: /^\d\d:\d\d$/
           example: "17:00"
         break:
           type: integer
@@ -4127,13 +4127,13 @@ components:
                 format: date
               start_time:
                 type: string
-                pattern: ^\d\d:\d\d$
+                pattern: /^\d\d:\d\d$/
                 example: "08:00"
                 description: "Format: hh:mm"
               end_time:
                 type: string
                 nullable: true
-                pattern: ^\d\d:\d\d$
+                pattern: /^\d\d:\d\d$/
                 example: "17:00"
                 description: "Format: hh:mm"
               break:
@@ -4161,13 +4161,13 @@ components:
           format: date
         start_time:
           type: string
-          pattern: ^\d\d:\d\d$
+          pattern: /^\d\d:\d\d$/
           example: "08:00"
           description: "Format: hh:mm"
         end_time:
           type: string
           nullable: true
-          pattern: ^\d\d:\d\d$
+          pattern: /^\d\d:\d\d$/
           example: "17:00"
           description: "Format: hh:mm"
         break:
@@ -4244,13 +4244,13 @@ components:
           example: '2020-01-31'
         attendances[][start_time]:
           type: string
-          pattern: ^\d\d:\d\d$
+          pattern: /^\d\d:\d\d$/
           description: "Start time. Format: hh:mm"
           example: '08:00'
         attendances[][end_time]:
           type: string
           nullable: true
-          pattern: ^\d\d:\d\d$
+          pattern: /^\d\d:\d\d$/
           description: "End time. Format: hh:mm"
           example: '12:00'
         attendances[]break:
