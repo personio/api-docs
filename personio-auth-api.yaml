@@ -91,5 +91,7 @@ components:
                   type: string
                 expires_in:
                   type: number
+                  description: Expiration time in seconds.
                 scope:
                   type: string
+                  description: The scope(s) this authentication token has access to; space-separated
