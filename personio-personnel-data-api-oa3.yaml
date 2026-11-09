@@ -2798,7 +2798,7 @@ paths:
           required: false
           description: The status of the report to filter the results.
       description: |
-        > 🚧 This endpoint will be deprecated, please use [v2](https://developer.personio.de/reference/listcompanyreports).
+        > 🚧 This endpoint will be deprecated, please use [v2](https://developer.personio.de/reference/listcompanyreports). See the [deprecation announcement](https://developer.personio.de/changelog/deprecation-of-custom-reports-api-v1) for the timeline.
 
         This endpoint provides you with metadata about existing custom reports in your Personio account, such as report name, report type, report date / timeframe.
       summary: List Custom Reports
@@ -2853,7 +2853,7 @@ paths:
           example: 10
           required: false
       description: |
-        > 🚧 This endpoint will be deprecated, please use [v2](https://developer.personio.de/reference/getreport).
+        > 🚧 This endpoint will be deprecated, please use [v2](https://developer.personio.de/reference/getreport). See the [deprecation announcement](https://developer.personio.de/changelog/deprecation-of-custom-reports-api-v1) for the timeline.
 
         This endpoint provides you with the data of an existing Custom Report.
       summary: Get Custom Report by ID
@@ -2915,7 +2915,7 @@ paths:
           description: The ID of the report to filter the result of the columns. If no ID is passed, all columns for the company are returned.
           required: false
       description: |
-        > 🚧 This endpoint will be deprecated, please use [v2](https://developer.personio.de/reference/listreportsattributes).
+        > 🚧 This endpoint will be deprecated, please use [v2](https://developer.personio.de/reference/listreportsattributes). See the [deprecation announcement](https://developer.personio.de/changelog/deprecation-of-custom-reports-api-v1) for the timeline.
 
         This endpoint provides human-readable labels for report table columns. It is particularly important if you get a report with custom attributes or absence data to match the column IDs to the translation.
       summary: List Custom Report Column Labels
